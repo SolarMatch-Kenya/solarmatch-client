@@ -1,0 +1,1 @@
+// Displays solar installer info with ratings/contact

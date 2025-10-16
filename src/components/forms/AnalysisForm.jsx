@@ -1,0 +1,1 @@
+// Collects user data for solar energy analysis

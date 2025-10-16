@@ -1,0 +1,1 @@
+// Chatbot widget for asking solar/AI questions (Swahili + English)

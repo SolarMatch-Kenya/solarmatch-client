@@ -1,0 +1,1 @@
+// Displays sunlight exposure scores per region or roof angle

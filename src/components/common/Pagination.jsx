@@ -1,0 +1,1 @@
+// Pagination controls for tables or analysis lists

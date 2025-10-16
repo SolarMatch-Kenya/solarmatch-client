@@ -1,0 +1,1 @@
+// Displays details of solar energy analyses

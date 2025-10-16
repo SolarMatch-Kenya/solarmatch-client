@@ -1,0 +1,1 @@
+// Displays top solar adopters by county (gamified chart/table)

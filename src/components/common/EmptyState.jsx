@@ -1,0 +1,1 @@
+// Displayed when there’s no data (e.g., “No analyses yet”)
