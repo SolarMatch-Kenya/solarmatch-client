@@ -1,0 +1,1 @@
+// Displays AI-powered energy analysis results

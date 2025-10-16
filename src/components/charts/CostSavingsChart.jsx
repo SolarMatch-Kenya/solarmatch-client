@@ -1,0 +1,1 @@
+// Shows monthly or yearly cost savings trend from solar usage

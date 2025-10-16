@@ -1,0 +1,1 @@
+// Stores user analysis data and AI responses

@@ -1,0 +1,1 @@
+// Shows AI analysis summaries or predictions

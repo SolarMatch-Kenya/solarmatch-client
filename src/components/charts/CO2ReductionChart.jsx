@@ -1,0 +1,1 @@
+// Visualizes reduction in carbon footprint (kg CO₂ saved)

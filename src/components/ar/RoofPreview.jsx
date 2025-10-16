@@ -1,0 +1,1 @@
+// AR/3D view showing how solar panels fit on a user’s roof

@@ -1,0 +1,1 @@
+// Route wrapper that checks authentication before rendering

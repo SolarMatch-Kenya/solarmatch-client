@@ -1,0 +1,1 @@
+// Shows list of installers available in user’s region

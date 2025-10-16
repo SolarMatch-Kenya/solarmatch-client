@@ -1,0 +1,1 @@
+// Secondary button for less critical actions (e.g., “Cancel”)

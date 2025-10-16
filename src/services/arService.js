@@ -1,0 +1,1 @@
+// Manages 3D/AR data (roof model, sunlight simulation)

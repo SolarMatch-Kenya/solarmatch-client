@@ -1,2 +1,3 @@
-import '@testing-library/jest-dom';
+// Config for testing environment (Jest/RTL setup)
 
+import '@testing-library/jest-dom';

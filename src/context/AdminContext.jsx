@@ -1,0 +1,1 @@
+// Admin-specific state (manage installers, analytics, etc.), (using React Context API)
