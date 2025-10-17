@@ -11,7 +11,7 @@ export default function ProtectedRoute({ children, role }) {
     return <Navigate to={`/login/${role}`} replace />;
   }
 
-  // Role mismatch? Optional (but just for extra security)
+  // Role mismatch? (for extra security)
   if (role && user.role !== role) {
     return <Navigate to="/" replace />;
   }
