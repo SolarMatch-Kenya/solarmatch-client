@@ -1,0 +1,1 @@
+// financer card with their logo and on click take them to their official site

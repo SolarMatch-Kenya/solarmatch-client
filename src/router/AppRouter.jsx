@@ -9,6 +9,8 @@ function AppRouter() {
         <Routes>
             {/* <Route path='/' element={Home}/> */}
             {/* <Route path='/about' element={About}/>
+            <Route path="/financing" element={<Financing />} />
+
             <Route path='/login' element={Login}/>
             <Route path='/forgot-password' element={ForgotPassword}/>
             <Route path='/register' element={Register}/>
