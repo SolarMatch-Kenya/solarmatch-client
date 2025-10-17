@@ -7,12 +7,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: 'var(--color-primary)',
-        secondary: 'var(--color-secondary)',
-        'tertiary-green': 'var(--color-tertiary-green)',
-        'tertiary-yellow': 'var(--color-tertiary-yellow)',
-        'tertiary-red': 'var(--color-tertiary-red)',
-        'tertiary-brown': 'var(--color-tertiary-brown)',
+        primary: '#006800',
+        secondary: '#f79436',
+        'tertiary-green': '#133b04',
+        'tertiary-yellow': '#fbc71f',
+        'tertiary-red': '#ca523b',
+        'tertiary-brown': '#ac7c1c',
       },
       fontFamily: {
         sans: ['Outfit', 'sans-serif'],
