@@ -2,19 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --color-primary: #006800;
-  --color-secondary: #f79436;
-  --color-tertiary-green: #133b04;
-  --color-tertiary-yellow: #fbc71f;
-  --color-tertiary-red: #ca523b;
-  --color-tertiary-brown: #ac7c1c;
-}
-
-body {
-  box-sizing: border-box;
-}
-
 @layer components {
   .h1 {
     @apply text-4xl font-bold lg:text-5xl;
@@ -34,4 +21,17 @@ body {
   .small {
     @apply text-sm font-light;
   }
+}
+
+:root {
+  --color-primary: #006800;
+  --color-secondary: #f79436;
+  --color-tertiary-green: #133b04;
+  --color-tertiary-yellow: #fbc71f;
+  --color-tertiary-red: #ca523b;
+  --color-tertiary-brown: #ac7c1c;
+}
+
+body {
+  box-sizing: border-box;
 }
