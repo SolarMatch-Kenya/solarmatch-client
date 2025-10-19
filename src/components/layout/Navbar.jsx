@@ -1,1 +1,7 @@
-// Top navigation bar (e.g., logo, profile dropdown)
+import React from 'react';
+
+const Navbar = () => {
+  return <div>Navbar (Placeholder)</div>;
+};
+
+export default Navbar;
