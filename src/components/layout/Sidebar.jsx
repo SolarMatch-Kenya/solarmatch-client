@@ -1,1 +1,7 @@
-// Sidebar navigation (links to Overview, Profile, etc.)
+import React from 'react';
+
+const Sidebar = () => {
+  return <div>Sidebar (Placeholder)</div>;
+};
+
+export default Sidebar;
