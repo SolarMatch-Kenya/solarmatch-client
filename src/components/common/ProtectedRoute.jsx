@@ -1,10 +1,10 @@
 // Route wrapper that checks authentication before rendering
 
 import { Navigate } from "react-router-dom";
-// import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 export default function ProtectedRoute({ children, role }) {
-//   const { user } = useAuth(); // assuming `user` is stored in context after login
+  const { user } = useAuth(); // assuming `user` is stored in context after login
 
   // Not logged in? Redirect to login
   if (!user) {
