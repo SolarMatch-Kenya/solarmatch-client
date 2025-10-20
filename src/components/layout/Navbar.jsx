@@ -48,19 +48,19 @@ const Navbar = () => {
                     </div>
 
                     {/* Desktop Navigation */}
-                    <div className="hidden md:flex items-center space-x-4">
-                        <Link to="/about" className="body text-primary hover:text-secondary uppercase font-bold hover:underline">
+                    <div className="hidden lg:flex items-center space-x-8">
+                        <Link to="/about" className="text-base font-normal text-primary font-bold hover:text-secondary p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
                             About
                         </Link>
-                        <Link to="/services" className="body text-primary hover:text-secondary uppercase font-bold hover:underline">
-                            Services
+                        <Link to="/how-it-works" className="text-base font-normal text-primary font-bold hover:text-secondary p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
+                            How It Works
                         </Link>
-                        <Link to="/contact" className="body text-primary hover:text-secondary uppercase font-bold hover:underline">
+                        <Link to="/contact" className="text-base font-normal text-primary font-bold hover:text-secondary p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
                             Contact
                         </Link>
                     </div>
 
-                    <div className="hidden md:flex items-center space-x-4">
+                    <div className="hidden lg:flex items-center space-x-4">
                         {/* Get Started button */}
                         <div>
                             <PrimaryButton>
@@ -85,14 +85,14 @@ const Navbar = () => {
                                 )}
                             </div>
                         ) : (
-                            <Link to="/login" className="body text-primary hover:text-secondary uppercase font-bold hover:underline">
-                                Login
+                            <Link to="/login" className="text-base font-normal text-primary hover:text-secondary p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
+                                Log in
                             </Link>
                         )}
                     </div>
 
                     {/* Mobile Menu Button (Hamburger) */}
-                    <div className="md:hidden flex items-center">
+                    <div className="lg:hidden flex items-center">
                         <button onClick={toggleMobileMenu} className="text-primary focus:outline-none">
                             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -103,7 +103,7 @@ const Navbar = () => {
             </div>
 
             {/* Mobile Menu Overlay */}
-            <div className={`fixed top-0 right-0 bottom-0 w-1/2 bg-white/90 z-40 transform ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out md:hidden`}>
+            <div className={`fixed top-0 right-0 bottom-0 w-1/2 bg-white/90 z-40 transform ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out lg:hidden`}>
                 <div className="flex justify-end p-4">
                     <button onClick={toggleMobileMenu} className="text-primary focus:outline-none">
                         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -112,27 +112,27 @@ const Navbar = () => {
                     </button>
                 </div>
                 <div className="flex flex-col items-center space-y-6 mt-8">
-                    <Link to="/about" className="body text-primary hover:text-secondary uppercase font-bold hover:underline" onClick={toggleMobileMenu}>
+                    <Link to="/about" className="text-base font-normal text-primary hover:text-secondary py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
                         About
                     </Link>
-                    <Link to="/services" className="body text-primary hover:text-secondary uppercase font-bold hover:underline" onClick={toggleMobileMenu}>
-                        Services
+                    <Link to="/how-it-works" className="text-base font-normal text-primary hover:text-secondary py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
+                        How It Works
                     </Link>
-                    <Link to="/contact" className="body text-primary hover:text-secondary uppercase font-bold hover:underline" onClick={toggleMobileMenu}>
+                    <Link to="/contact" className="text-base font-normal text-primary hover:text-secondary py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
                         Contact
                     </Link>
                     {isLoggedIn ? (
                         <>
-                            <Link to="/profile" className="body text-primary hover:text-secondary uppercase font-bold hover:underline" onClick={toggleMobileMenu}>
+                            <Link to="/profile" className="text-base font-normal text-primary hover:text-secondary py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
                                 Profile
                             </Link>
-                            <button onClick={() => { handleLogout(); toggleMobileMenu(); }} className="body text-primary hover:text-secondary uppercase font-bold hover:underline">
+                            <button onClick={() => { handleLogout(); toggleMobileMenu(); }} className="text-base font-normal text-primary hover:text-secondary py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
                                 Logout
                             </button>
                         </>
                     ) : (
-                        <Link to="/login" className="body text-primary hover:text-secondary uppercase font-bold hover:underline" onClick={toggleMobileMenu}>
-                            Login
+                        <Link to="/login" className="text-base font-normal text-primary hover:text-secondary py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
+                            Log in
                         </Link>
                     )}
                     <PrimaryButton>
