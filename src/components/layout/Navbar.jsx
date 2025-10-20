@@ -1,13 +1,40 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import PrimaryButton from "../buttons/PrimaryButton";
+import { useAuth } from "../../context/AuthContext";
 
 const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const { isLoggedIn, logout, user } = useAuth();
+    const dropdownRef = useRef(null);
+    const navigate = useNavigate();
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
+
+    const handleLogout = () => {
+        logout();
+        setIsDropdownOpen(false);
+        navigate("/login");
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     return (
         <nav className="bg-white shadow-md relative z-50">
@@ -31,9 +58,6 @@ const Navbar = () => {
                         <Link to="/contact" className="body text-primary hover:text-secondary uppercase font-bold hover:underline">
                             Contact
                         </Link>
-                        <Link to="/login" className="body text-primary hover:text-secondary uppercase font-bold hover:underline">
-                            Login
-                        </Link>
                     </div>
 
                     <div className="hidden md:flex items-center space-x-4">
@@ -43,12 +67,28 @@ const Navbar = () => {
                                 <Link to="/get-started">Get Started</Link>
                             </PrimaryButton>
                         </div>
-                        {/* User profile dropdown*/}
-                        <div className="relative">
-                            <button className="flex items-center text-primary hover:text-secondary focus:outline-none">
-                                <img src="./user-avatar.png" alt="User Avatar" className="w-8 h-8 rounded-full" />
-                            </button>
-                        </div>
+                        {/* User profile dropdown or Login button */}
+                        {isLoggedIn ? (
+                            <div className="relative" ref={dropdownRef}>
+                                <button onClick={toggleDropdown} className="flex items-center text-primary hover:text-secondary focus:outline-none">
+                                    <img src={user?.profilePicture || "./user-avatar.png"} alt="User Avatar" className="w-8 h-8 rounded-full" />
+                                </button>
+                                {isDropdownOpen && (
+                                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
+                                        <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={() => setIsDropdownOpen(false)}>
+                                            Profile
+                                        </Link>
+                                        <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                            Logout
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <Link to="/login" className="body text-primary hover:text-secondary uppercase font-bold hover:underline">
+                                Login
+                            </Link>
+                        )}
                     </div>
 
                     {/* Mobile Menu Button (Hamburger) */}
@@ -81,17 +121,23 @@ const Navbar = () => {
                     <Link to="/contact" className="body text-primary hover:text-secondary uppercase font-bold hover:underline" onClick={toggleMobileMenu}>
                         Contact
                     </Link>
-                    <Link to="/login" className="body text-primary hover:text-secondary uppercase font-bold hover:underline" onClick={toggleMobileMenu}>
-                        Login
-                    </Link>
+                    {isLoggedIn ? (
+                        <>
+                            <Link to="/profile" className="body text-primary hover:text-secondary uppercase font-bold hover:underline" onClick={toggleMobileMenu}>
+                                Profile
+                            </Link>
+                            <button onClick={() => { handleLogout(); toggleMobileMenu(); }} className="body text-primary hover:text-secondary uppercase font-bold hover:underline">
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <Link to="/login" className="body text-primary hover:text-secondary uppercase font-bold hover:underline" onClick={toggleMobileMenu}>
+                            Login
+                        </Link>
+                    )}
                     <PrimaryButton>
                         <Link to="/get-started" onClick={toggleMobileMenu}>Get Started</Link>
                     </PrimaryButton>
-                    <div className="relative">
-                        <button className="flex items-center text-primary hover:text-secondary focus:outline-none" onClick={toggleMobileMenu}>
-                            <img src="./user-avatar.png" alt="User Avatar" className="w-8 h-8 rounded-full" />
-                        </button>
-                    </div>
                 </div>
             </div>
         </nav>
