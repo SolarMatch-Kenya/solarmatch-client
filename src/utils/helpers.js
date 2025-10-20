@@ -26,3 +26,7 @@ export function isTokenExpired(token) {
   const now = Date.now() / 1000; // seconds
   return decoded.exp < now;
 }
+
+export function cn(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
