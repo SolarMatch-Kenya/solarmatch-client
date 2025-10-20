@@ -115,7 +115,7 @@ const About = () => {
                     >
                         <div className="absolute inset-0 bg-black opacity-50"></div>
                         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-                            <h1 className="h1">About SolarMatch</h1>
+                            <h1 className="text-4xl font-bold lg:text-5xl">About SolarMatch</h1>
                             <p className="text-lg mt-4 max-w-2xl mx-auto">Empowering a sustainable future through accessible solar energy.</p>
                         </div>
                     </div>

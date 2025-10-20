@@ -75,13 +75,13 @@ const Footer = () => {
                         <nav className="mb-4 md:mb-0 md:mr-10">
                             <ul className="flex space-x-6">
                                 <li>
-                                    <Link to="/about" className="body text-white hover:text-secondary">About</Link>
+                                    <Link to="/about" className="text-base font-normal text-white hover:text-secondary">About</Link>
                                 </li>
                                 <li>
-                                    <Link to="/services" className="body text-white hover:text-secondary">Services</Link>
+                                    <Link to="/services" className="text-base font-normal text-white hover:text-secondary">Services</Link>
                                 </li>
                                 <li>
-                                    <Link to="/contact" className="body text-white hover:text-secondary">Contact</Link>
+                                    <Link to="/contact" className="text-base font-normal text-white hover:text-secondary">Contact</Link>
                                 </li>
                             </ul>
                         </nav>
@@ -97,11 +97,11 @@ const Footer = () => {
 
                 {/* Legal Links and Copyright */}
                 <div className="mt-8 pt-8 border-t border-white flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                    <p className="small text-center md:text-left">&copy; {new Date().getFullYear()} SolarMatch. All rights reserved.</p>
+                    <p className="text-sm font-light text-center md:text-left">&copy; {new Date().getFullYear()} SolarMatch. All rights reserved.</p>
                     <div className="flex space-x-6">
-                        <Link to="/privacy" className="small text-white hover:text-secondary">Privacy Policy</Link>
-                        <Link to="/terms" className="small text-white hover:text-secondary">Terms of Service</Link>
-                        <Link to="/contact" className="small text-white hover:text-secondary">Contact Us</Link>
+                        <Link to="/privacy" className="text-sm font-light text-white hover:text-secondary">Privacy Policy</Link>
+                        <Link to="/terms" className="text-sm font-light text-white hover:text-secondary">Terms of Service</Link>
+                        <Link to="/contact" className="text-sm font-light text-white hover:text-secondary">Contact Us</Link>
                     </div>
                 </div>
             </div>

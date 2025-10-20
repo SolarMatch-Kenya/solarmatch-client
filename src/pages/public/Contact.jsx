@@ -37,7 +37,7 @@ const Contact = () => {
                 <div className="header">
                     <Navbar />
                 </div>
-                <div className="body">
+                <div className="text-base font-normal">
                     {/* Hero Section */}
                     <div
                         className="relative bg-cover bg-center text-white py-20 text-center min-h-[300px]"
@@ -45,7 +45,7 @@ const Contact = () => {
                     >
                         <div className="absolute inset-0 bg-black opacity-50"></div>
                         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-                            <h1 className="h1">Contact Us</h1>
+                            <h1 className="text-4xl font-bold lg:text-5xl">Contact Us</h1>
                             <p className="text-lg mt-4 max-w-2xl mx-auto">We'd love to hear from you. Get in touch with us for any inquiries.</p>
                         </div>
                     </div>
@@ -56,8 +56,8 @@ const Contact = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                 {/* Contact Information */}
                                 <div className="text-gray-700">
-                                    <h2 className="h2 text-primary mb-6">Get in Touch</h2>
-                                    <p className="body mb-4">Have a question or a project in mind? <br />Fill out the form or contact us through the details below.</p>
+                                    <h2 className="text-3xl font-bold lg:text-4xl text-primary mb-6">Get in Touch</h2>
+                                    <p className="text-base font-normal mb-4">Have a question or a project in mind? <br />Fill out the form or contact us through the details below.</p>
                                     <div className="space-y-4">
                                         <div className="flex items-center">
                                             <svg className="w-6 h-6 text-primary mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>

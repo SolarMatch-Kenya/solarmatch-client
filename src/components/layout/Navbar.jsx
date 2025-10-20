@@ -49,13 +49,13 @@ const Navbar = () => {
 
                     {/* Desktop Navigation */}
                     <div className="hidden lg:flex items-center space-x-8">
-                        <Link to="/about" className="body text-primary font-bold hover:text-secondary p-2 link-underline">
+                        <Link to="/about" className="text-base font-normal text-primary font-bold hover:text-secondary p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
                             About
                         </Link>
-                        <Link to="/how-it-works" className="body text-primary font-bold hover:text-secondary p-2 link-underline">
+                        <Link to="/how-it-works" className="text-base font-normal text-primary font-bold hover:text-secondary p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
                             How It Works
                         </Link>
-                        <Link to="/contact" className="body text-primary font-bold hover:text-secondary p-2 link-underline">
+                        <Link to="/contact" className="text-base font-normal text-primary font-bold hover:text-secondary p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
                             Contact
                         </Link>
                     </div>
@@ -85,7 +85,7 @@ const Navbar = () => {
                                 )}
                             </div>
                         ) : (
-                            <Link to="/login" className="body text-primary hover:text-secondary p-2 link-underline">
+                            <Link to="/login" className="text-base font-normal text-primary hover:text-secondary p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
                                 Log in
                             </Link>
                         )}
@@ -112,26 +112,26 @@ const Navbar = () => {
                     </button>
                 </div>
                 <div className="flex flex-col items-center space-y-6 mt-8">
-                    <Link to="/about" className="body text-primary hover:text-secondary py-5 link-underline" onClick={toggleMobileMenu}>
+                    <Link to="/about" className="text-base font-normal text-primary hover:text-secondary py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
                         About
                     </Link>
-                    <Link to="/how-it-works" className="body text-primary hover:text-secondary py-5 link-underline" onClick={toggleMobileMenu}>
+                    <Link to="/how-it-works" className="text-base font-normal text-primary hover:text-secondary py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
                         How It Works
                     </Link>
-                    <Link to="/contact" className="body text-primary hover:text-secondary py-5 link-underline" onClick={toggleMobileMenu}>
+                    <Link to="/contact" className="text-base font-normal text-primary hover:text-secondary py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
                         Contact
                     </Link>
                     {isLoggedIn ? (
                         <>
-                            <Link to="/profile" className="body text-primary hover:text-secondary py-5 link-underline" onClick={toggleMobileMenu}>
+                            <Link to="/profile" className="text-base font-normal text-primary hover:text-secondary py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
                                 Profile
                             </Link>
-                            <button onClick={() => { handleLogout(); toggleMobileMenu(); }} className="body text-primary hover:text-secondary py-5 link-underline">
+                            <button onClick={() => { handleLogout(); toggleMobileMenu(); }} className="text-base font-normal text-primary hover:text-secondary py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
                                 Logout
                             </button>
                         </>
                     ) : (
-                        <Link to="/login" className="body text-primary hover:text-secondary py-5 link-underline" onClick={toggleMobileMenu}>
+                        <Link to="/login" className="text-base font-normal text-primary hover:text-secondary py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
                             Log in
                         </Link>
                     )}
