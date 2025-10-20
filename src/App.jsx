@@ -1,9 +1,10 @@
-import Home from './pages/public/Home.jsx'
+import AppRouter from "./router/AppRouter"
 
 function App() {
   return (
     <>
-      <Home />
+      <h1 className="text-3xl font-bold underline">SolarMatch Web App</h1>
+      <AppRouter />
     </>
   )
 }
