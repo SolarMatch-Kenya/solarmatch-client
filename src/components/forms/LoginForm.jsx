@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
-export default function Login() {
+export default function LoginForm() {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useAuth();
@@ -40,7 +40,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen">
       <div className="m-auto w-full max-w-md bg-white p-8 rounded-lg shadow-md">
         <h1 className="text-2xl font-bold mb-2">Welcome Back</h1>
         <p className="text-gray-600 mb-6">
@@ -68,6 +68,14 @@ export default function Login() {
               className="w-full border p-2 rounded-md"
             />
           </div>
+          <div className="flex justify-between items-center">
+  <Link
+    to="/forgot-password"
+    className="text-sm text-[#f79436] hover:underline"
+  >
+    Forgot Password?
+  </Link>
+</div>
           {error && <p className="text-red-500 text-sm">{error}</p>}
           <button
             type="submit"
@@ -80,7 +88,7 @@ export default function Login() {
         <p className="mt-4 text-center text-sm text-gray-600">
           Don’t have an account?{" "}
           <Link
-            to={`/signup?redirect=${location.search.replace("?redirect=", "") || "/dashboard"}`}
+            to={`/register?redirect=${location.search.replace("?redirect=", "") || "/dashboard"}`}
             className="text-[#f79436] font-semibold hover:underline"
           >
             Register here

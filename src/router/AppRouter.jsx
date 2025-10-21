@@ -8,8 +8,9 @@ import About from "../pages/public/About"
 import Register from "../pages/auth/Register";
 import AnalysisForm from "../components/forms/AnalysisForm";
 import ARView from "../pages/dashboard/ARView";
-import Login from "../components/forms/LoginForm";
+import Login from "../pages/auth/Login";
 import Dashboard from "../pages/Dashboard";
+import ForgotPassword from '../pages/auth/ForgotPassword'
 
 function AppRouter() {
     return (
@@ -19,10 +20,11 @@ function AppRouter() {
             {/* <Route path="/financing" element={<Financing />} /> */}
 
             <Route path='/login' element={<Login />}/>
-            {/* <Route path='/forgot-password' element={ForgotPassword}/>  */}
+            <Route path='/forgot-password' element={<ForgotPassword/>}/>
             <Route path='/register' element={<Register />}/>
             <Route path='/analysis-form' element={<AnalysisForm />}/>
             {/* <Route path="/installer-contract" element={<InstallerContract />} /> */}
+
             <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>}>
                 {/* <Route index element={<Overview/>}/> */}
                 {/* <Route path='analysis-result' element={<AnalysisResult/>}/> */}

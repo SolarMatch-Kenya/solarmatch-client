@@ -6,6 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import Bulb from '../ui/Bulb'
 
 export default function SignupForm() {
   const navigate = useNavigate();
@@ -67,12 +68,27 @@ export default function SignupForm() {
             {({ isSubmitting }) => (
               <Form className="space-y-4">
                 <div>
+                  <label className="block mb-1 text-gray-700">Full Name</label>
+                  <Field
+                    name="full-name"
+                    type="name"
+                    placeholder="Enter your full name"
+                    className="w-full px-4 py-2 border rounded-[10px] outline-none focus:ring-2 focus:ring-[#f79436]"
+                  />
+                  <ErrorMessage
+                    name="name"
+                    component="div"
+                    className="text-red-500 text-sm mt-1"
+                  />
+                </div>
+
+                <div>
                   <label className="block mb-1 text-gray-700">Email</label>
                   <Field
                     name="email"
                     type="email"
                     placeholder="Enter your email"
-                    className="w-full px-4 py-3 border rounded-full outline-none focus:ring-2 focus:ring-yellow-400"
+                    className="w-full px-4 py-2 border rounded-[10px] outline-none focus:ring-2 focus:ring-[#f79436]"
                   />
                   <ErrorMessage
                     name="email"
@@ -87,7 +103,7 @@ export default function SignupForm() {
                     name="password"
                     type="password"
                     placeholder="Create a password"
-                    className="w-full px-4 py-3 border rounded-full outline-none focus:ring-2 focus:ring-yellow-400"
+                    className="w-full px-4 py-2 border rounded-[10px] outline-none focus:ring-2 focus:ring-[#f79436]"
                   />
                   <ErrorMessage
                     name="password"
@@ -102,7 +118,7 @@ export default function SignupForm() {
                     name="confirmPassword"
                     type="password"
                     placeholder="Confirm your password"
-                    className="w-full px-4 py-3 border rounded-full outline-none focus:ring-2 focus:ring-yellow-400"
+                    className="w-full px-4 py-2 border rounded-[10px] outline-none focus:ring-2 focus:ring-[#f79436]"
                   />
                   <ErrorMessage
                     name="confirmPassword"
@@ -116,7 +132,7 @@ export default function SignupForm() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3 bg-yellow-400 text-white font-semibold rounded-full hover:bg-yellow-500 transition"
+                  className="w-full py-3 border bg-[#f79436] text-white font-semibold rounded-[10px] hover:bg-[#f79436] hover:text-white transition"
                 >
                   {isSubmitting ? "Signing up..." : "Sign Up"}
                 </button>
@@ -131,7 +147,7 @@ export default function SignupForm() {
           </div>
 
           <div className="flex justify-between">
-            <button className="flex items-center justify-center w-[48%] py-2 border rounded-full font-semibold hover:bg-gray-50">
+            <button className="flex items-center justify-center w-[48%] py-2 border rounded-[10px] font-semibold hover:bg-gray-50">
               <img
                 src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
                 alt="Google"
@@ -140,7 +156,7 @@ export default function SignupForm() {
               Sign up with Google
             </button>
 
-            <button className="flex items-center justify-center w-[48%] py-2 border rounded-full font-semibold hover:bg-gray-50">
+            <button className="flex items-center justify-center w-[48%] py-2 border rounded-[10px] font-semibold hover:bg-gray-50">
               <img
                 src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg"
                 alt="Facebook"
@@ -160,28 +176,53 @@ export default function SignupForm() {
       </div>
 
       {/* Right Side - Info Section */}
-      <div className="w-1/2 bg-gray-300 flex flex-col justify-center px-16 text-white">
+      <div className="w-1/2 bg-[#fff7f2] flex flex-col justify-center px-16 text-black">
         <div>
-          <h2 className="text-3xl font-bold mb-4">Unlock Your Solar Potential</h2>
-          <p className="text-lg mb-6 text-gray-100">
+          <h2 className="text-3xl font-bold mb-4">Redefine Energy. Redefine You.</h2>
+          <p className="text-lg mb-6 text-black">
             Join SolarMatch Kenya to get personalized insights for your home, farm, or
             business. Make a smart, sustainable choice for a brighter future.
           </p>
 
-          <div className="space-y-6 text-gray-100">
-            <div>
-              <p className="font-semibold text-white">⚡ AI-Powered Analysis</p>
-              <p>Get accurate predictions on cost, savings, and ROI with our smart technology.</p>
-            </div>
-            <div>
-              <p className="font-semibold text-white">💰 Save Money</p>
-              <p>Discover how much you can save on energy bills and increase your property value.</p>
-            </div>
-            <div>
-              <p className="font-semibold text-white">🌿 Go Green</p>
-              <p>Calculate your CO₂ reduction and contribute to a cleaner Kenya.</p>
-            </div>
-          </div>
+          <div className="space-y-6 text-black">
+  <div className="flex gap-3">
+    <div className="flex-shrink-0 flex items-stretch">
+      <div className="flex items-center">
+        <Bulb className="text-yellow-500 h-full w-6" />
+      </div>
+    </div>
+    <div>
+      <p className="font-semibold text-black">AI-Powered Analysis</p>
+      <p>Get accurate predictions on cost, savings, and ROI with our smart technology.</p>
+    </div>
+  </div>
+
+  <div className="flex gap-3">
+    <div className="flex-shrink-0 flex items-stretch">
+      <div className="flex items-center">
+        <Bulb className="text-yellow-500 h-full w-6" />
+      </div>
+    </div>
+    <div>
+      <p className="font-semibold text-black">Save Money</p>
+      <p>Discover how much you can save on energy bills and increase your property value.</p>
+    </div>
+  </div>
+
+  <div className="flex gap-3">
+    <div className="flex-shrink-0 flex items-stretch">
+      <div className="flex items-center">
+        <Bulb className="text-yellow-500 h-full w-6" />
+      </div>
+    </div>
+    <div>
+      <p className="font-semibold text-black">Go Green</p>
+      <p>Calculate your CO₂ reduction and contribute to a cleaner Kenya.</p>
+    </div>
+  </div>
+</div>
+
+
         </div>
       </div>
     </div>
