@@ -8,6 +8,7 @@ import OnboardingCard from "../../components/ui/OnboardingCard";
 import HomeIcon from "../../assets/icons/home_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react";
 import RoofIcon from "../../assets/icons/roofing_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react";
 import ReportIcon from "../../assets/icons/analytics_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react";
+import Counter from '../../components/ui/Counter'
 
 
 const Home = () => {
@@ -61,19 +62,20 @@ const Home = () => {
 
                         {/* Statistics Counter*/}
                         <div className="statistics py-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <div className="stat-item text-center">
-                                <h3 className="text-4xl font-bold text-primary">480+</h3>
-                                <p className="text-lg text-gray-600">Homes Analyzed</p>
-                            </div>
-                            <div className="stat-item text-center">
-                                <h3 className="text-4xl font-bold text-primary">Kes. 10M+</h3>
-                                <p className="text-lg text-gray-600">Energy Savings</p>
-                            </div>
-                            <div className="stat-item text-center">
-                                <h3 className="text-4xl font-bold text-primary">1,200+</h3>
-                                <p className="text-lg text-gray-600">Metric Tons of CO₂ Saved</p>
-                            </div>
-                        </div>
+  <div className="stat-item text-center">
+    <Counter target={480} suffix="+" />
+    <p className="text-lg text-gray-600">Homes Analyzed</p>
+  </div>
+  <div className="stat-item text-center">
+    <Counter target={10000000} prefix="Kes. " suffix="+" />
+    <p className="text-lg text-gray-600">Energy Savings</p>
+  </div>
+  <div className="stat-item text-center">
+    <Counter target={1200} suffix="+" />
+    <p className="text-lg text-gray-600">Metric Tons of CO₂ Saved</p>
+  </div>
+</div>
+
                     </div>
 
                     {/* Testimonials */}
