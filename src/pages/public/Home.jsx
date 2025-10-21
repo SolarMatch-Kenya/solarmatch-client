@@ -18,7 +18,7 @@ const Home = () => {
                     <div className="hero relative bg-cover bg-center min-h-screen flex items-center justify-center" style={{ backgroundImage: 'url(https://lh3.googleusercontent.com/aida-public/AB6AXuCXEFYl5TbKlJDcMDZExuMHu9oaR5dfuOAd7ARZEyJho9bxVAZo57GIHmp9bI14HwQiIPnGULC1L2HhqhkjDWJ7xOjhs4jOer0lBlPZQMpfvBygBRnakBAlrKgeDhp2ABIe0YLq3KBbaeH8n6Clmx6BMf1jiKiyyJsYNxffuAyd0xlO8beuKsfRwu0vi0iThNfOyAwrlRgsQW9fT-SjP18IdOv4ky7XrjAKHyHIn35Te2s-0KMlbQG3oduwjED2b9Eg9ugV1gL2s3gc)' }}>
                         <div className="absolute inset-0 bg-black/60"></div>
                         <div className="container mx-auto px-8 relative text-center max-w-7xl">
-                            <h1 className="h1 text-white tracking-tight">Find out if your home is perfect for solar — in just 3 minutes.</h1>
+                            <h1 className="text-4xl font-bold lg:text-5xl text-white tracking-tight">Find out if your home is perfect for solar — in just 3 minutes.</h1>
                             <p className="text-body mt-6 max-w-2xl mx-auto text-lg text-white/90">SolarMatch Kenya uses AI to analyze your roof or land for solar panel suitability, providing predictions on sunlight hours, installation cost, energy savings, ROI, and CO₂ reduction.</p>
                             <div className="mt-10 flex justify-center items-center gap-4">
                                 <PrimaryButton>
