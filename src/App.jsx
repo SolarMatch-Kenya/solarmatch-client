@@ -7,7 +7,6 @@ function App() {
   return (
     <>
       <Toaster />
-      <h1 className="text-3xl font-bold underline">SolarMatch Web App</h1>
       <AppRouter/>
       <SunnyWidget/>
     </>
