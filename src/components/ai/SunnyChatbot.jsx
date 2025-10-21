@@ -1,6 +1,7 @@
 // src/components/chat/SunnyChatbot.jsx
 import React, { useState, useRef, useEffect } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import DotLottie from "../ui/dotLottie"
 
 const SunnyChatbot = () => {
   const [messages, setMessages] = useState([]);
@@ -27,7 +28,7 @@ const SunnyChatbot = () => {
     try {
       const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-      // 🌍 Swahili + Gen Z Vibe Prompt
+      // Swahili + Gen Z Vibe Prompt
       const solarPrompt = `
         You are Sunny — a Kenyan solar assistant who mixes English and Swahili naturally.
         You speak in genZ english if the user talks in english and mix english and swahili when they talk in swahili.
@@ -63,20 +64,14 @@ const SunnyChatbot = () => {
 
   // WhatsApp-style Chat UI
   return (
-    <div className="flex flex-col h-full bg-[#fdfcf6] rounded-2xl shadow-md overflow-hidden">
-      {/* Header */}
-      <div className="px-4 py-3 border-b border-gray-200 bg-[#fdfcf6]">
-        <h2 className="text-base font-bold text-[#144404] flex items-center gap-1">
-          ☀️ Sunny — Your Solar Assistant
-        </h2>
-      </div>
+    <div className="flex flex-col h-full bg-[#fdfcf6] rounded-[10px] shadow-md overflow-hidden">
 
       {/* Messages Area */}
       <div className="flex-1 overflow-y-auto px-4 py-2 space-y-2 scroll-smooth flex flex-col">
         {messages.map((msg, idx) => (
           <div
             key={idx}
-            className={`max-w-[80%] p-2 rounded-lg text-sm leading-snug ${
+            className={`max-w-[80%] p-2 rounded-[10px] text-sm leading-snug ${
               msg.sender === "user"
                 ? "bg-[#f79436] text-white self-end ml-auto text-right"
                 : "bg-[#e8f5e9] text-[#133b04]"
@@ -99,7 +94,7 @@ const SunnyChatbot = () => {
       >
         <input
           type="text"
-          className="flex-1 border border-gray-300 rounded-full px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#fbc71f]"
+          className="flex-1 border border-gray-300 rounded-[10px] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#fbc71f]"
           placeholder="Ask about anything solar..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -107,7 +102,7 @@ const SunnyChatbot = () => {
         <button
           type="submit"
           disabled={loading}
-          className="bg-[#f79436] text-white px-4 py-2 rounded-full hover:bg-[#ca523b] transition disabled:opacity-50"
+          className="bg-[#f79436] text-white px-4 py-2 rounded-[10px] hover:bg-[#ca523b] transition disabled:opacity-50"
         >
           Send
         </button>

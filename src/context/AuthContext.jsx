@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { loginService, logoutService, getStoredUser } from "../services/authService";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
