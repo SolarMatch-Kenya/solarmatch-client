@@ -59,7 +59,7 @@ const XIcon = () => (
 
 const Footer = () => {
     return (
-        <footer className="bg-tertiary-green text-white py-8 mt-10">
+        <footer className="bg-[#133b04] text-white py-8 mt-10">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col md:flex-row md:justify-between items-center">
                     {/* Logo */}
