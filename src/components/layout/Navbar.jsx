@@ -64,7 +64,7 @@ const Navbar = () => {
                         {/* Get Started button */}
                         <div>
                             <PrimaryButton>
-                                <Link to="/get-started">Get Started</Link>
+                                <Link to="/register">Get Started</Link>
                             </PrimaryButton>
                         </div>
                         {/* User profile dropdown or Login button */}

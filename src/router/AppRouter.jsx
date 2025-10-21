@@ -3,18 +3,21 @@
 
 import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from '../components/common/ProtectedRoute';
+import Home from "../pages/public/Home";
+import About from "../pages/public/About"
+import Register from "../pages/auth/Register";
 
 function AppRouter() {
     return (
         <Routes>
-            {/* <Route path='/' element={Home}/> */}
-            {/* <Route path='/about' element={About}/>
-            <Route path="/financing" element={<Financing />} />
+            <Route path='/' element={<Home />}/> 
+            <Route path='/about' element={<About />}/>
+            {/* <Route path="/financing" element={<Financing />} /> */}
 
-            <Route path='/login' element={Login}/>
-            <Route path='/forgot-password' element={ForgotPassword}/>
-            <Route path='/register' element={Register}/>
-            <Route path="/installer-contract" element={<InstallerContract />} />
+            {/* <Route path='/login' element={<Login />}/> */}
+            {/* <Route path='/forgot-password' element={ForgotPassword}/>  */}
+            <Route path='/register' element={<Register />}/>
+            {/* <Route path="/installer-contract" element={<InstallerContract />} />
             <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>}>
                 <Route index element={Overview}/>
                 <Route path='/dashboard/analysis-result' element={AnalysisResult}/>
