@@ -22,7 +22,7 @@ const Home = () => {
                             <p className="text-body mt-6 max-w-2xl mx-auto text-lg text-white/90">SolarMatch Kenya uses AI to analyze your roof or land for solar panel suitability, providing predictions on sunlight hours, installation cost, energy savings, ROI, and CO₂ reduction.</p>
                             <div className="mt-10 flex justify-center items-center gap-4">
                                 <PrimaryButton>
-                                    Check My Roof
+                                    <Link to='/analysis-form'>Check My Roof</Link>
                                 </PrimaryButton>
                                 <SecondaryButton>
                                     Learn More
