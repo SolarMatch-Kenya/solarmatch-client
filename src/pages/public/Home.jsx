@@ -63,15 +63,15 @@ const Home = () => {
                         {/* Statistics Counter*/}
                         <div className="statistics py-20 grid grid-cols-1 md:grid-cols-3 gap-8">
                             <div className="stat-item text-center">
-                                <h3 className="text-4xl font-bold text-primary">480+</h3>
+                                <h3 className="text-4xl font-bold text-[#006800]">480+</h3>
                                 <p className="text-lg text-gray-600">Homes Analyzed</p>
                             </div>
                             <div className="stat-item text-center">
-                                <h3 className="text-4xl font-bold text-primary">Kes. 10M+</h3>
+                                <h3 className="text-4xl font-bold text-[#006800]">Kes. 10M+</h3>
                                 <p className="text-lg text-gray-600">Energy Savings</p>
                             </div>
                             <div className="stat-item text-center">
-                                <h3 className="text-4xl font-bold text-primary">1,200+</h3>
+                                <h3 className="text-4xl font-bold text-[#006800]">1,200+</h3>
                                 <p className="text-lg text-gray-600">Metric Tons of CO₂ Saved</p>
                             </div>
                         </div>
