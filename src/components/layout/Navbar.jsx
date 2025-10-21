@@ -41,7 +41,7 @@ const Navbar = () => {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 ">
                 <div className="flex items-center justify-between h-32">
                     <div className="flex items-center">
-                        <Link to="/" className="flex items-center text-xl font-bold text-primary space-x-2">
+                        <Link to="/" className="flex items-center text-xl font-bold text-[#006800] space-x-2">
                             <img src="./public/android-chrome-192x192.png" alt="Home" className="h-24" />
                             <span className="text-3xl font-bold">SolarMatch</span>
                         </Link>
@@ -49,13 +49,13 @@ const Navbar = () => {
 
                     {/* Desktop Navigation */}
                     <div className="hidden lg:flex items-center space-x-8">
-                        <Link to="/about" className="text-base font-normal text-primary font-bold hover:text-secondary p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
+                        <Link to="/about" className="text-base font-normal text-[#006800] font-bold hover:text-[#f79436] p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
                             About
                         </Link>
-                        <Link to="/how-it-works" className="text-base font-normal text-primary font-bold hover:text-secondary p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
+                        <Link to="/how-it-works" className="text-base font-normal text-[#006800] font-bold hover:text-[#f79436] p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
                             How It Works
                         </Link>
-                        <Link to="/contact" className="text-base font-normal text-primary font-bold hover:text-secondary p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
+                        <Link to="/contact" className="text-base font-normal text-[#006800] font-bold hover:text-[#f79436] p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
                             Contact
                         </Link>
                     </div>
@@ -70,7 +70,7 @@ const Navbar = () => {
                         {/* User profile dropdown or Login button */}
                         {isLoggedIn ? (
                             <div className="relative" ref={dropdownRef}>
-                                <button onClick={toggleDropdown} className="flex items-center text-primary hover:text-secondary focus:outline-none">
+                                <button onClick={toggleDropdown} className="flex items-center text-[#006800] hover:text-[#f79436] focus:outline-none">
                                     <img src={user?.profilePicture || "./user-avatar.png"} alt="User Avatar" className="w-8 h-8 rounded-full" />
                                 </button>
                                 {isDropdownOpen && (
@@ -85,7 +85,7 @@ const Navbar = () => {
                                 )}
                             </div>
                         ) : (
-                            <Link to="/login" className="text-base font-normal text-primary hover:text-secondary p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
+                            <Link to="/login" className="text-base font-normal text-[#006800] hover:text-[#f79436] p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
                                 Log in
                             </Link>
                         )}
@@ -93,7 +93,7 @@ const Navbar = () => {
 
                     {/* Mobile Menu Button (Hamburger) */}
                     <div className="lg:hidden flex items-center">
-                        <button onClick={toggleMobileMenu} className="text-primary focus:outline-none">
+                        <button onClick={toggleMobileMenu} className="text-[#006800] focus:outline-none">
                             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
                             </svg>
@@ -105,33 +105,33 @@ const Navbar = () => {
             {/* Mobile Menu Overlay */}
             <div className={`fixed top-0 right-0 bottom-0 w-1/2 bg-white/90 z-40 transform ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out lg:hidden`}>
                 <div className="flex justify-end p-4">
-                    <button onClick={toggleMobileMenu} className="text-primary focus:outline-none">
+                    <button onClick={toggleMobileMenu} className="text-[#006800] focus:outline-none">
                         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
                     </button>
                 </div>
                 <div className="flex flex-col items-center space-y-6 mt-8">
-                    <Link to="/about" className="text-base font-normal text-primary hover:text-secondary py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
+                    <Link to="/about" className="text-base font-normal text-[#006800] hover:text-[#f79436] py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
                         About
                     </Link>
-                    <Link to="/how-it-works" className="text-base font-normal text-primary hover:text-secondary py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
+                    <Link to="/how-it-works" className="text-base font-normal text-[#006800] hover:text-[#f79436] py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
                         How It Works
                     </Link>
-                    <Link to="/contact" className="text-base font-normal text-primary hover:text-secondary py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
+                    <Link to="/contact" className="text-base font-normal text-[#006800] hover:text-[#f79436] py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
                         Contact
                     </Link>
                     {isLoggedIn ? (
                         <>
-                            <Link to="/profile" className="text-base font-normal text-primary hover:text-secondary py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
+                            <Link to="/profile" className="text-base font-normal text-[#006800] hover:text-[#f79436] py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
                                 Profile
                             </Link>
-                            <button onClick={() => { handleLogout(); toggleMobileMenu(); }} className="text-base font-normal text-primary hover:text-secondary py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
+                            <button onClick={() => { handleLogout(); toggleMobileMenu(); }} className="text-base font-normal text-[#006800] hover:text-[#f79436] py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
                                 Logout
                             </button>
                         </>
                     ) : (
-                        <Link to="/login" className="text-base font-normal text-primary hover:text-secondary py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
+                        <Link to="/login" className="text-base font-normal text-[#006800] hover:text-[#f79436] py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
                             Log in
                         </Link>
                     )}
