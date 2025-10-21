@@ -42,8 +42,7 @@ const Navbar = () => {
                 <div className="flex items-center justify-between h-32">
                     <div className="flex items-center">
                         <Link to="/" className="flex items-center text-xl font-bold text-primary space-x-2">
-                            <img src="./public/android-chrome-192x192.png" alt="Home" className="h-24" />
-                            <span className="text-3xl font-bold">SolarMatch</span>
+                            <img src="src/assets/1.svg" alt="Home" className="h-24" />
                         </Link>
                     </div>
 
@@ -64,7 +63,7 @@ const Navbar = () => {
                         {/* Get Started button */}
                         <div>
                             <PrimaryButton>
-                                <Link to="/get-started">Get Started</Link>
+                                <Link to="/register">Get Started</Link>
                             </PrimaryButton>
                         </div>
                         {/* User profile dropdown or Login button */}
