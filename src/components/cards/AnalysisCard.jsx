@@ -25,13 +25,13 @@ const AnalysisCard = ({ analysis }) => {
             {/* Estimated Installation Cost */}
             <div className="mb-4">
                 <span className="text-gray-700 font-medium">Estimated Installation Cost: </span>
-                <span className="text-green-600 font-bold">${analysis.estimatedInstallationCost}</span>
+                <span className="text-green-600 font-bold">Ksh {analysis.estimatedInstallationCost}</span>
             </div>
 
             {/* Estimated Annual Savings */}
             <div className="mb-4">
                 <span className="text-gray-700 font-medium">Estimated Annual Savings: </span>
-                <span className="text-green-600 font-bold">${analysis.estimatedAnnualSavings}</span>
+                <span className="text-green-600 font-bold">Ksh {analysis.estimatedAnnualSavings}</span>
             </div>
 
             {/* Estimated CO2 Emissions reduction in tons per year*/}

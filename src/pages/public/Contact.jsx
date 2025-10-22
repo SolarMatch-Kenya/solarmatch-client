@@ -7,6 +7,8 @@ const Contact = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
+        subject: '',
+        customSubject: '',
         message: ''
     });
 
@@ -20,13 +22,20 @@ const Contact = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        // Determine the final subject to send
+        const finalSubject = formData.subject === 'Other' ? formData.customSubject : formData.subject;
+        const dataToSend = { ...formData, subject: finalSubject };
+        delete dataToSend.customSubject; // Remove customSubject if not needed or already merged
+
         // Here you would typically send the form data to a backend server
         // For demonstration purposes, we'll just log it to the console
-        console.log('Form data submitted:', formData);
+        console.log('Form data submitted:', dataToSend);
         alert('Thank you for your message! We will get back to you shortly.');
         setFormData({
             name: '',
             email: '',
+            subject: '',
+            customSubject: '',
             message: ''
         });
     };
@@ -40,13 +49,13 @@ const Contact = () => {
                 <div className="text-base font-normal">
                     {/* Hero Section */}
                     <div
-                        className="relative bg-cover bg-center text-white py-20 text-center min-h-[300px]"
-                        style={{ backgroundImage: "url('/hero-background.jpg')" }}
+                        className="hero relative bg-cover bg-center min-h-[50vh] flex items-center justify-center"
+                        style={{ backgroundImage: "url('/src/assets/contact.jpg')" }}
                     >
-                        <div className="absolute inset-0 bg-black opacity-50"></div>
+                        <div className="absolute inset-0 bg-black opacity-70"></div>
                         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-                            <h1 className="text-4xl font-bold lg:text-5xl">Contact Us</h1>
-                            <p className="text-lg mt-4 max-w-2xl mx-auto">We'd love to hear from you. Get in touch with us for any inquiries.</p>
+                            <h1 className="text-white text-4xl font-bold lg:text-5xl text-center">Contact Us</h1>
+                            <p className="text-white xt-lg mt-4 max-w-2xl mx-auto text-center">We'd love to hear from you. Get in touch with us for any inquiries.</p>
                         </div>
                     </div>
 
@@ -85,6 +94,22 @@ const Contact = () => {
                                             <label htmlFor="email" className="block text-gray-700 font-bold mb-2">Email</label>
                                             <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006800]" required />
                                         </div>
+                                        <div className="mb-4">
+                                            <label htmlFor="subject" className="block text-gray-700 font-bold mb-2">Subject</label>
+                                            <select id="subject" name="subject" value={formData.subject} onChange={handleChange} className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006800]" required>
+                                                <option value="">Select a Subject</option>
+                                                <option value="General Inquiry">General Inquiry</option>
+                                                <option value="I am an Installer">I am an Installer</option>
+                                                <option value="I am a Financer">I am a Financer</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
+                                        {formData.subject === 'Other' && (
+                                            <div className="mb-4">
+                                                <label htmlFor="customSubject" className="block text-gray-700 font-bold mb-2">Custom Subject</label>
+                                                <input type="text" id="customSubject" name="customSubject" value={formData.customSubject} onChange={handleChange} className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006800]" placeholder="Enter your subject" required />
+                                            </div>
+                                        )}
                                         <div className="mb-6">
                                             <label htmlFor="message" className="block text-gray-700 font-bold mb-2">Message</label>
                                             <textarea id="message" name="message" value={formData.message} onChange={handleChange} rows="5" className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006800]" required></textarea>

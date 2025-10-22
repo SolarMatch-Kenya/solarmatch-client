@@ -1,5 +1,5 @@
-// Displays solar installer info with ratings/contact
 import React from 'react';
+import PrimaryButton from '../buttons/PrimaryButton';
 
 const InstallerCard = ({ installer }) => {
     return (
@@ -23,12 +23,9 @@ const InstallerCard = ({ installer }) => {
             </div>
 
             {/* Contact Installer Button */}
-            <a
-                href={`tel:${installer.contact}`}
-                className="bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded transition-transform duration-200 ease-in-out transform hover:scale-105 shadow-md inline-block"
-            >
+            <PrimaryButton onClick={() => window.open(`tel:${installer.contact}`)}>
                 Contact Installer
-            </a>
+            </PrimaryButton>
         </div>
     );
 };

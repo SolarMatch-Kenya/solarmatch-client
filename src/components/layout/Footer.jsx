@@ -59,32 +59,24 @@ const XIcon = () => (
 
 const Footer = () => {
     return (
-        <footer className="bg-[#133b04] text-white py-8 mt-10">
+        <footer className="bg-[#133b04] text-white py-8">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col md:flex-row md:justify-between items-center">
                     {/* Logo */}
                     <div className="flex flex-col items-center md:items-start mb-6 md:mb-0">
-                        <div className="flex items-center mb-4">
-                            <img src="./logo.png" alt="Logo" className="h-8" />
-                            <span className="ml-3 text-xl font-bold">SolarMatch</span>
-                        </div>
+                        <img src="src/assets/logo-white.svg" alt="Logo" className="h-24" />
                     </div>
 
-                    {/* Navigation Links */}
-                    <div className="flex flex-col md:flex-row items-center mb-6 md:mb-0">
-                        <nav className="mb-4 md:mb-0 md:mr-10">
-                            <ul className="flex space-x-6">
-                                <li>
-                                    <Link to="/about" className="text-base font-normal text-white hover:text-secondary">About</Link>
-                                </li>
-                                <li>
-                                    <Link to="/services" className="text-base font-normal text-white hover:text-secondary">Services</Link>
-                                </li>
-                                <li>
-                                    <Link to="/contact" className="text-base font-normal text-white hover:text-secondary">Contact</Link>
-                                </li>
-                            </ul>
-                        </nav>
+                    {/* Navigation Links and Copyright */}
+                    <div className="flex-col md:flex-row md:items-center justify-center space-y-2">
+                        <div className="flex space-x-6 align-center justify-center mb-4 md:mb-2">
+                            <Link to="/privacy" className="text-sm font-light text-white hover:text-secondary">Privacy Policy</Link>
+                            <Link to="/terms" className="text-sm font-light text-white hover:text-secondary">Terms of Service</Link>
+                            <Link to="/contact" className="text-sm font-light text-white hover:text-secondary">Contact Us</Link>
+                        </div>
+                        <div>
+                            <p className="text-sm font-light text-center md:text-center border-t opacity-50 border-white pt-2 px-10">&copy; {new Date().getFullYear()} SolarMatch. | All rights reserved.</p>
+                        </div>
                     </div>
 
                     {/* Social Media Links */}
@@ -92,16 +84,6 @@ const Footer = () => {
                         <a href="#" className="text-white hover:text-secondary" aria-label="LinkedIn"><LinkedinIcon /></a>
                         <a href="#" className="text-white hover:text-secondary" aria-label="Instagram"><InstagramIcon /></a>
                         <a href="#" className="text-white hover:text-secondary" aria-label="X"><XIcon /></a>
-                    </div>
-                </div>
-
-                {/* Legal Links and Copyright */}
-                <div className="mt-8 pt-8 border-t border-white flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                    <p className="text-sm font-light text-center md:text-left">&copy; {new Date().getFullYear()} SolarMatch. All rights reserved.</p>
-                    <div className="flex space-x-6">
-                        <Link to="/privacy" className="text-sm font-light text-white hover:text-secondary">Privacy Policy</Link>
-                        <Link to="/terms" className="text-sm font-light text-white hover:text-secondary">Terms of Service</Link>
-                        <Link to="/contact" className="text-sm font-light text-white hover:text-secondary">Contact Us</Link>
                     </div>
                 </div>
             </div>

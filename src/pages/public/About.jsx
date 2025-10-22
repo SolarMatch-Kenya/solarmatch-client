@@ -110,20 +110,20 @@ const About = () => {
                 <div className="body">
                     {/* Hero Section */}
                     <div
-                        className="relative bg-cover bg-center text-white py-20 text-center min-h-[400px]"
-                        style={{ backgroundImage: "url('/hero-background.jpg')" }}
+                        className="relative bg-cover bg-bottom min-h-[50vh] flex items-center justify-center"
+                        style={{ backgroundImage: "url('src/assets/contact.jpg')" }}
                     >
-                        <div className="absolute inset-0 bg-black opacity-50"></div>
+                        <div className="absolute inset-0 bg-black opacity-70"></div>
                         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-                            <h1 className="text-4xl font-bold lg:text-5xl">About SolarMatch</h1>
-                            <p className="text-lg mt-4 max-w-2xl mx-auto">Empowering a sustainable future through accessible solar energy.</p>
+                            <h1 className="text-white text-4xl font-bold lg:text-5xl text-center">About SolarMatch</h1>
+                            <p className="text-white text-lg mt-4 max-w-2xl mx-auto text-center">Empowering a sustainable future through accessible solar energy.</p>
                         </div>
                     </div>
 
                     {/* Mission Section */}
                     <div className="py-20 bg-gray-50">
                         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                            <h2 className="h2 text-[#006800]">Our Mission</h2>
+                            <h2 className="text-3xl font-bold lg:text-4xl text-[#006800] mb-4">Our Mission</h2>
                             <p className="text-lg mt-6 max-w-3xl mx-auto text-gray-700">
                                 At SolarMatch, our mission is to revolutionize access to solar energy in Kenya by providing accurate, AI-driven insights into solar panel suitability for homes and businesses. We aim to simplify the transition to renewable energy, making it affordable, efficient, and transparent for everyone.
                             </p>
@@ -133,22 +133,22 @@ const About = () => {
                     {/* Values Section */}
                     <div className="py-20">
                         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                            <h2 className="h2 text-center text-[#006800]">Our Values</h2>
+                            <h2 className="text-3xl font-bold lg:text-4xl text-center text-[#006800] mb-8">Our Values</h2>
                             <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                                 <div className="p-6 bg-white rounded-lg shadow-md">
                                     <InnovationIcon />
-                                    <h3 className="h3 text-[#006800] mt-4">Innovation</h3>
-                                    <p className="body mt-2 text-gray-600">Leveraging cutting-edge AI to provide precise and reliable solar analysis.</p>
+                                    <h3 className="text-xl font-semibold text-[#006800] mt-4">Innovation</h3>
+                                    <p className="text-base mt-2 text-gray-600">Leveraging cutting-edge AI to provide precise and reliable solar analysis.</p>
                                 </div>
                                 <div className="p-6 bg-white rounded-lg shadow-md">
                                     <SustainabilityIcon />
-                                    <h3 className="h3 text-[#006800] mt-4">Sustainability</h3>
-                                    <p className="body mt-2 text-gray-600">Committed to promoting clean energy and reducing carbon footprints.</p>
+                                    <h3 className="text-xl font-semibold text-[#006800] mt-4">Sustainability</h3>
+                                    <p className="text-base mt-2 text-gray-600">Committed to promoting clean energy and reducing carbon footprints.</p>
                                 </div>
                                 <div className="p-6 bg-white rounded-lg shadow-md">
                                     <TransparencyIcon />
-                                    <h3 className="h3 text-[#006800] mt-4">Transparency</h3>
-                                    <p className="body mt-2 text-gray-600">Offering clear, understandable reports and honest cost estimations.</p>
+                                    <h3 className="text-xl font-semibold text-[#006800] mt-4">Transparency</h3>
+                                    <p className="text-base mt-2 text-gray-600">Offering clear, understandable reports and honest cost estimations.</p>
                                 </div>
                             </div>
                         </div>
@@ -157,12 +157,12 @@ const About = () => {
                     {/* Team Section */}
                     <div className="py-20 bg-gray-50">
                         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                            <h2 className="h2 text-[#006800]">Meet the Team</h2>
+                            <h2 className="text-3xl font-bold lg:text-4xl text-center text-[#006800] mb-8">Meet the Team</h2>
                             <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 <div className="p-6 bg-white rounded-lg shadow-md">
                                     <img src="https://via.placeholder.com/150" alt="Team Member 1" className="w-32 h-32 rounded-full mx-auto mb-4" />
-                                    <h3 className="h3">Jaymo Kariuki</h3>
-                                    <p className="body text-gray-600">Team Lead</p>
+                                    <h3 className="text-xl font-semibold">Jaymo Kariuki</h3>
+                                    <p className="text-base text-gray-600">Team Lead</p>
                                     <div className="mt-4 flex justify-center space-x-4">
                                         <a href="#"><LinkedinIcon /></a>
                                         <a href="#"><InstagramIcon /></a>
@@ -171,8 +171,8 @@ const About = () => {
                                 </div>
                                 <div className="p-6 bg-white rounded-lg shadow-md">
                                     <img src="https://via.placeholder.com/150" alt="Team Member 2" className="w-32 h-32 rounded-full mx-auto mb-4" />
-                                    <h3 className="h3">Trish Njuguna</h3>
-                                    <p className="body text-gray-600">Lead AI Engineer</p>
+                                    <h3 className="text-xl font-semibold">Trish Njuguna</h3>
+                                    <p className="text-base text-gray-600">Lead AI Engineer</p>
                                     <div className="mt-4 flex justify-center space-x-4">
                                         <a href="#"><LinkedinIcon /></a>
                                         <a href="#"><InstagramIcon /></a>
@@ -181,8 +181,8 @@ const About = () => {
                                 </div>
                                 <div className="p-6 bg-white rounded-lg shadow-md">
                                     <img src="https://via.placeholder.com/150" alt="Team Member 3" className="w-32 h-32 rounded-full mx-auto mb-4" />
-                                    <h3 className="h3">Ayub Foks</h3>
-                                    <p className="body text-gray-600">Lead Software Engineer</p>
+                                    <h3 className="text-xl font-semibold">Ayub Foks</h3>
+                                    <p className="text-base text-gray-600">Lead Software Engineer</p>
                                     <div className="mt-4 flex justify-center space-x-4">
                                         <a href="#"><LinkedinIcon /></a>
                                         <a href="#"><InstagramIcon /></a>
@@ -196,7 +196,7 @@ const About = () => {
                     {/* Connect with us Section */}
                     <div className="py-20">
                         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                            <h2 className="h2 text-[#006800]">Connect with us</h2>
+                            <h2 className="text-3xl font-bold lg:text-4xl text-center text-[#006800] mb-8">Connect with us</h2>
                             <p className="text-lg mt-6 max-w-3xl mx-auto text-gray-700">
                                 Follow us on social media to stay updated with the latest news and announcements.
                             </p>
@@ -211,7 +211,7 @@ const About = () => {
                     {/* Call to Action */}
                     <div className="relative bg-secondary text-white py-20 text-center">
                         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                            <h2 className="h2">Ready to go Solar?</h2>
+                            <h2 className="text-3xl font-bold lg:text-4xl text-white mb-4">Ready to go Solar?</h2>
                             <p className="text-lg mt-4 max-w-2xl mx-auto">Join the solar revolution today and start saving on your energy bills while contributing to a greener planet.</p>
                             <div className="mt-8">
                                 <PrimaryButton>
