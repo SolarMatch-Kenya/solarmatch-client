@@ -11,6 +11,8 @@ import ARView from "../pages/dashboard/ARView";
 import Login from "../pages/auth/Login";
 import Dashboard from "../pages/Dashboard";
 import ForgotPassword from '../pages/auth/ForgotPassword'
+import InstallerContract from "../pages/installer/InstallerContract";
+import VerifyCode from "../pages/auth/VerifyCode";
 
 function AppRouter() {
     return (
@@ -22,8 +24,9 @@ function AppRouter() {
             <Route path='/login' element={<Login />}/>
             <Route path='/forgot-password' element={<ForgotPassword/>}/>
             <Route path='/register' element={<Register />}/>
+            <Route path="/verify" element={<VerifyCode />} />
             <Route path='/analysis-form' element={<AnalysisForm />}/>
-            {/* <Route path="/installer-contract" element={<InstallerContract />} /> */}
+            <Route path="/installer-contract" element={<ProtectedRoute><InstallerContract /></ProtectedRoute>} />
 
             <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>}>
                 {/* <Route index element={<Overview/>}/> */}

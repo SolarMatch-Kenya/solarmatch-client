@@ -16,6 +16,11 @@ export default function ProtectedRoute({ children, role }) {
     return <Navigate to="/" replace />;
   }
 
+  // if installer contract isn't signed
+  if (!user.contractAccepted) {
+    return <Navigate to="/installer-contract" replace />;
+  }
+
   // Otherwise show the protected content
   return children;
 }

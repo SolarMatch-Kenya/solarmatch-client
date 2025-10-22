@@ -40,7 +40,15 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="relative min-h-screen flex items-center justify-center">
+      <Link to='/'>
+        <div className="absolute top-6 left-6 flex items-center gap-2 text-gray-800 hover:text-[#f79436] transition">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+          </svg>
+          <p>Back to homepage</p>
+        </div>
+      </Link>
       <div className="m-auto w-full max-w-md bg-white p-8 rounded-lg shadow-md">
         <h1 className="text-2xl font-bold mb-2">Welcome Back</h1>
         <p className="text-gray-600 mb-6">

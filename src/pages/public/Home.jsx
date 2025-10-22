@@ -31,7 +31,7 @@ const Home = () => {
                                     <Link to='/analysis-form'>Check My Roof</Link>
                                 </PrimaryButton>
                                 <SecondaryButton>
-                                    Learn More
+                                    <Link to='/about'>Learn More</Link>
                                 </SecondaryButton>
                             </div>
                         </div>

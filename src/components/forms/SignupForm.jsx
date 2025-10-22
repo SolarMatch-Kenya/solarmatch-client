@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Bulb from '../ui/Bulb'
 
@@ -41,10 +41,11 @@ export default function SignupForm() {
       // Assuming backend returns { user, token }
       localStorage.setItem("user", JSON.stringify(data.user));
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify({ email: values.email }));
 
       // Automatically log in and redirect
       login(values.email, values.password);
-      navigate("/");
+      navigate("/verify");
     } catch (err) {
       setError(err.message || "Something went wrong");
     } finally {
@@ -57,6 +58,14 @@ export default function SignupForm() {
       {/* Left Side - Signup Form */}
       <div className="w-1/2 bg-white flex flex-col justify-center items-center px-16">
         <div className="w-full max-w-md">
+          <Link to='/'>
+            <div className="pb-4 flex items-center gap-2 text-gray-800 hover:text-[#f79436] transition">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+              </svg>
+              <p>Back to homepage</p>
+            </div>
+          </Link>
           <h1 className="text-3xl font-bold mb-2 text-gray-900">Create Your Account</h1>
           <p className="text-sm text-yellow-600 mb-6">Start your solar journey today.</p>
 
@@ -141,9 +150,9 @@ export default function SignupForm() {
           </Formik>
 
           <div className="flex items-center my-4">
-            <hr className="flex-grow border-gray-300" />
+            <hr className="grow border-gray-300" />
             <span className="mx-2 text-gray-400 text-sm">OR</span>
-            <hr className="flex-grow border-gray-300" />
+            <hr className="grow border-gray-300" />
           </div>
 
           <div className="flex justify-between">
@@ -186,7 +195,7 @@ export default function SignupForm() {
 
           <div className="space-y-6 text-black">
   <div className="flex gap-3">
-    <div className="flex-shrink-0 flex items-stretch">
+    <div className="shrink-0 flex items-stretch">
       <div className="flex items-center">
         <Bulb className="text-yellow-500 h-full w-6" />
       </div>
@@ -198,7 +207,7 @@ export default function SignupForm() {
   </div>
 
   <div className="flex gap-3">
-    <div className="flex-shrink-0 flex items-stretch">
+    <div className="shrink-0 flex items-stretch">
       <div className="flex items-center">
         <Bulb className="text-yellow-500 h-full w-6" />
       </div>
@@ -210,7 +219,7 @@ export default function SignupForm() {
   </div>
 
   <div className="flex gap-3">
-    <div className="flex-shrink-0 flex items-stretch">
+    <div className="shrink-0 flex items-stretch">
       <div className="flex items-center">
         <Bulb className="text-yellow-500 h-full w-6" />
       </div>
