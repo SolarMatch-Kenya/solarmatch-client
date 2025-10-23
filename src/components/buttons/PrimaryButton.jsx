@@ -5,7 +5,7 @@ const PrimaryButton = ({ children, onClick, type = 'button', className = '' }) =
         <button
             type={type}
             onClick={onClick}
-            className={`bg-[#006800] hover:bg-[#f79436] text-white font-bold py-2 px-4 rounded-full transition-transform duration-200 ease-in-out transform hover:scale-105 shadow-md ${className}`}
+            className={`bg-primary hover:bg-primary/90 text-black font-bold py-2 px-4 rounded-full transition-transform duration-200 ease-in-out transform hover:scale-105 shadow-md ${className}`}
 
         >
             {children}
