@@ -7,49 +7,128 @@ import PrimaryButton from "../buttons/PrimaryButton";
 import { validateAnalysisForm } from "../../utils/validations";
 import MapSelector from "../map/MapSelector";
 
-const AnalysisForm = () => {
+export default function AnalysisForm() {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const { submitAnalysis } = useContext(AnalysisContext);
+
   const [formData, setFormData] = useState({
     address: "",
     energyConsumption: "",
     roofType: "",
+    roofImage: null,
+    roofAngle: "",
+    roofOrientation: "",
   });
+
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [aiResults, setAiResults] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // 📸 Handle Roof Photo Upload
+  const handlePhotoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setFormData({ ...formData, roofImage: file });
+    setLoading(true);
+
+    const formDataUpload = new FormData();
+    formDataUpload.append("image", file);
+
+    try {
+      const res = await fetch("/api/ai/roof-photo", {
+        method: "POST",
+        body: formDataUpload,
+      });
+      const data = await res.json();
+
+      // e.g. response: { type: "pitched" }
+      setFormData((prev) => ({ ...prev, roofType: data.type || "other" }));
+      setAiResults((prev) => ({ ...prev, photoAnalysis: data }));
+    } catch (err) {
+      console.error("AI Photo Analysis Failed", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 📍 Handle Map Location Select → AI Geometry Analysis
+  const handleMapSelect = async (place) => {
+    const address = place.place_name || "";
+    setFormData((prev) => ({ ...prev, address }));
+
+    try {
+      const coords = place.geometry?.coordinates;
+      if (!coords) return;
+
+      const res = await fetch("/api/ai/roof-geometry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ lon: coords[0], lat: coords[1] }),
+      });
+
+      const data = await res.json();
+      // e.g. { angle: 25, orientation: "South-East" }
+      setFormData((prev) => ({
+        ...prev,
+        roofAngle: data.angle,
+        roofOrientation: data.orientation,
+      }));
+      setAiResults((prev) => ({ ...prev, geometry: data }));
+    } catch (err) {
+      console.error("AI Geometry Analysis Failed", err);
+    }
+  };
+
+  // ✅ Form Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formErrors = validateAnalysisForm(formData);
-    if (Object.keys(formErrors).length !== 0) {
-      return setErrors(formErrors);
-    }
+    if (Object.keys(formErrors).length !== 0) return setErrors(formErrors);
 
-    // 🟡 If user not logged in
     if (!user) {
       localStorage.setItem("pendingAnalysis", JSON.stringify(formData));
       navigate("/login?redirect=/dashboard");
       return;
     }
 
-    // 🟢 Logged in → run analysis
     await submitAnalysis(formData);
-    navigate("/dashboard"); // Redirect after successful analysis
+    navigate("/dashboard");
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 bg-white p-6 rounded-lg shadow-md"
+      className="space-y-6 bg-white px-26 py-20 rounded-lg shadow-md"
     >
-      <h2 className="text-xl font-semibold mb-4">Roof Analysis Details</h2>
+      <h2 className="text-xl font-semibold mb-6">Roof Analysis Details</h2>
 
-      {/* Address + Map */}
+      {/* 📸 Upload Section */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
+          Upload a photo of your roof
+        </label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handlePhotoUpload}
+          className="mt-2 block w-full text-sm text-gray-600 border border-gray-300 rounded-md p-2"
+        />
+        {loading && <p className="text-yellow-600 mt-1">Analyzing roof image...</p>}
+        {formData.roofType && (
+          <p className="text-green-600 mt-1">
+            ✅ Detected roof type: {formData.roofType}
+          </p>
+        )}
+      </div>
+
+      {/* 📍 Address & Map */}
       <div>
         <label className="block text-sm font-medium text-gray-700">Address</label>
         <input
@@ -60,19 +139,18 @@ const AnalysisForm = () => {
           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           placeholder="123 Koinange St, Nairobi"
         />
-        {errors.address && (
-          <p className="text-red-500 text-xs mt-1">{errors.address}</p>
-        )}
         <div className="mt-3">
-          <MapSelector
-            onSelect={(coords) =>
-              setFormData({ ...formData, address: coords.place_name || "" })
-            }
-          />
+          <MapSelector onSelect={handleMapSelect} />
         </div>
+        {formData.roofAngle && (
+          <div className="mt-2 text-sm text-gray-600">
+            🧭 <b>Orientation:</b> {formData.roofOrientation} | <b>Angle:</b>{" "}
+            {formData.roofAngle}°
+          </div>
+        )}
       </div>
 
-      {/* Energy Consumption */}
+      {/* ⚡ Energy Consumption */}
       <div>
         <label className="block text-sm font-medium text-gray-700">
           Average Monthly Energy Consumption (kWh)
@@ -84,12 +162,9 @@ const AnalysisForm = () => {
           onChange={handleChange}
           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
         />
-        {errors.energyConsumption && (
-          <p className="text-red-500 text-xs mt-1">{errors.energyConsumption}</p>
-        )}
       </div>
 
-      {/* Roof Type */}
+      {/* 🏠 Roof Type (auto-settable) */}
       <div>
         <label className="block text-sm font-medium text-gray-700">
           Roof Type
@@ -105,9 +180,6 @@ const AnalysisForm = () => {
           <option value="flat">Flat</option>
           <option value="other">Other</option>
         </select>
-        {errors.roofType && (
-          <p className="text-red-500 text-xs mt-1">{errors.roofType}</p>
-        )}
       </div>
 
       <PrimaryButton type="submit">
@@ -115,6 +187,4 @@ const AnalysisForm = () => {
       </PrimaryButton>
     </form>
   );
-};
-
-export default AnalysisForm;
+}
