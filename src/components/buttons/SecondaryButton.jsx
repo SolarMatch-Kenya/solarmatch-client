@@ -5,7 +5,7 @@ const SecondaryButton = ({ children, onClick, type = 'button', className = '' })
         <button
             type={type}
             onClick={onClick}
-            className={`bg-secondary hover:bg-secondary/90 text-white font-bold py-2 px-4 rounded-full transition-transform duration-200 ease-in-out transform hover:scale-105 shadow-md ${className}`}
+            className={`bg-secondary hover:bg-secondary/90 text-white font-bold py-2 px-4 rounded-[10px] transition-transform duration-200 ease-in-out transform hover:scale-105 shadow-md ${className}`}
         >
             {children}
         </button>

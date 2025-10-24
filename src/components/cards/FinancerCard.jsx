@@ -26,7 +26,7 @@ const FinancerCard = ({ financer }) => {
             {/* Contact Financer Button */}
             <a
                 href={`tel:${financer.contact}`}
-                className="bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded transition-transform duration-200 ease-in-out transform hover:scale-105 shadow-md inline-block mt-4"
+                className="bg-[#f79436] hover:bg-[#f79436]/90 text-white font-bold py-2 px-4 rounded-[10px] transition-transform duration-200 ease-in-out transform hover:scale-105 shadow-md inline-block mt-4"
             >
                 Contact Financer
             </a>
