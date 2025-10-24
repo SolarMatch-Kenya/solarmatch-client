@@ -4,7 +4,12 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 export default function ProtectedRoute({ children, role }) {
-  const { user } = useAuth(); // assuming `user` is stored in context after login
+  const { user, loading } = useAuth(); // assuming `user` is stored in context after login
+
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token");
+
+  if (!user && !storedUser) return <Navigate to="/login" />;
 
   // Not logged in? Redirect to login
   if (!user) {

@@ -9,7 +9,7 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useAuth();
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({ user_name: "", password: "" });
   const [error, setError] = useState("");
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -19,23 +19,12 @@ export default function LoginForm() {
     setError("");
 
     try {
-      await login(form.email, form.password);
+      await login(form.user_name, form.password);
 
-      // check redirect param or default
-      const redirectPath = new URLSearchParams(location.search).get("redirect") || "/dashboard";
-
-      // check for saved pending analysis
-      const pending = localStorage.getItem("pendingAnalysis");
-      if (pending) {
-        const analysis = JSON.parse(pending);
-        localStorage.removeItem("pendingAnalysis");
-        // optionally send to API via your AnalysisContext
-        console.log("Submitting pending analysis:", analysis);
-      }
-
-      navigate(redirectPath);
+      // Redirect to Verify page
+      navigate("/verify");
     } catch (err) {
-      setError("Invalid credentials. Try again or register below.");
+      setError(err.message || "Invalid credentials. Try again.");
     }
   };
 
@@ -57,11 +46,11 @@ export default function LoginForm() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium">Email</label>
+            <label className="block text-sm font-medium">Username</label>
             <input
-              type="email"
-              name="email"
-              value={form.email}
+              type="text"
+              name="user_name"
+              value={form.user_name}
               onChange={handleChange}
               className="w-full border p-2 rounded-md"
             />

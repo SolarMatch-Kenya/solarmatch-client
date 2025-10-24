@@ -123,7 +123,7 @@ export default function AnalysisForm() {
         {loading && <p className="text-yellow-600 mt-1">Analyzing roof image...</p>}
         {formData.roofType && (
           <p className="text-green-600 mt-1">
-            ✅ Detected roof type: {formData.roofType}
+             Detected roof type: {formData.roofType}
           </p>
         )}
       </div>

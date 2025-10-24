@@ -9,6 +9,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
+  const API_URL = "http://127.0.0.1:5000/api/auth";
 
   // Restore user & token on app load
   useEffect(() => {
@@ -21,11 +22,25 @@ export function AuthProvider({ children }) {
   }, []);
 
   // Login (using service)
-  const login = async (email, password) => {
-    const { user, token } = await loginService(email, password);
-    setUser(user);
-    setToken(token);
+  const login = async (user_name, password) => {
+    // Only triggers OTP, does not set user yet
+    await loginService(user_name, password);
+    localStorage.setItem("pendingUser", JSON.stringify({ user_name }));
   };
+
+  const verifyOTP = async (user_name, code) => {
+    const data = await confirmCodeService(user_name, code);
+
+    // Save user & token in context
+    setUser(data.user);
+    setToken(data.access_token);
+
+    localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("token", data.access_token);
+
+    return data;
+  };
+
 
   // Logout (using service)
   const logout = () => {
@@ -62,7 +77,7 @@ export function AuthProvider({ children }) {
   };
 
 
-  const value = { user, token, login, logout, loading, resetPassword, updateUser };
+  const value = { user, token, login, logout, verifyOTP, loading, resetPassword, updateUser };
 
   return (
     <AuthContext.Provider value={value}>

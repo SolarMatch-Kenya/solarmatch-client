@@ -26,12 +26,14 @@ export default function SignupForm() {
   const handleSubmit = async (values, { setSubmitting }) => {
     setError("");
     try {
-      const response = await fetch("https://api.solarmatch.com/auth/signup", {
+      const response = await fetch("http://127.0.0.1:5000/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          full_name: values.full_name,
           email: values.email,
           password: values.password,
+          phone_number: values.phone_number || null,
         }),
       });
 
@@ -39,13 +41,21 @@ export default function SignupForm() {
 
       const data = await response.json();
       // Assuming backend returns { user, token }
-      localStorage.setItem("user", JSON.stringify(data.user));
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify({ email: values.email }));
+      if (response.ok) {
+        // Save the username from backend (e.g., CUS-Trish-1234)
+        localStorage.setItem("user_name", data.user_name);
+
+        // Automatically log in using the username & password
+        await login(data.user_name, values.password);
+
+        alert("Signup successful! Please check your email for a confirmation code.");
+      } else {
+        alert(data.message || "Signup failed.");
+      }
 
       // Automatically log in and redirect
-      login(values.email, values.password);
-      navigate("/verify");
+      login(data.user_name, values.password);
+      navigate("/login");
     } catch (err) {
       setError(err.message || "Something went wrong");
     } finally {
@@ -70,7 +80,7 @@ export default function SignupForm() {
           <p className="text-sm text-yellow-600 mb-6">Start your solar journey today.</p>
 
           <Formik
-            initialValues={{ email: "", password: "", confirmPassword: "" }}
+            initialValues={{ email: "", password: "", confirmPassword: "", full_name: "", phone_number: "" }}
             validationSchema={SignupSchema}
             onSubmit={handleSubmit}
           >
@@ -79,13 +89,13 @@ export default function SignupForm() {
                 <div>
                   <label className="block mb-1 text-gray-700">Full Name</label>
                   <Field
-                    name="full-name"
+                    name="full_name"
                     type="name"
                     placeholder="Enter your full name"
                     className="w-full px-4 py-2 border rounded-[10px] outline-none focus:ring-2 focus:ring-[#f79436]"
                   />
                   <ErrorMessage
-                    name="name"
+                    name="full_name"
                     component="div"
                     className="text-red-500 text-sm mt-1"
                   />
@@ -101,6 +111,21 @@ export default function SignupForm() {
                   />
                   <ErrorMessage
                     name="email"
+                    component="div"
+                    className="text-red-500 text-sm mt-1"
+                  />
+                </div>
+
+                <div>
+                  <label className="block mb-1 text-gray-700">Phone Number</label>
+                  <Field
+                    name="phone_number"
+                    type="phone number"
+                    placeholder="Enter your phone number"
+                    className="w-full px-4 py-2 border rounded-[10px] outline-none focus:ring-2 focus:ring-[#f79436]"
+                  />
+                  <ErrorMessage
+                    name="phone_number"
                     component="div"
                     className="text-red-500 text-sm mt-1"
                   />
