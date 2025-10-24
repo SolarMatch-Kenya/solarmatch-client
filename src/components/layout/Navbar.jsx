@@ -44,30 +44,17 @@ const Navbar = () => {
     }, []);
 
     return (
-<<<<<<< HEAD
-        <nav className="bg-white shadow-md relative z-50">
-            <div className="w-full px-4 sm:px-6 lg:px-8 ">
-                <div className="flex items-center justify-between h-24 mt-4">
-                    <div className="flex items-center">
-                        <Link to="/" className="flex items-center text-xl font-bold text-[#006800] space-x-2">
-                            <img src="src/assets/logo-color.svg" alt="Logo" className="h-24" />
-=======
         <nav className="bg-white shadow-md relative z-50 px-[100px]">
             <div className="w-full px-4 sm:px-6 lg:px-8 ">
                 <div className="flex items-center justify-between h-24">
                     <div className="flex items-center">
                         <Link to="/" className="flex items-center text-xl font-bold text-[#006800] space-x-2">
                             <img src="src/assets/logo-color.svg" alt="Logo" className="h-20" />
->>>>>>> 51071dbd530d41a7cf2c70497f45ebd0da689ba6
                         </Link>
                     </div>
 
                     {/* Desktop Navigation */}
-<<<<<<< HEAD
-                    <div className="hidden lg:flex items-center space-x-8">
-=======
                     <div className="hidden lg:flex items-center space-x-6">
->>>>>>> 51071dbd530d41a7cf2c70497f45ebd0da689ba6
                         <Link to="/" className="flex items-center text-base font-bold text-[#006800] hover:text-[#f79436] p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
                             Home
                         </Link>
@@ -77,12 +64,9 @@ const Navbar = () => {
                         <Link to="/how-it-works" className="flex items-center text-base font-bold text-[#006800] hover:text-[#f79436] p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
                             How It Works
                         </Link>
-<<<<<<< HEAD
-=======
                         <Link to="/financing" className="flex items-center text-base font-bold text-[#006800] hover:text-[#f79436] p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
                             Financing
                         </Link>
->>>>>>> 51071dbd530d41a7cf2c70497f45ebd0da689ba6
                         <Link to="/contact" className="flex items-center text-base font-bold text-[#006800] hover:text-[#f79436] p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
                             Contact
                         </Link>
@@ -103,11 +87,7 @@ const Navbar = () => {
                                 </button>
                                 {isDropdownOpen && (
                                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
-<<<<<<< HEAD
-                                        <Link to="/profile" className="flex items-center block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={() => setIsDropdownOpen(false)}>
-=======
                                         <Link to="/profile" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={() => setIsDropdownOpen(false)}>
->>>>>>> 51071dbd530d41a7cf2c70497f45ebd0da689ba6
                                             Profile
                                         </Link>
                                         <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
