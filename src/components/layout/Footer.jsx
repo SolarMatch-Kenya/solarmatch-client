@@ -59,8 +59,13 @@ const XIcon = () => (
 
 const Footer = () => {
     return (
+<<<<<<< HEAD
         <footer className="bg-[#133b04] text-white py-8">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+=======
+        <footer className="bg-[#133b04] text-white py-8 px-[100px]">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 ">
+>>>>>>> 51071dbd530d41a7cf2c70497f45ebd0da689ba6
                 <div className="flex flex-col md:flex-row md:justify-between items-center">
                     {/* Logo */}
                     <div className="flex flex-col items-center md:items-start mb-6 md:mb-0">
@@ -69,13 +74,21 @@ const Footer = () => {
 
                     {/* Navigation Links and Copyright */}
                     <div className="flex-col md:flex-row md:items-center justify-center space-y-2">
+<<<<<<< HEAD
                         <div className="flex space-x-6 align-center justify-center mb-4 md:mb-2">
+=======
+                        <div className="flex space-x-10 align-center justify-center mb-4 md:mb-2">
+>>>>>>> 51071dbd530d41a7cf2c70497f45ebd0da689ba6
                             <Link to="/privacy" className="text-sm font-light text-white hover:text-secondary">Privacy Policy</Link>
                             <Link to="/terms" className="text-sm font-light text-white hover:text-secondary">Terms of Service</Link>
                             <Link to="/contact" className="text-sm font-light text-white hover:text-secondary">Contact Us</Link>
                         </div>
                         <div>
+<<<<<<< HEAD
                             <p className="text-sm font-light text-center md:text-center border-t opacity-50 border-white pt-2 px-10">&copy; {new Date().getFullYear()} SolarMatch. | All rights reserved.</p>
+=======
+                            <p className="text-sm font-light text-center md:text-center border-t opacity-50 border-white pt-2 px-10">&copy; {new Date().getFullYear()} SolarMatch.  |  All rights reserved.</p>
+>>>>>>> 51071dbd530d41a7cf2c70497f45ebd0da689ba6
                         </div>
                     </div>
 

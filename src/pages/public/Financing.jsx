@@ -1,3 +1,5 @@
+// financing page with loan estimator
+
 import React, { useState } from 'react';
 import FinancerCard from '../../components/cards/FinancerCard';
 import Navbar from '../../components/layout/Navbar';
@@ -55,7 +57,7 @@ const Financing = () => {
             <Navbar />
             <div className="body">
                 {/* Hero section */}
-                <div className="hero relative bg-cover bg-center min-h-[50vh] flex items-center justify-center" style={{ backgroundImage: 'url(https://via.placeholder.com/1500x800/006800/FFFFFF?text=Solar+Financing)' }}>
+                <div className="hero relative bg-cover bg-center min-h-[50vh] flex items-center justify-center" style={{ backgroundImage: "url('src/assets/contact.jpg')" }}>
                     <div className="absolute inset-0 bg-black/60"></div>
                     <div className="container mx-auto px-8 relative text-center max-w-7xl">
                         <h1 className="text-4xl font-bold lg:text-5xl text-white tracking-tight">Power Your Home with Solar, Affordably.</h1>
@@ -116,7 +118,7 @@ const Financing = () => {
                             </div>
                         </div>
                         <div className="flex justify-center">
-                            <PrimaryButton onClick={calculateMonthlyPayment}>
+                            <PrimaryButton onClick={calculateMonthlyPayment} className='bg-[#f79436]'>
                                 Calculate Monthly Payment
                             </PrimaryButton>
                         </div>
@@ -129,7 +131,7 @@ const Financing = () => {
                 </div>
 
                 {/* Green Loan Providers */}
-                <div className='financer bg-green-50'>
+                <div className='financer bg-linear-to-b from-green-50 to-[#133b04]'>
                     <div className="container mx-auto px-4 py-8 max-w-7xl">
                         <h2 className="text-2xl font-semibold mb-4 text-center">Green Loan Providers</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -34,7 +34,35 @@ export function AuthProvider({ children }) {
     setToken(null);
   };
 
-  const value = { user, token, login, logout, loading };
+  async function resetPassword(email) {
+    try {
+      // This depends on how your backend is set up.
+      // Example if you have an API endpoint for this:
+      const response = await fetch("http://localhost:5000/api/auth/forgot-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send reset email");
+      }
+
+      console.log("Password reset link sent to:", email);
+      return true;
+    } catch (err) {
+      console.error("Error in resetPassword:", err);
+      throw err;
+    }
+  }
+
+  const updateUser = (newUserData) => {
+    setUser(newUserData);
+    localStorage.setItem("user", JSON.stringify(newUserData));
+  };
+
+
+  const value = { user, token, login, logout, loading, resetPassword, updateUser };
 
   return (
     <AuthContext.Provider value={value}>

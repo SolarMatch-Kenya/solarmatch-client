@@ -81,7 +81,7 @@ const HowItWorks = () => {
                         <h2 className="text-3xl font-bold lg:text-4xl mb-4 text-[#006800]">Ready to Start Your Solar Journey?</h2>
                         <p className="text-lg mt-4 max-w-2xl mx-auto text-[#006800]">Get your personalized solar report today and take the first step towards energy independence.</p>
                         <div className="mt-8">
-                            <PrimaryButton>
+                            <PrimaryButton className='bg-[#f79436] text-white'>
                                 Get Your Free Solar Report
                             </PrimaryButton>
                         </div>

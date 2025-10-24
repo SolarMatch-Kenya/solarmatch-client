@@ -193,28 +193,13 @@ const About = () => {
                         </div>
                     </div>
 
-                    {/* Connect with us Section */}
-                    <div className="py-20">
-                        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                            <h2 className="text-3xl font-bold lg:text-4xl text-center text-[#006800] mb-8">Connect with us</h2>
-                            <p className="text-lg mt-6 max-w-3xl mx-auto text-gray-700">
-                                Follow us on social media to stay updated with the latest news and announcements.
-                            </p>
-                            <div className="mt-8 flex justify-center space-x-6">
-                                <a href="#" className="text-gray-600 hover:text-gray-900"><LinkedinIcon /></a>
-                                <a href="#" className="text-gray-600 hover:text-gray-900"><InstagramIcon /></a>
-                                <a href="#" className="text-gray-600 hover:text-gray-900"><XIcon /></a>
-                            </div>
-                        </div>
-                    </div>
-
                     {/* Call to Action */}
                     <div className="relative bg-secondary text-white py-20 text-center">
                         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                            <h2 className="text-3xl font-bold lg:text-4xl text-white mb-4">Ready to go Solar?</h2>
-                            <p className="text-lg mt-4 max-w-2xl mx-auto">Join the solar revolution today and start saving on your energy bills while contributing to a greener planet.</p>
+                            <h2 className="text-3xl font-bold lg:text-4xl text-[#006800] mb-4">Ready to go Solar?</h2>
+                            <p className="text-lg mt-4 max-w-2xl mx-auto text-black">Join the solar revolution today and start saving on your energy bills while contributing to a greener planet.</p>
                             <div className="mt-8">
-                                <PrimaryButton>
+                                <PrimaryButton className='bg-[#f79436] text-white'>
                                     Get Your Free Solar Report
                                 </PrimaryButton>
                             </div>

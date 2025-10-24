@@ -6,29 +6,37 @@ import ProtectedRoute from '../components/common/ProtectedRoute';
 import Home from "../pages/public/Home";
 import About from "../pages/public/About"
 import Register from "../pages/auth/Register";
-import AnalysisForm from "../components/forms/AnalysisForm";
 import ARView from "../pages/dashboard/ARView";
-import Login from "../components/forms/LoginForm";
+import Login from "../pages/auth/Login";
 import Dashboard from "../pages/Dashboard";
-import SolarAnalysis from "../pages/public/SolarAnalysis";
+import ForgotPassword from '../pages/auth/ForgotPassword'
+import InstallerContract from "../pages/installer/InstallerContract";
+import VerifyCode from "../pages/auth/VerifyCode";
+import Contact from "../pages/public/Contact";
+import HowItWorks from "../pages/public/HowItWorks";
+import Analysis from "../pages/public/Analysis";
+import Financing from "../pages/public/Financing";
 
 function AppRouter() {
     return (
         <Routes>
-            <Route path='/' element={<Home />}/> 
-            <Route path='/about' element={<About />}/>
-            <Route path='/solar-analysis' element={<SolarAnalysis />}/>
-            {/* <Route path="/financing" element={<Financing />} /> */}
+            <Route path='/' element={<Home />} />
+            <Route path='/about' element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/how-it-works" element={<HowItWorks />} />
+            <Route path="/financing" element={<Financing />} />
 
-            <Route path='/login' element={<Login />}/>
-            {/* <Route path='/forgot-password' element={ForgotPassword}/>  */}
-            <Route path='/register' element={<Register />}/>
-            <Route path='/analysis-form' element={<AnalysisForm />}/>
-            {/* <Route path="/installer-contract" element={<InstallerContract />} /> */}
+            <Route path='/login' element={<Login />} />
+            <Route path='/forgot-password' element={<ForgotPassword />} />
+            <Route path='/register' element={<Register />} />
+            <Route path="/verify" element={<VerifyCode />} />
+            <Route path='/analysis' element={<Analysis />} />
+            <Route path="/installer-contract" element={<ProtectedRoute><InstallerContract /></ProtectedRoute>} />
+
             <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>}>
                 {/* <Route index element={<Overview/>}/> */}
                 {/* <Route path='analysis-result' element={<AnalysisResult/>}/> */}
-                <Route path='ARview' element={<ARView/>}/>
+                <Route path='ARview' element={<ARView />} />
                 {/* <Route path='energy-data' element={<EnergyData/>}/>
                 <Route path='installers' element={<Installers/>}/>
                 <Route path='profile' element={<Profile/>}/> */}
