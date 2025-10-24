@@ -24,14 +24,7 @@ const FinancerCard = ({ financer }) => {
             <span className="text-gray-500 mb-4">{financer.location}</span>
 
             {/* Contact Financer Button */}
-<<<<<<< HEAD
             <PrimaryButton onClick={() => window.open(`tel:${financer.contact}`)}>
-=======
-            <a
-                href={`tel:${financer.contact}`}
-                className="bg-[#f79436] hover:bg-[#f79436]/90 text-white font-bold py-2 px-4 rounded-[10px] transition-transform duration-200 ease-in-out transform hover:scale-105 shadow-md inline-block mt-4"
-            >
->>>>>>> 51071dbd530d41a7cf2c70497f45ebd0da689ba6
                 Contact Financer
             </PrimaryButton>
         </div>
