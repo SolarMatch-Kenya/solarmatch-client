@@ -1,0 +1,1 @@
+// App-wide constants (e.g., BASE_URL, API endpoints)
