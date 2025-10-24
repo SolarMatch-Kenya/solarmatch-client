@@ -22,22 +22,9 @@ const Contact = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Determine the final subject to send
         const finalSubject = formData.subject === 'Other' ? formData.customSubject : formData.subject;
-        const dataToSend = { ...formData, subject: finalSubject };
-        delete dataToSend.customSubject; // Remove customSubject if not needed or already merged
-
-        // Here you would typically send the form data to a backend server
-        // For demonstration purposes, we'll just log it to the console
-        console.log('Form data submitted:', dataToSend);
-        alert('Thank you for your message! We will get back to you shortly.');
-        setFormData({
-            name: '',
-            email: '',
-            subject: '',
-            customSubject: '',
-            message: ''
-        });
+        const mailtoLink = `mailto:solamatchke@gmail.com?subject=${encodeURIComponent(finalSubject)}&body=${encodeURIComponent(formData.message)}`;
+        window.location.href = mailtoLink;
     };
 
     return (

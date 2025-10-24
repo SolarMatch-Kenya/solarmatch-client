@@ -10,12 +10,14 @@ import AnalysisForm from "../components/forms/AnalysisForm";
 import ARView from "../pages/dashboard/ARView";
 import Login from "../components/forms/LoginForm";
 import Dashboard from "../pages/Dashboard";
+import SolarAnalysis from "../pages/public/SolarAnalysis";
 
 function AppRouter() {
     return (
         <Routes>
             <Route path='/' element={<Home />}/> 
             <Route path='/about' element={<About />}/>
+            <Route path='/solar-analysis' element={<SolarAnalysis />}/>
             {/* <Route path="/financing" element={<Financing />} /> */}
 
             <Route path='/login' element={<Login />}/>
