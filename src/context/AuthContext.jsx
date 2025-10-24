@@ -1,7 +1,7 @@
 // Manages authentication state and user info
 
 import { createContext, useContext, useState, useEffect } from "react";
-import { loginService, logoutService, getStoredUser } from "../services/authService";
+import { loginService, logoutService, getStoredUser, confirmCodeService } from "../services/authService";
 
 export const AuthContext = createContext();
 

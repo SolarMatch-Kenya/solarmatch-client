@@ -10,6 +10,7 @@ export default function VerifyCode() {
   const { verifyOTP } = useAuth();
   const [error, setError] = useState("");
   const [resending, setResending] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
 
   const pendingUser = JSON.parse(localStorage.getItem("pendingUser"));
   const initialUserName = pendingUser?.user_name || "";
@@ -23,20 +24,24 @@ export default function VerifyCode() {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     setError("");
+    setIsVerifying(true); // Use your state
     try {
       const otpString = values.otp.join("");
-      await verifyOTP(values.user_name, otpString);
-
+      
+      // Call it only ONCE and store the result
       const data = await verifyOTP(values.user_name, otpString);
+
+      // Now navigate. The auth context is already updated by verifyOTP.
       navigate("/dashboard", { replace: true });
-      // Small delay ensures AuthContext updates before route change
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 100);
+      
+      // You can also remove the redundant setTimeout navigation
+      
     } catch (err) {
+      // The error will be "Invalid or expired code" if it's wrong
       setError(err.message || "Something went wrong");
     } finally {
       setSubmitting(false);
+      setIsVerifying(false); // Use your state
     }
   };
 
@@ -110,10 +115,10 @@ export default function VerifyCode() {
 
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isVerifying}
                   className="w-full py-3 bg-[#f79436] text-white rounded hover:bg-[#f79436]/90"
                 >
-                  {isSubmitting ? "Verifying..." : "Verify"}
+                  {isVerifying ? "Verifying..." : "Verify"}
                 </button>
 
                 <button

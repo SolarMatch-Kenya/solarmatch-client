@@ -22,7 +22,8 @@ export default function ProtectedRoute({ children, role }) {
   }
 
   // if installer contract isn't signed
-  if (!user.contractAccepted) {
+  // if an INSTALLER'S contract isn't signed
+  if (user.role === "installer" && !user.contractAccepted) {
     return <Navigate to="/installer-contract" replace />;
   }
 
