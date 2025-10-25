@@ -1,6 +1,3 @@
-// Registration form for new users
-
-// src/pages/auth/Signup.jsx
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -10,52 +7,27 @@ import Bulb from '../ui/Bulb'
 
 export default function SignupForm() {
   const navigate = useNavigate();
-  const { login } = useAuth(); // You can reuse login after successful signup
+  const { register } = useAuth();
   const [error, setError] = useState("");
 
   // Validation schema
   const SignupSchema = Yup.object({
+    full_name: Yup.string().required("Required"),
     email: Yup.string().email("Invalid email").required("Required"),
     password: Yup.string().min(6, "At least 6 characters").required("Required"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password")], "Passwords must match")
       .required("Required"),
+    phone_number: Yup.string().nullable(),
   });
 
   // Handle form submission
   const handleSubmit = async (values, { setSubmitting }) => {
     setError("");
     try {
-      const response = await fetch("http://127.0.0.1:5000/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          full_name: values.full_name,
-          email: values.email,
-          password: values.password,
-          phone_number: values.phone_number || null,
-        }),
-      });
-
-      if (!response.ok) throw new Error("Signup failed");
-
-      const data = await response.json();
-      // Assuming backend returns { user, token }
-      if (response.ok) {
-        // Save the username from backend (e.g., CUS-Trish-1234)
-        localStorage.setItem("user_name", data.user_name);
-
-        // Automatically log in using the username & password
-        await login(data.user_name, values.password);
-
-        alert("Signup successful! Please check your email for a confirmation code.");
-      } else {
-        alert(data.message || "Signup failed.");
-      }
-
-      // Automatically log in and redirect
-      login(data.user_name, values.password);
-      navigate("/login");
+      await register(values.full_name, values.email, values.password, values.phone_number);
+      alert("Signup successful! You are now logged in.");
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message || "Something went wrong");
     } finally {
@@ -80,7 +52,7 @@ export default function SignupForm() {
           <p className="text-sm text-yellow-600 mb-6">Start your solar journey today.</p>
 
           <Formik
-            initialValues={{ email: "", password: "", confirmPassword: "", full_name: "", phone_number: "" }}
+            initialValues={{ full_name: "", email: "", password: "", confirmPassword: "", phone_number: "" }}
             validationSchema={SignupSchema}
             onSubmit={handleSubmit}
           >
@@ -90,7 +62,7 @@ export default function SignupForm() {
                   <label className="block mb-1 text-gray-700">Full Name</label>
                   <Field
                     name="full_name"
-                    type="name"
+                    type="text"
                     placeholder="Enter your full name"
                     className="w-full px-4 py-2 border rounded-[10px] outline-none focus:ring-2 focus:ring-[#f79436]"
                   />
@@ -120,8 +92,8 @@ export default function SignupForm() {
                   <label className="block mb-1 text-gray-700">Phone Number</label>
                   <Field
                     name="phone_number"
-                    type="phone number"
-                    placeholder="Enter your phone number"
+                    type="text"
+                    placeholder="Enter your phone number (optional)"
                     className="w-full px-4 py-2 border rounded-[10px] outline-none focus:ring-2 focus:ring-[#f79436]"
                   />
                   <ErrorMessage

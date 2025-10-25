@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DollarSign, Users, Zap } from "lucide-react";
 import EnergyUsageChart from "../../components/charts/EnergyUsageChart";
 import { useAuth } from "../../context/AuthContext";
-import { installerService } from "../../services/installerService";
+import { getInstallerOverview } from "../../services/installerService";
 import Loader from "../../components/common/Loader";
 
 const InstallerOverview = () => {
@@ -18,22 +18,12 @@ const InstallerOverview = () => {
       if (!user) return;
       try {
         setLoading(true);
-        // const data = await installerService.getOverview(user.id);
-        // setStats(data);
-
-        // Mock data for now
-        setTimeout(() => {
-          setStats({
-            newLeads: 12,
-            pendingInstallations: 5,
-            totalEarnings: 4500,
-          });
-          setLoading(false);
-        }, 1000);
-
+        const data = await getInstallerOverview(user.id);
+        setStats(data);
       } catch (err) {
         setError("Failed to fetch overview data.");
         console.error(err);
+      } finally {
         setLoading(false);
       }
     };

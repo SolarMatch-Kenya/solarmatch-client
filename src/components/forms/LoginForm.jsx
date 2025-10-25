@@ -9,7 +9,7 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useAuth();
-  const [form, setForm] = useState({ user_name: "", password: "" });
+  const [form, setForm] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -19,10 +19,11 @@ export default function LoginForm() {
     setError("");
 
     try {
-      await login(form.user_name, form.password);
+      await login(form.username, form.password);
 
-      // Redirect to Verify page
-      navigate("/verify");
+      // Redirect to dashboard
+      const from = location.state?.from?.pathname || "/dashboard";
+      navigate(from, { replace: true });
     } catch (err) {
       setError(err.message || "Invalid credentials. Try again.");
     }
@@ -49,8 +50,8 @@ export default function LoginForm() {
             <label className="block text-sm font-medium">Username</label>
             <input
               type="text"
-              name="user_name"
-              value={form.user_name}
+              name="username"
+              value={form.username}
               onChange={handleChange}
               className="w-full border p-2 rounded-md"
             />

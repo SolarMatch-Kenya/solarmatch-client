@@ -1,7 +1,7 @@
 // Manages authentication state and user info
 
 import { createContext, useContext, useState, useEffect } from "react";
-import { loginService, logoutService, getStoredUser, confirmCodeService } from "../services/authService";
+import { loginService, logoutService, getStoredUser, registerService } from "../services/authService";
 
 export const AuthContext = createContext();
 
@@ -9,7 +9,6 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
-  const API_URL = "http://127.0.0.1:5000/api/auth";
 
   // Restore user & token on app load
   useEffect(() => {
@@ -22,25 +21,20 @@ export function AuthProvider({ children }) {
   }, []);
 
   // Login (using service)
-  const login = async (user_name, password) => {
-    // Only triggers OTP, does not set user yet
-    await loginService(user_name, password);
-    localStorage.setItem("pendingUser", JSON.stringify({ user_name }));
+  const login = async (username, password) => {
+    const { user: loggedInUser, token: accessToken } = await loginService(username, password);
+    setUser(loggedInUser);
+    setToken(accessToken);
+    return { user: loggedInUser, token: accessToken };
   };
 
-  const verifyOTP = async (user_name, code) => {
-    const data = await confirmCodeService(user_name, code);
-
-    // Save user & token in context
-    setUser(data.user);
-    setToken(data.access_token);
-
-    localStorage.setItem("user", JSON.stringify(data.user));
-    localStorage.setItem("token", data.access_token);
-
-    return data;
+  // Register (using service)
+  const register = async (full_name, email, password, phone_number) => {
+    const { user: registeredUser, token: accessToken } = await registerService(full_name, email, password, phone_number);
+    setUser(registeredUser);
+    setToken(accessToken);
+    return { user: registeredUser, token: accessToken };
   };
-
 
   // Logout (using service)
   const logout = () => {
@@ -53,7 +47,7 @@ export function AuthProvider({ children }) {
     try {
       // This depends on how your backend is set up.
       // Example if you have an API endpoint for this:
-      const response = await fetch("http://localhost:5000/api/auth/forgot-password", {
+      const response = await fetch("http://127.0.0.1:5000/api/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -77,7 +71,7 @@ export function AuthProvider({ children }) {
   };
 
 
-  const value = { user, token, login, logout, verifyOTP, loading, resetPassword, updateUser };
+  const value = { user, token, login, register, logout, loading, resetPassword, updateUser };
 
   return (
     <AuthContext.Provider value={value}>
