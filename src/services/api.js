@@ -21,4 +21,21 @@ API.interceptors.request.use(
   }
 );
 
+API.interceptors.response.use(
+  (response) => response, // Pass through successful responses
+  (error) => {
+    // Check if it's a 401 Unauthorized error
+    if (error.response && error.response.status === 401) {
+      // Clear token and user from storage
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      
+      // Redirect to login page
+      // We use window.location to force a full refresh, clearing all state
+      window.location.href = '/login?session=expired';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default API;
