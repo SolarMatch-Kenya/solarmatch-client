@@ -18,7 +18,7 @@ const adminLinks = [
   { name: 'Dashboard', icon: 'dashboard', path: '/admin-dashboard' },
   { name: 'Users', icon: 'group', path: '/admin-dashboard/user-management' },
   { name: 'Installers', icon: 'engineering', path: '/admin-dashboard/installer-management' },
-  { name: 'Analytics', icon: 'analytics', path: '/admin-dashboard/content' },
+  { name: 'Content', icon: 'analytics', path: '/admin-dashboard/content' },
 ];
 
 const installerLinks = [

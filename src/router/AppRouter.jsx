@@ -1,7 +1,7 @@
 // Handles navigation and route protection
 // Defines all app routes using React Router
 
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from '../components/common/ProtectedRoute';
 import Home from "../pages/public/Home";
 import About from "../pages/public/About"
@@ -21,6 +21,11 @@ import AnalysisResult from "../pages/dashboard/AnalysisResult";
 import EnergyData from "../pages/dashboard/EnergyData";
 import Installers from "../pages/dashboard/Installers";
 import Profile from "../pages/dashboard/Profile";
+import AdminDashboard from "../pages/AdminDashboard";
+import AdminOverview from "../pages/admin/AdminOverview";
+import UserManagement from "../pages/admin/UserManagement";
+import InstallerManagement from "../pages/admin/InstallerManagement";
+import Content from "../pages/admin/Content";
 
 function AppRouter() {
     return (
@@ -38,6 +43,7 @@ function AppRouter() {
             <Route path='/analysis' element={<Analysis />}/>
             <Route path="/installer-contract" element={<ProtectedRoute><InstallerContract /></ProtectedRoute>} />
 
+            {/* regular user routes */}
             <Route path='/dashboard' element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
                 <Route index element={<Dashboard/>}/>
                 <Route path='analysis-result' element={<AnalysisResult/>}/>
@@ -46,12 +52,15 @@ function AppRouter() {
                 <Route path='installers' element={<Installers/>}/>
                 <Route path='profile' element={<Profile/>}/> */
             </Route>
-            {/* <Route path='/admin-dashboard' element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>}>
-                <Route index element={AdminOverview}/>
-                <Route path='/admin-dashboard/user-management' element={UserManagement}/>
-                <Route path='/admin-dashboard/installer-management' element={InstallerManagement}/>
-                <Route path='/admin-dashboard/content' element={Content}/>
-            <Route/> */}
+
+            {/* admin routes */}
+            <Route path='/admin-dashboard' element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>}>
+                <Route index element={<AdminOverview />}/>
+                <Route path='user-management' element={<UserManagement />}/>
+                <Route path='installer-management' element={<InstallerManagement />}/>
+                <Route path='content' element={<Content />}/>
+            </Route>
+
             {/* <Route path='/installer-dashboard' element={<ProtectedRoute><InstallerDashboard /></ProtectedRoute>}>
                 <Route index element={<InstallerOverview />} />
                 <Route path="leads" element={<CustomerLeads />} />

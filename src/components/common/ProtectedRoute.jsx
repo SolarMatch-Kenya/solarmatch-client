@@ -16,9 +16,13 @@ export default function ProtectedRoute({ children, role }) {
     return <Navigate to={`/login/${role}`} replace />;
   }
 
-  // Role mismatch? (for extra security)
   if (role && user.role !== role) {
-    return <Navigate to="/" replace />;
+    // User is logged in, but wrong role. Send them to their default dashboard.
+    if (user.role === 'admin') {
+      return <Navigate to="/admin-dashboard" replace />;
+    }
+    // Default for all other roles
+    return <Navigate to="/dashboard" replace />;
   }
 
   // if installer contract isn't signed

@@ -8,7 +8,7 @@ export default function DashboardLayout() {
     <div className="flex min-h-screen bg-white">
       <SideBar />
       <main className="flex-1 p-6 lg:p-10">
-        <Outlet /> {/* This renders the active child route (e.g., AnalysisResult) */}
+        <Outlet /> 
       </main>
     </div>
   );
