@@ -16,6 +16,15 @@ export default function ProtectedRoute({ children, role }) {
     return <Navigate to={`/login/${role}`} replace />;
   }
 
+  if (user.password_reset_required) {
+    // If they are on the change-password page, let them stay
+    if (location.pathname === '/change-password') {
+      return children;
+    }
+    // Otherwise, force them to the change-password page
+    return <Navigate to="/change-password" replace />;
+  }
+
   if (role && user.role !== role) {
     // User is logged in, but wrong role. Send them to their default dashboard.
     if (user.role === 'admin') {

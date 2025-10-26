@@ -108,3 +108,11 @@ const InstallerOverview = () => {
 };
 
 export default InstallerOverview;
+
+
+
+
+// --- NEW INSTALLER CREATED ---
+// Email: johndoe@foreversolar.com
+// Username: INS-John-8734
+// Temporary Password: Solar6562!

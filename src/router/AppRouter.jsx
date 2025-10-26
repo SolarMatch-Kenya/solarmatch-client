@@ -26,6 +26,7 @@ import AdminOverview from "../pages/admin/AdminOverview";
 import UserManagement from "../pages/admin/UserManagement";
 import InstallerManagement from "../pages/admin/InstallerManagement";
 import Content from "../pages/admin/Content";
+import ChangePassword from "../pages/auth/ChangePassword";
 
 function AppRouter() {
     return (
@@ -42,6 +43,7 @@ function AppRouter() {
             <Route path="/verify" element={<VerifyCode />} />
             <Route path='/analysis' element={<Analysis />}/>
             <Route path="/installer-contract" element={<ProtectedRoute><InstallerContract /></ProtectedRoute>} />
+            <Route path="/change-password" element={<ProtectedRoute><ChangePassword /></ProtectedRoute>} />
 
             {/* regular user routes */}
             <Route path='/dashboard' element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
