@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Eye, Edit2, ShieldBan, ChevronDown } from 'lucide-react';
+// 1. Import the 'Unlock' icon for the unban button
+import { Search, Eye, Edit2, ShieldBan, ChevronDown, Unlock } from 'lucide-react';
 import API from '../../services/api';
 import {
   Pagination,
@@ -9,7 +10,7 @@ import {
   PaginationNext,
   PaginationPrevious,
   PaginationEllipsis
-} from '../../components/common/Pagination'; // Assuming Pagination.jsx is here
+} from '../../components/common/Pagination';
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
@@ -18,32 +19,81 @@ const UserManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  // Fetch users from the new API endpoint
+  // --- 2. Add state for search ---
+  const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+
+  // --- 3. Add a debouncer for the search input ---
+  // This prevents an API call on every single keystroke
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchTerm);
+      setCurrentPage(1); // Reset to page 1 on a new search
+    }, 500); // 500ms delay
+    
+    return () => clearTimeout(timer); // Cleanup timer
+  }, [searchTerm]);
+
+  // --- 4. Update data fetching to include search ---
   useEffect(() => {
     const fetchUsers = async () => {
       setLoading(true);
       try {
         const res = await API.get('/admin/users', {
-          params: { page: currentPage, per_page: 8 } // Show 8 users per page
+          params: { 
+            page: currentPage, 
+            per_page: 8,
+            search: debouncedSearch // Send the debounced search term
+          }
         });
         setUsers(res.data.users);
         setTotalPages(res.data.pagination.total_pages);
+        setError(null); // Clear previous errors
       } catch (err) {
         setError(err.response?.data?.error || "Failed to fetch users");
+        setUsers([]); // Clear users on error
       }
       setLoading(false);
     };
 
     fetchUsers();
-  }, [currentPage]); // Re-run this effect when currentPage changes
+  // Re-run when page or debounced search term changes
+  }, [currentPage, debouncedSearch]); 
 
   const handlePageChange = (page) => {
     if (page < 1 || page > totalPages) return;
     setCurrentPage(page);
   };
+  
+  // --- 5. Add handlers for Ban/Unban ---
+  const handleBanUser = async (userId) => {
+    if (!window.confirm("Are you sure you want to ban this user?")) return;
+
+    try {
+      await API.put(`/admin/users/${userId}/ban`);
+      // Update the user's role in the local state
+      setUsers(users.map(u => 
+        u.id === userId ? { ...u, role: 'banned' } : u
+      ));
+    } catch (err) {
+      alert("Failed to ban user: " + err.response?.data?.error);
+    }
+  };
+
+  const handleUnbanUser = async (userId) => {
+    try {
+      await API.put(`/admin/users/${userId}/unban`);
+      // Update the user's role in the local state
+      setUsers(users.map(u => 
+        u.id === userId ? { ...u, role: 'customer' } : u
+      ));
+    } catch (err) {
+      alert("Failed to unban user: " + err.response?.data?.error);
+    }
+  };
 
   // Helper to capitalize the first letter
-  const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+  const capitalize = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : '');
 
   return (
     <div className="p-6 h-full">
@@ -52,13 +102,17 @@ const UserManagement = () => {
       {/* Search and Filters */}
       <div className="flex flex-col md:flex-row gap-4 mb-6">
         <div className="relative grow">
+          {/* --- 6. Wire up the search input --- */}
           <input
             type="text"
-            placeholder="Search by name, email, or ID..."
+            placeholder="Search by name, email, or username..."
             className="w-full p-3 pl-12 bg-gray-100 rounded-lg border border-gray-200"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
         </div>
+        {/* TODO: Wire up filter dropdowns */}
         <button className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200 min-w-[150px]">
           County <ChevronDown className="w-4 h-4 text-gray-400" />
         </button>
@@ -84,6 +138,8 @@ const UserManagement = () => {
               <tr><td colSpan="5" className="p-4 text-center">Loading...</td></tr>
             ) : error ? (
               <tr><td colSpan="5" className="p-4 text-center text-red-500">{error}</td></tr>
+            ) : users.length === 0 ? (
+              <tr><td colSpan="5" className="p-4 text-center text-gray-500">No users found.</td></tr>
             ) : (
               users.map((user) => (
                 <tr key={user.id} className="hover:bg-gray-50">
@@ -102,11 +158,14 @@ const UserManagement = () => {
                     {user.county || 'N/A'}
                   </td>
                   <td className="p-4 whitespace-nowrap text-sm">
+                    {/* --- 7. Add styling for 'banned' role --- */}
                     <span 
                       className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        user.role === 'installer' 
+                        user.role === 'customer' 
+                          ? 'bg-green-100 text-green-800'
+                          : user.role === 'installer'
                           ? 'bg-blue-100 text-blue-800' 
-                          : 'bg-green-100 text-green-800'
+                          : 'bg-red-100 text-red-800' // Banned
                       }`}
                     >
                       {capitalize(user.role)}
@@ -115,7 +174,25 @@ const UserManagement = () => {
                   <td className="p-4 whitespace-nowrap text-sm text-gray-500">
                     <button className="p-1 hover:text-blue-600"><Eye className="w-4 h-4" /></button>
                     <button className="p-1 hover:text-green-600 ml-2"><Edit2 className="w-4 h-4" /></button>
-                    <button className="p-1 hover:text-red-600 ml-2"><ShieldBan className="w-4 h-4" /></button>
+                    
+                    {/* --- 8. Add conditional Ban/Unban button --- */}
+                    {user.role === 'banned' ? (
+                      <button 
+                        className="p-1 hover:text-yellow-600 ml-2" 
+                        onClick={() => handleUnbanUser(user.id)}
+                        title="Unban User"
+                      >
+                        <Unlock className="w-4 h-4" />
+                      </button>
+                    ) : (
+                      <button 
+                        className="p-1 hover:text-red-600 ml-2" 
+                        onClick={() => handleBanUser(user.id)}
+                        title="Ban User"
+                      >
+                        <ShieldBan className="w-4 h-4" />
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))
@@ -136,8 +213,7 @@ const UserManagement = () => {
               />
             </PaginationItem>
             
-            {/* We will implement full pagination logic later */}
-            {/* For now, a simple page number display */}
+            {/* TODO: Add full page number logic if needed */}
             <PaginationItem>
               <PaginationLink isActive>
                 {currentPage}
