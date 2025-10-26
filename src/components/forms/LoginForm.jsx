@@ -9,7 +9,7 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useAuth();
-  const [form, setForm] = useState({ username: "", password: "" });
+  const [form, setForm] = useState({ login_identifier: "", password: "" });
   const [error, setError] = useState("");
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -19,7 +19,7 @@ export default function LoginForm() {
     setError("");
 
     try {
-      await login(form.username, form.password);
+      await login(form.login_identifier, form.password);
 
       // Redirect to dashboard
       const from = location.state?.from?.pathname || "/dashboard";
@@ -34,8 +34,7 @@ export default function LoginForm() {
       <Link to='/'>
         <div className="absolute top-6 left-6 flex items-center gap-2 text-gray-800 hover:text-[#f79436] transition">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
-          </svg>
+                          <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>          </svg>
           <p>Back to homepage</p>
         </div>
       </Link>
@@ -47,11 +46,11 @@ export default function LoginForm() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium">Username</label>
+            <label className="block text-sm font-medium">Username or Email</label>
             <input
               type="text"
-              name="username"
-              value={form.username}
+              name="login_identifier"
+              value={form.login_identifier}
               onChange={handleChange}
               className="w-full border p-2 rounded-md"
             />

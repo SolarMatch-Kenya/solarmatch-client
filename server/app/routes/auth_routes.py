@@ -53,10 +53,10 @@ def register():
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
-    username = request.json.get('username', None)
+    login_identifier = request.json.get('login_identifier', None)
     password = request.json.get('password', None)
 
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter((User.email == login_identifier) | (User.username == login_identifier)).first()
 
     if user and user.check_password(password):
         access_token = create_access_token(identity=user.id)

@@ -5,11 +5,11 @@ import { isTokenExpired } from "../utils/helpers";
 const API_URL = "http://127.0.0.1:5000/api/auth"; // adjust to the solarmatch backend
 
 // Login
-export async function loginService(username, password) {
+export async function loginService(login_identifier, password) {
   const response = await fetch(`${API_URL}/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ login_identifier, password }),
   });
 
   const data = await response.json();

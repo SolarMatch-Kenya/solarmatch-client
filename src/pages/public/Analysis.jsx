@@ -1,15 +1,16 @@
-// this is where the roof analysis details will be collected
+import React from 'react';
+import DashboardLayout from '../../components/layout/DashboardLayout';
+import AnalysisForm from '../../components/forms/AnalysisForm';
 
-import AnalysisForm from "../../components/forms/AnalysisForm";
-import Navbar from "../../components/layout/Navbar";
-import Footer from "../../components/layout/Footer";
-
-export default function Analysis() {
+const Analysis = () => {
     return (
-        <>
-           <Navbar />
-           <AnalysisForm />
-           <Footer />
-        </>
-    )
-}
+        <DashboardLayout>
+            <div className="container mx-auto px-6 py-12 max-w-4xl">
+                <h1 className="text-3xl font-bold text-gray-800 mb-6">Start a New Analysis</h1>
+                <AnalysisForm />
+            </div>
+        </DashboardLayout>
+    );
+};
+
+export default Analysis;

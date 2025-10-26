@@ -1,64 +1,76 @@
 import React from 'react';
+import Navbar from '../../components/layout/Navbar';
+import Footer from '../../components/layout/Footer';
+import InstallerCard from '../../components/cards/InstallerCard';
+import Logo from '../../assets/logo-color.svg';
 
 const Installers = () => {
   const installerList = [
     {
       id: 1,
       name: 'Bright Solar Solutions',
-      region: 'Nairobi',
+      description: 'Bright Solar Solutions is a leading solar installer in Nairobi, with over 120 projects completed.',
+      logo: Logo,
       rating: 4.8,
-      projects: 120,
-      contact: 'info@brightsolar.co.ke',
+      reviews: 45,
+      contact: '+254 712 345 678',
     },
     {
       id: 2,
       name: 'Green Energy Installers',
-      region: 'Mombasa',
+      description: 'Green Energy Installers is a Mombasa-based solar installer with a focus on residential projects.',
+      logo: Logo,
       rating: 4.5,
-      projects: 90,
-      contact: 'contact@greenenergy.co.ke',
+      reviews: 32,
+      contact: '+254 723 456 789',
     },
     {
       id: 3,
       name: 'SunPower Kenya',
-      region: 'Kisumu',
+      description: 'SunPower Kenya is a top-rated solar installer in Kisumu, with over 150 projects completed.',
+      logo: Logo,
       rating: 4.9,
-      projects: 150,
-      contact: 'sales@sunpower.co.ke',
+      reviews: 67,
+      contact: '+254 734 567 890',
     },
     {
       id: 4,
       name: 'EcoWatt Solar',
-      region: 'Nakuru',
+      description: 'EcoWatt Solar is a Nakuru-based solar installer that specializes in commercial projects.',
+      logo: Logo,
       rating: 4.7,
-      projects: 110,
-      contact: 'hello@ecowatt.co.ke',
+      reviews: 28,
+      contact: '+254 745 678 901',
     },
   ];
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-3xl font-bold mb-6">Available Installers in Your Region</h1>
+    <div className="app-container">
+        <div className="header">
+            <Navbar />
+        </div>
+        <div className="body">
+            {/* Hero section */}
+            <div className="hero relative bg-cover bg-center min-h-screen flex items-center justify-center" style={{ backgroundImage: 'url(/src/assets/contact.jpg)' }}>
+                <div className="absolute inset-0 bg-black/60"></div>
+                <div className="container mx-auto px-8 py-30 mb-8 relative text-center max-w-7xl">
+                    <img src={Logo} alt="SolarMatch Logo" className="h-24 mx-auto mb-8" />
+                    <h1 className="text-4xl font-bold lg:text-5xl text-white tracking-tight">Find the Best Solar Installers in Kenya</h1>
+                    <p className="text-body mt-6 max-w-2xl mx-auto text-lg text-white/90">We have a network of certified and experienced solar installers across Kenya. Browse through our list of installers and find the perfect one for your project.</p>
+                </div>
+            </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {installerList.map((installer) => (
-          <div key={installer.id} className="border p-4 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-2">{installer.name}</h2>
-            <p className="text-gray-600">Region: {installer.region}</p>
-            <p className="text-gray-600">Rating: {installer.rating} / 5</p>
-            <p className="text-gray-600">Projects Completed: {installer.projects}</p>
-            <p className="text-blue-500 mt-2">Contact: {installer.contact}</p>
-            <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-              View Profile
-            </button>
-          </div>
-        ))}
-      </div>
-
-      <p className="text-gray-600 mt-8">
-        These are certified installers available to help you with your solar installation needs.
-        You can view their profiles for more details and to request a quote.
-      </p>
+            <div className="container mx-auto px-6 py-12 max-w-7xl">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {installerList.map((installer) => (
+                        <InstallerCard key={installer.id} installer={installer} />
+                    ))}
+                </div>
+            </div>
+        </div>
+        <div className="footer">
+            <Footer />
+        </div>
     </div>
   );
 };

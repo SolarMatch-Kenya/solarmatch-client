@@ -27,8 +27,10 @@ const SunnyWidget = () => {
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
           animate={{
-            backgroundColor: hover ? "rgba(255,255,255,0.05)" : "transparent",
-            borderColor: hover ? "#f79436" : "transparent",
+            backgroundColor: hover
+              ? "rgba(255, 255, 255, 0.05)"
+              : "rgba(0, 0, 0, 0)",
+            borderColor: hover ? "#f79436" : "rgba(247, 148, 54, 0)",
             borderWidth: hover ? "2px" : "0px",
             padding: hover ? "10px 16px" : "0px",
             borderRadius: hover ? "12px" : "50%",

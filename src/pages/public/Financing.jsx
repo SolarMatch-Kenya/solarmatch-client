@@ -6,18 +6,19 @@ import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 
+import logo from '../../assets/logo-color.svg';
+
 const financers = [
     {
         name: 'Kenya Green Finance',
-        logo: 'https://via.placeholder.com/150',
+        logo: logo,
         description: 'Leading green energy financing solutions in Kenya.',
         location: 'Nairobi, Kenya',
         contact: '0712345678',
         website: 'https://www.kenyagreenfinance.co.ke',
     },
     {
-        name: 'EcoBank Solar Loans',
-        logo: 'https://via.placeholder.com/150',
+        logo: logo,
         description: 'Affordable solar panel loans for Kenyan households.',
         location: 'Mombasa, Kenya',
         contact: '0723456789',
@@ -25,7 +26,7 @@ const financers = [
     },
     {
         name: 'SustainaCredit Kenya',
-        logo: 'https://via.placeholder.com/150',
+        logo: logo,
         description: 'Sustainable financing for renewable energy projects.',
         location: 'Kisumu, Kenya',
         contact: '0734567890',

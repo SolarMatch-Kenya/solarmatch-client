@@ -100,6 +100,8 @@ const TransparencyIcon = () => (
     </svg>
 );
 
+import logo from '../../assets/logo-color.svg';
+
 const About = () => {
     return (
         <div className="app-container">
@@ -160,7 +162,7 @@ const About = () => {
                             <h2 className="text-3xl font-bold lg:text-4xl text-center text-[#006800] mb-8">Meet the Team</h2>
                             <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 <div className="p-6 bg-white rounded-lg shadow-md">
-                                    <img src="https://via.placeholder.com/150" alt="Team Member 1" className="w-32 h-32 rounded-full mx-auto mb-4" />
+                                    <img src={logo} alt="Team Member 1" className="w-32 h-32 rounded-full mx-auto mb-4" />
                                     <h3 className="text-xl font-semibold">Jaymo Kariuki</h3>
                                     <p className="text-base text-gray-600">Team Lead</p>
                                     <div className="mt-4 flex justify-center space-x-4">
@@ -170,7 +172,7 @@ const About = () => {
                                     </div>
                                 </div>
                                 <div className="p-6 bg-white rounded-lg shadow-md">
-                                    <img src="https://via.placeholder.com/150" alt="Team Member 2" className="w-32 h-32 rounded-full mx-auto mb-4" />
+                                    <img src={logo} alt="Team Member 2" className="w-32 h-32 rounded-full mx-auto mb-4" />
                                     <h3 className="text-xl font-semibold">Trish Njuguna</h3>
                                     <p className="text-base text-gray-600">Lead AI Engineer</p>
                                     <div className="mt-4 flex justify-center space-x-4">
@@ -180,7 +182,7 @@ const About = () => {
                                     </div>
                                 </div>
                                 <div className="p-6 bg-white rounded-lg shadow-md">
-                                    <img src="https://via.placeholder.com/150" alt="Team Member 3" className="w-32 h-32 rounded-full mx-auto mb-4" />
+                                    <img src={logo} alt="Team Member 3" className="w-32 h-32 rounded-full mx-auto mb-4" />
                                     <h3 className="text-xl font-semibold">Ayub Foks</h3>
                                     <p className="text-base text-gray-600">Lead Software Engineer</p>
                                     <div className="mt-4 flex justify-center space-x-4">

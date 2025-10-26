@@ -1,13 +1,15 @@
 import React, { useRef, useEffect } from "react";
 import mapboxgl from "mapbox-gl";
+import 'mapbox-gl/dist/mapbox-gl.css';
 
-mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+mapboxgl.accessToken = "pk.eyJ1IjoibXMtbmp1Z3VuYSIsImEiOiJjbWgwcWp4MHkwM2MxMmtzOGR0dGw5ankzIn0.AFdT5eSHW16DCg4eGLoxAA";
 
 export default function MapSelector({ onSelect, width = "100%", height = 400 }) {
   const mapContainer = useRef(null);
   const markerRef = useRef(null);
 
   useEffect(() => {
+    if (mapContainer.current.children.length > 0) return;
     const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/satellite-streets-v12", // hybrid view
@@ -105,6 +107,6 @@ export default function MapSelector({ onSelect, width = "100%", height = 400 }) 
         overflow: "hidden",
         boxShadow: "0 0 10px rgba(0,0,0,0.2)",
       }}
-    />
+    ></div>
   );
 }
