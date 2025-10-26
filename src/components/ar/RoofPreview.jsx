@@ -1,12 +1,10 @@
-// AR/3D view showing how solar panels fit on a user’s roof
 // src/components/ar/RoofPreview.jsx
 import React, { useRef, useEffect, useState, Suspense } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { OrbitControls, useTexture } from "@react-three/drei";
-import * as THREE from "three";
+import { Canvas, useThree } from "@react-three/fiber";
+import { OrbitControls, useTexture, useGLTF } from "@react-three/drei";
 import API from "../../services/api";
 
-// Panel mesh component
+// Panel component is unchanged
 function Panel({ position, rotation, active }) {
   return (
     <mesh position={position} rotation={rotation} castShadow receiveShadow>
@@ -16,7 +14,39 @@ function Panel({ position, rotation, active }) {
   );
 }
 
-function RoofScene({ photoUrl, panelPositions, setExporterScene }) {
+// --- THIS IS THE NEW SCENE FOR THE 3D MODEL ---
+function GLBScene({ modelUrl, panelPositions, setExporterScene }) {
+  // Load the 3D model from the URL
+  const { scene: roofModel } = useGLTF(modelUrl);
+  
+  const { scene } = useThree();
+  useEffect(() => {
+    setExporterScene(scene);
+  }, [scene, setExporterScene]);
+
+  return (
+    <>
+      <ambientLight intensity={0.6} />
+      <directionalLight position={[5, 10, 7]} intensity={1.2} castShadow />
+      
+      {/* Render the loaded roof model */}
+      <primitive object={roofModel} receiveShadow castShadow />
+      
+      {/* Render panels. These will lie flat on the Y=0 plane.
+        This assumes your Gemini prompt provides coordinates
+        that match the GLB model's coordinate system.
+      */}
+      {panelPositions.map((p, i) => (
+        <Panel key={i} position={[p.x, 0.05, p.z]} rotation={[0, 0, 0]} active={true} />
+      ))}
+      
+      <OrbitControls enablePan enableRotate enableZoom />
+    </>
+  );
+}
+
+// --- THIS IS YOUR OLD SCENE, RENAMED ---
+function FlatScene({ photoUrl, panelPositions, setExporterScene }) {
   const texture = useTexture(photoUrl);
   const planeRef = useRef();
 
@@ -26,11 +56,10 @@ function RoofScene({ photoUrl, panelPositions, setExporterScene }) {
     }
   }, []);
 
-  // expose scene for exporting
   const { scene } = useThree();
   useEffect(() => {
     setExporterScene(scene);
-  }, [scene]);
+  }, [scene, setExporterScene]);
 
   return (
     <>
@@ -42,8 +71,11 @@ function RoofScene({ photoUrl, panelPositions, setExporterScene }) {
           <meshStandardMaterial map={texture} />
         </mesh>
 
+        {/* We apply the 90-degree counter-rotation here
+          to make the panels lie flat on the rotated plane.
+        */}
         {panelPositions.map((p, i) => (
-          <Panel key={i} position={[p.x, 0.05, p.z]} rotation={[0, 0, 0]} active={true} />
+          <Panel key={i} position={[p.x, 0.05, p.z]} rotation={[Math.PI / 2, 0, 0]} active={true} />
         ))}
       </group>
 
@@ -52,20 +84,21 @@ function RoofScene({ photoUrl, panelPositions, setExporterScene }) {
   );
 }
 
-export default function RoofPreview({ photoUrl, panelPositions = [] }) {
+
+// --- THE MAIN COMPONENT ---
+export default function RoofPreview({ photoUrl, panelPositions = [], roofModelUrl = null }) {
   const [exporterScene, setExporterScene] = useState(null);
   const [status, setStatus] = useState("");
 
   const handleExportGLB = async () => {
+    // ... This function remains exactly the same ...
     if (!exporterScene) return;
     setStatus("Exporting...");
-    // Use GLTFExporter from three/examples/jsm/exporters/GLTFExporter
     const { GLTFExporter } = await import("three/examples/jsm/exporters/GLTFExporter.js");
     const exporter = new GLTFExporter();
     exporter.parse(
       exporterScene,
       async (result) => {
-        // result is ArrayBuffer or JSON
         let arrayBuffer;
         if (result instanceof ArrayBuffer) arrayBuffer = result;
         else {
@@ -93,8 +126,23 @@ export default function RoofPreview({ photoUrl, panelPositions = [] }) {
       <div style={{ height: 520 }}>
         <Canvas shadows camera={{ position: [6, 6, 6], fov: 50 }}>
           <Suspense fallback={null}>
-            {/* Pass the props down to the scene */}
-            <RoofScene photoUrl={photoUrl} panelPositions={panelPositions} setExporterScene={setExporterScene} />
+            {/* --- THIS IS THE KEY ---
+              If we have a roofModelUrl, use the new 3D scene.
+              If not, fall back to the old flat image scene.
+            */}
+            {roofModelUrl ? (
+              <GLBScene 
+                modelUrl={roofModelUrl}
+                panelPositions={panelPositions}
+                setExporterScene={setExporterScene}
+              />
+            ) : (
+              <FlatScene 
+                photoUrl={photoUrl}
+                panelPositions={panelPositions}
+                setExporterScene={setExporterScene}
+              />
+            )}
           </Suspense>
         </Canvas>
       </div>

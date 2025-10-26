@@ -87,6 +87,7 @@ const AnalysisResult = () => {
             <RoofPreview 
               photoUrl={data.request.roof_image_url}
               panelPositions={data.result.panel_layout}
+              roofModelUrl={data.result.roof_model_url}
             />
           ) : (
             <div className="p-4 text-center text-gray-500 bg-gray-100 rounded-lg">
