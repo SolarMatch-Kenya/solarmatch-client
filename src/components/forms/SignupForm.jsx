@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Bulb from '../ui/Bulb'
+import API from '../../services/api';
 
 export default function SignupForm() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ export default function SignupForm() {
 
   // Validation schema
   const SignupSchema = Yup.object({
+    full_name: Yup.string().required("Required"),
     email: Yup.string().email("Invalid email").required("Required"),
     password: Yup.string().min(6, "At least 6 characters").required("Required"),
     confirmPassword: Yup.string()
@@ -26,38 +28,35 @@ export default function SignupForm() {
   const handleSubmit = async (values, { setSubmitting }) => {
     setError("");
     try {
-      const response = await fetch("http://127.0.0.1:5000/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          full_name: values.full_name,
-          email: values.email,
-          password: values.password,
-          phone_number: values.phone_number || null,
-        }),
+      // 2. Use API.post
+      const response = await API.post("/auth/register", {
+        full_name: values.full_name,
+        email: values.email,
+        password: values.password,
+        phone_number: values.phone_number || null,
       });
 
-      if (!response.ok) throw new Error("Signup failed");
-
-      const data = await response.json();
-      // Assuming backend returns { user, token }
-      if (response.ok) {
-        // Save the username from backend (e.g., CUS-Trish-1234)
-        localStorage.setItem("user_name", data.user_name);
-
-        // Automatically log in using the username & password
-        await login(data.user_name, values.password);
-
-        alert("Signup successful! Please check your email for a confirmation code.");
-      } else {
-        alert(data.message || "Signup failed.");
+      if (response.status !== 201) { // <-- Check for 201 Created
+        throw new Error(response.data.message || "Signup failed");
+      }
+      
+      const data = response.data;
+      const username = data.user_name; // <-- This is CRITICAL
+      
+      if (!username) {
+        throw new Error("Signup succeeded but did not return a username.");
       }
 
-      // Automatically log in and redirect
-      login(data.user_name, values.password);
-      navigate("/login");
+      // Automatically log in using the username & password
+      await login(username, values.password);
+
+      alert("Signup successful! Please check your email for a confirmation code.");
+      
+      // Redirect to verification page
+      navigate("/verify"); // <-- Redirect to verify, not login
+
     } catch (err) {
-      setError(err.message || "Something went wrong");
+      setError(err.response?.data?.message || err.message || "Something went wrong");
     } finally {
       setSubmitting(false);
     }
@@ -137,6 +136,7 @@ export default function SignupForm() {
                     name="password"
                     type="password"
                     placeholder="Create a password"
+                    autoComplete="current-password"
                     className="w-full px-4 py-2 border rounded-[10px] outline-none focus:ring-2 focus:ring-[#f79436]"
                   />
                   <ErrorMessage
@@ -152,6 +152,7 @@ export default function SignupForm() {
                     name="confirmPassword"
                     type="password"
                     placeholder="Confirm your password"
+                    autoComplete="current-password"
                     className="w-full px-4 py-2 border rounded-[10px] outline-none focus:ring-2 focus:ring-[#f79436]"
                   />
                   <ErrorMessage

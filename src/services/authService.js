@@ -1,33 +1,29 @@
 // Handles login/signup/logout API requests
 // src/services/authService.js
-import { isTokenExpired } from "../utils/helpers";
+// src/services/authService.js
 
-const API_URL = "http://127.0.0.1:5000/api/auth"; // adjust to the solarmatch backend
+import { isTokenExpired } from "../utils/helpers";
+import API from './api'; // <-- 1. Import your axios instance
 
 // Login
 export async function loginService(user_name, password) {
-  const response = await fetch(`${API_URL}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ user_name, password }),
-  });
+  // 2. Use API.post. Note: /auth/login (no base URL)
+  const response = await API.post('/auth/login', { user_name, password });
 
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.message || "Login failed");
+  // 3. Axios puts data in response.data
+  const data = response.data;
+  if (response.status !== 200) throw new Error(data.message || "Login failed");
 
   // Backend sends: "Confirmation code sent to email"
   return data;
 }
 
 export async function confirmCodeService(user_name, code) {
-  const response = await fetch(`${API_URL}/confirm`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ user_name, code }),
-  });
+  // 4. Use API.post
+  const response = await API.post('/auth/confirm', { user_name, code });
 
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.message || "Invalid code");
+  const data = response.data;
+  if (response.status !== 200) throw new Error(data.message || "Invalid code");
 
   // Backend returns { access_token, user }
   localStorage.setItem("token", data.access_token);
@@ -35,7 +31,6 @@ export async function confirmCodeService(user_name, code) {
 
   return data;
 }
-
 
 // Logout
 export function logoutService() {

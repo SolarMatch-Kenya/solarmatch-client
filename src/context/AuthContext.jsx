@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 import { loginService, logoutService, getStoredUser, confirmCodeService } from "../services/authService";
+import API from '../services/api';
 
 export const AuthContext = createContext();
 
@@ -9,7 +10,6 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
-  const API_URL = "http://127.0.0.1:5000/api/auth";
 
   // Restore user & token on app load
   useEffect(() => {
@@ -51,15 +51,10 @@ export function AuthProvider({ children }) {
 
   async function resetPassword(email) {
     try {
-      // This depends on how your backend is set up.
-      // Example if you have an API endpoint for this:
-      const response = await fetch("http://localhost:5000/api/auth/forgot-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
+      // 2. Use API.post
+      const response = await API.post("/auth/forgot-password", { email });
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error("Failed to send reset email");
       }
 

@@ -16,6 +16,11 @@ import Contact from "../pages/public/Contact";
 import HowItWorks from "../pages/public/HowItWorks";
 import Analysis from "../pages/public/Analysis";
 import Financing from "../pages/public/Financing";
+import DashboardLayout from "../components/layout/DashboardLayout";
+import AnalysisResult from "../pages/dashboard/AnalysisResult";
+import EnergyData from "../pages/dashboard/EnergyData";
+import Installers from "../pages/dashboard/Installers";
+import Profile from "../pages/dashboard/Profile";
 
 function AppRouter() {
     return (
@@ -33,13 +38,13 @@ function AppRouter() {
             <Route path='/analysis' element={<Analysis />}/>
             <Route path="/installer-contract" element={<ProtectedRoute><InstallerContract /></ProtectedRoute>} />
 
-            <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>}>
-                {/* <Route index element={<Overview/>}/> */}
-                {/* <Route path='analysis-result' element={<AnalysisResult/>}/> */}
-                <Route path='ARview' element={<ARView/>}/>
-                {/* <Route path='energy-data' element={<EnergyData/>}/>
+            <Route path='/dashboard' element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
+                <Route index element={<Dashboard/>}/>
+                <Route path='analysis-result' element={<AnalysisResult/>}/>
+                <Route path='ar-view' element={<ARView/>}/>
+                <Route path='energy-data' element={<EnergyData/>}/>
                 <Route path='installers' element={<Installers/>}/>
-                <Route path='profile' element={<Profile/>}/> */}
+                <Route path='profile' element={<Profile/>}/> */
             </Route>
             {/* <Route path='/admin-dashboard' element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>}>
                 <Route index element={AdminOverview}/>

@@ -1,83 +1,54 @@
-// Stores user analysis data and AI responses
-
 // src/context/AnalysisContext.jsx
-import React, { createContext, useState, useEffect, useContext } from "react";
-import { AuthContext } from "./AuthContext";
+
+import React, { createContext, useContext } from 'react';
+import API from '../services/api';
+
+// We don't need useAuth anymore
+// import { useAuth } from './AuthContext'; 
 
 export const AnalysisContext = createContext();
 
+export const useAnalysis = () => useContext(AnalysisContext);
+
 export const AnalysisProvider = ({ children }) => {
-  const { user } = useContext(AuthContext);
-  const [analyses, setAnalyses] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [selectedAnalysis, setSelectedAnalysis] = useState(null);
+  // 2. The token is handled by the API interceptor,
+  // so we don't need it here.
+  // const { token } = useAuth(); 
 
-  // 🧠 When a user logs in, load their analyses
-  useEffect(() => {
-    if (user) {
-      loadUserAnalyses();
-    } else {
-      setAnalyses([]);
-    }
-  }, [user]);
-
-  // 🟩 Simulated load (replace with API call later)
-  const loadUserAnalyses = async () => {
-    setLoading(true);
+  const submitAnalysis = async (formData) => {
+    // 1. This FormData setup is correct
+    const data = new FormData();
+    
+    data.append('roofImage', formData.roofImage); // The file object
+    data.append('address', formData.address);
+    data.append('energyConsumption', formData.energyConsumption);
+    data.append('roofType', formData.roofType);
+    
+    // IMPORTANT: Make sure your form is passing these!
+    // I noticed in your AnalysisForm.jsx, you might not be saving
+    // the lat/lon to the state. (See fix below)
+    data.append('latitude', formData.latitude); 
+    data.append('longitude', formData.longitude);
+    
     try {
-      const stored = JSON.parse(localStorage.getItem(`analyses_${user?.id}`)) || [];
-      setAnalyses(stored);
+      // 3. This is the entire fetch() block, replaced with API.post
+      // The URL is just '/analysis/submit' because the base URL
+      // is already in the API instance.
+      const res = await API.post('/analysis/submit', data);
+
+      // 4. Axios puts the response in res.data
+      const result = res.data; 
+      console.log('Submission success:', result);
+      
     } catch (error) {
-      console.error("Failed to load analyses:", error);
-    } finally {
-      setLoading(false);
+      // 5. Improved error logging for Axios
+      console.error("Analysis submission failed:", error.response?.data || error.message);
+      // Handle error display
     }
-  };
-
-  // 🟩 Submit new roof analysis
-  const submitAnalysis = async (data) => {
-    setLoading(true);
-    try {
-      // Simulate backend computation
-      const fakeResult = {
-        ...data,
-        id: Date.now(),
-        roofArea: Math.floor(Math.random() * 120 + 50),
-        potentialSavings: Math.floor(Math.random() * 5000 + 1000),
-        timestamp: new Date().toISOString(),
-      };
-
-      // Save under this user (temporary localStorage persistence)
-      const existing = JSON.parse(localStorage.getItem(`analyses_${user?.id}`)) || [];
-      const updated = [fakeResult, ...existing];
-      localStorage.setItem(`analyses_${user?.id}`, JSON.stringify(updated));
-      setAnalyses(updated);
-      setSelectedAnalysis(fakeResult);
-      return fakeResult;
-    } catch (error) {
-      console.error("Error submitting analysis:", error);
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // 🟩 Select an analysis to view (for ARView or details)
-  const selectAnalysis = (id) => {
-    const found = analyses.find((a) => a.id === id);
-    setSelectedAnalysis(found);
   };
 
   return (
-    <AnalysisContext.Provider
-      value={{
-        analyses,
-        selectedAnalysis,
-        loading,
-        submitAnalysis,
-        selectAnalysis,
-      }}
-    >
+    <AnalysisContext.Provider value={{ submitAnalysis }}>
       {children}
     </AnalysisContext.Provider>
   );

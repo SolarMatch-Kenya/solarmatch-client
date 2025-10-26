@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import API from '../../services/api';
 
 export default function VerifyCode() {
   const navigate = useNavigate();
@@ -24,43 +25,45 @@ export default function VerifyCode() {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     setError("");
-    setIsVerifying(true); // Use your state
+    setIsVerifying(true); 
     try {
       const otpString = values.otp.join("");
       
-      // Call it only ONCE and store the result
-      const data = await verifyOTP(values.user_name, otpString);
+      await verifyOTP(values.user_name, otpString);
 
-      // Now navigate. The auth context is already updated by verifyOTP.
-      navigate("/dashboard", { replace: true });
+      // 2. Check for the redirect flag
+      const pendingRedirect = localStorage.getItem("pendingAnalysisRedirect");
       
-      // You can also remove the redundant setTimeout navigation
+      if (pendingRedirect) {
+        localStorage.removeItem("pendingAnalysisRedirect");
+        navigate("/analysis", { replace: true }); // <-- Go to form
+      } else {
+        navigate("/dashboard", { replace: true }); // <-- Go to dashboard
+      }
       
     } catch (err) {
-      // The error will be "Invalid or expired code" if it's wrong
-      setError(err.message || "Something went wrong");
+      setError(err.response?.data?.message || err.message || "Something went wrong");
     } finally {
       setSubmitting(false);
-      setIsVerifying(false); // Use your state
+      setIsVerifying(false); 
     }
   };
 
   const resendCode = async () => {
     try {
       setResending(true);
-      const email = JSON.parse(localStorage.getItem("pendingUser"))?.email;
-      if (!email) throw new Error("No email found");
+      // 3. Get username from form, not email
+      const pendingUser = JSON.parse(localStorage.getItem("pendingUser"));
+      if (!pendingUser?.user_name) throw new Error("No username found");
 
-      const res = await fetch("http://127.0.0.1:5000/api/auth/resend-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+      // 4. Use API.post and send username
+      await API.post("/auth/resend-otp", {
+        user_name: pendingUser.user_name,
       });
 
-      if (!res.ok) throw new Error("Failed to resend code");
       alert("Verification code resent!");
     } catch (err) {
-      alert(err.message);
+      alert(err.response?.data?.message || err.message);
     } finally {
       setResending(false);
     }

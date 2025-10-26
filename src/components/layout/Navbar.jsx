@@ -13,7 +13,8 @@ const LoginIcon = () => (
 const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const { isLoggedIn, logout, user } = useAuth();
+    const { user, token, logout } = useAuth(); // Get user and token instead of isLoggedIn
+    const isLoggedIn = !!(user && token);
     const dropdownRef = useRef(null);
     const navigate = useNavigate();
 
@@ -87,7 +88,7 @@ const Navbar = () => {
                                 </button>
                                 {isDropdownOpen && (
                                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
-                                        <Link to="/profile" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={() => setIsDropdownOpen(false)}>
+                                        <Link to={user?.role === 'installer' ? '/installer-dashboard' : '/dashboard'} className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={() => setIsDropdownOpen(false)}>
                                             Profile
                                         </Link>
                                         <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
@@ -135,7 +136,7 @@ const Navbar = () => {
                     </Link>
                     {isLoggedIn ? (
                         <>
-                            <Link to="/profile" className="flex items-center text-base font-normal text-[#006800] hover:text-[#f79436] py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
+                            <Link to={user?.role === 'installer' ? '/installer-dashboard' : '/dashboard'} className="flex items-center text-base font-normal text-[#006800] hover:text-[#f79436] py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
                                 Profile
                             </Link>
                             <button onClick={() => { handleLogout(); toggleMobileMenu(); }} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">

@@ -43,7 +43,7 @@ function RoofScene({ photoUrl, panelPositions, setExporterScene }) {
         </mesh>
 
         {panelPositions.map((p, i) => (
-          <Panel key={i} position={[p.x, 0.05, p.z]} rotation={[0, 0, 0]} active={p.active} />
+          <Panel key={i} position={[p.x, 0.05, p.z]} rotation={[0, 0, 0]} active={true} />
         ))}
       </group>
 
@@ -52,21 +52,9 @@ function RoofScene({ photoUrl, panelPositions, setExporterScene }) {
   );
 }
 
-export default function RoofPreview({ data }) {
-  const [panelPositions, setPanelPositions] = useState([]);
+export default function RoofPreview({ photoUrl, panelPositions = [] }) {
   const [exporterScene, setExporterScene] = useState(null);
   const [status, setStatus] = useState("");
-
-  useEffect(() => {
-    // Build a simple grid of panels across the plane (example positions)
-    const positions = [];
-    for (let i = -3; i <= 3; i += 1.8) {
-      for (let j = -3; j <= 3; j += 2.0) {
-        positions.push({ x: i, z: j, active: true });
-      }
-    }
-    setPanelPositions(positions);
-  }, [data]);
 
   const handleExportGLB = async () => {
     if (!exporterScene) return;
@@ -105,7 +93,8 @@ export default function RoofPreview({ data }) {
       <div style={{ height: 520 }}>
         <Canvas shadows camera={{ position: [6, 6, 6], fov: 50 }}>
           <Suspense fallback={null}>
-            <RoofScene photoUrl={data.photoUrl} panelPositions={panelPositions} setExporterScene={setExporterScene} />
+            {/* Pass the props down to the scene */}
+            <RoofScene photoUrl={photoUrl} panelPositions={panelPositions} setExporterScene={setExporterScene} />
           </Suspense>
         </Canvas>
       </div>
