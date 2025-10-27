@@ -41,9 +41,19 @@ export default function VerifyCode() {
       } else {
           if (data.user && data.user.role === 'admin') {
             navigate("/admin-dashboard", { replace: true }); // <-- CORRECT: Go to admin dashboard
+          } else if (data.user.role === 'installer') {
+              // Priority 1: Password reset
+              if (data.user.password_reset_required) {
+                navigate("/change-password", { replace: true });
+              } else if (!data.user.contractAccepted) { 
+                navigate("/installer-contract", { replace: true });
+              } else {
+                navigate("/installer-dashboard", { replace: true });
+              }
           } else {
-            navigate("/dashboard", { replace: true }); // <-- Go to user dashboard
-          }
+            // Send to the main dashboard
+            navigate("/dashboard", { replace: true });
+        }
       }
       
     } catch (err) {

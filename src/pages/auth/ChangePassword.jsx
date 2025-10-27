@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // <-- Add
 import { useAuth } from '../../context/AuthContext';
 import API from '../../services/api';
 
@@ -7,7 +8,8 @@ const ChangePassword = () => {
   const [confirm, setConfirm] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const { logout } = useAuth();
+  const { updateUser } = useAuth(); // <-- Get updateUser
+  const navigate = useNavigate(); // <-- Add
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,12 +26,44 @@ const ChangePassword = () => {
     }
 
     try {
+      // The backend now returns { message: "...", user: { ... } }
       const res = await API.post('/auth/change-password', { new_password: password });
-      setSuccess(res.data.message);
-      // Log the user out after success
+      
+      setSuccess(res.data.message || "Password updated!");
+      
+      let updatedUser;
+      // Update the user in context
+      if (res.data.user) {
+        updateUser(res.data.user);
+        updatedUser = res.data.user; // Store for navigation
+      } else {
+        // Fallback: manually update just the one field
+        updatedUser = (prevUser) => ({ ...prevUser, password_reset_required: false });
+        updateUser(updatedUser);
+      }
+
+      // --- START SMART NAVIGATION ---
       setTimeout(() => {
-        logout(); 
-      }, 2000);
+        // Now, decide where to go next based on the *updated* user
+        if (updatedUser.role === 'installer' && !updatedUser.contractAccepted) {
+          // New installer flow: password done, now sign contract
+          navigate("/installer-contract", { replace: true });
+        
+        } else if (updatedUser.role === 'installer') {
+          // Returning installer (who already signed contract)
+          navigate("/installer-dashboard", { replace: true });
+        
+        } else if (updatedUser.role === 'admin') {
+          // Admin flow
+          navigate("/admin-dashboard", { replace: true });
+        
+        } else {
+          // Default/customer flow
+          navigate("/dashboard", { replace: true });
+        }
+      }, 2000); // 2-second delay to show success message
+      // --- END SMART NAVIGATION ---
+
     } catch (err) {
       setError(err.response?.data?.error || "Failed to update password");
     }
@@ -70,7 +104,7 @@ const ChangePassword = () => {
               type="submit"
               className="w-full bg-[#f79436] text-white py-2 rounded hover:bg-[#e68529]"
             >
-              Set Password & Log Out
+              Set Password & Continue
             </button>
           </form>
         )}
