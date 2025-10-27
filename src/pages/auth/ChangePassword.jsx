@@ -24,7 +24,7 @@ const ChangePassword = () => {
     }
 
     try {
-      const res = await API.post('/account/change-password', { new_password: password });
+      const res = await API.post('/auth/change-password', { new_password: password });
       setSuccess(res.data.message);
       // Log the user out after success
       setTimeout(() => {

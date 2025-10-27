@@ -27,9 +27,6 @@ import UserManagement from "../pages/admin/UserManagement";
 import InstallerManagement from "../pages/admin/InstallerManagement";
 import Content from "../pages/admin/Content";
 import ChangePassword from "../pages/auth/ChangePassword";
-import InstallerDashboard from "../pages/InstallerDashboard"; // Assuming you have this layout
-import InstallerOverview from "../pages/installer/InstallerOverview"; // Placeholder, create this page
-import CustomerLeads from "../pages/installer/CustomerLeads";
 
 function AppRouter() {
     return (
@@ -66,10 +63,11 @@ function AppRouter() {
                 <Route path='content' element={<Content />}/>
             </Route>
 
-            <Route path='/installer-dashboard' element={<ProtectedRoute role="installer"><InstallerDashboard /></ProtectedRoute>}>
+            {/* <Route path='/installer-dashboard' element={<ProtectedRoute><InstallerDashboard /></ProtectedRoute>}>
                 <Route index element={<InstallerOverview />} />
                 <Route path="leads" element={<CustomerLeads />} />
-            </Route>
+                <Route path="roof-analysis" element={<RoofReports />} />
+            </Route> */}
         </Routes>
     )
 }

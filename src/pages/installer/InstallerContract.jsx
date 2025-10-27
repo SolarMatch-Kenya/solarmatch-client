@@ -25,34 +25,43 @@ export default function InstallerContract() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // ... (validation) ...
+
     if (!agree || sigCanvas.current.isEmpty()) {
-       alert("Please agree and sign before submitting.");
-       return;
-     }
+      alert("Please agree and sign before submitting.");
+      return;
+    }
 
     setLoading(true);
     try {
-      const signatureData = sigCanvas.current.getTrimmedCanvas().toDataURL("image/png");
-      const payload = { /* ... signature, signedAt, ipAddress ... */ };
+      const signatureData = sigCanvas.current
+        .getTrimmedCanvas()
+        .toDataURL("image/png");
 
-      // --- 1. Use API instance and correct endpoint ---
-      // No need for manual fetch or Authorization header if using the API instance
-      await API.post(`/installer/contract`, payload);
-      // ---------------------------------------------
+      const payload = {
+        signature: signatureData,
+        signedAt: new Date().toISOString(),
+        ipAddress,
+      };
 
-      // --- 2. Update user state in AuthContext ---
-      // This immediately removes the contract block in ProtectedRoute
-      updateUser({ ...user, contract_accepted: true });
-      // ------------------------------------------
+      const response = await fetch(
+        `http://localhost:5000/api/installers/${user.id}/contract`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
+        }
+      );
 
-      // --- 3. Navigate to Installer Dashboard ---
-      navigate("/installer-dashboard", { replace: true });
-      // ---------------------------------------
+      if (!response.ok) throw new Error("Failed to submit contract");
 
+      updateUser({ ...user, contractAccepted: true });
+      navigate("/dashboard");
     } catch (err) {
-      console.error("Contract Submission Error:", err);
-      alert("Error submitting contract: " + (err.response?.data?.error || err.message));
+      console.error(err);
+      alert("Error submitting contract. Please try again.");
     } finally {
       setLoading(false);
     }

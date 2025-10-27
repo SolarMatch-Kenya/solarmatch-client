@@ -25,44 +25,27 @@ export default function VerifyCode() {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     setError("");
-    setIsVerifying(true);
+    setIsVerifying(true); 
     try {
       const otpString = values.otp.join("");
+      
+      await verifyOTP(values.user_name, otpString);
 
-      // 1. verifyOTP returns { access_token, user }
-      const data = await verifyOTP(values.user_name, otpString);
-      const verifiedUser = data.user; // Get the user object with the flags
-
-      // --- NEW INSTALLER/USER ROUTING LOGIC ---
-      if (verifiedUser.password_reset_required) {
-        // MUST change password first
-        navigate("/change-password", { replace: true });
-      } else if (verifiedUser.role === 'installer' && !verifiedUser.contract_accepted) {
-        // Installer hasn't accepted contract yet
-        navigate("/installer-contract", { replace: true });
-      } else if (verifiedUser.role === 'admin') {
-        // Admin goes to admin dashboard
-        navigate("/admin-dashboard", { replace: true });
-      } else if (verifiedUser.role === 'installer' && verifiedUser.contract_accepted) {
-         // Installer is fully onboarded, go to their dashboard
-         navigate("/installer-dashboard", { replace: true });
+      // 2. Check for the redirect flag
+      const pendingRedirect = localStorage.getItem("pendingAnalysisRedirect");
+      
+      if (pendingRedirect) {
+        localStorage.removeItem("pendingAnalysisRedirect");
+        navigate("/analysis", { replace: true }); // <-- Go to form
       } else {
-        // --- Default for Customers ---
-        const pendingRedirect = localStorage.getItem("pendingAnalysisRedirect");
-        if (pendingRedirect && verifiedUser.role === 'customer') {
-          localStorage.removeItem("pendingAnalysisRedirect");
-          navigate("/analysis", { replace: true }); // Customer was doing analysis
-        } else {
-          navigate("/dashboard", { replace: true }); // Default customer dashboard
-        }
+        navigate("/dashboard", { replace: true }); // <-- Go to dashboard
       }
-      // --- END NEW LOGIC ---
-
+      
     } catch (err) {
-      setError(err.response?.data?.message || err.message || "Something went wrong after verification");
+      setError(err.response?.data?.message || err.message || "Something went wrong");
     } finally {
       setSubmitting(false);
-      setIsVerifying(false);
+      setIsVerifying(false); 
     }
   };
 
