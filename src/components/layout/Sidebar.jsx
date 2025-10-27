@@ -24,7 +24,6 @@ const adminLinks = [
 const installerLinks = [
   { name: 'Overview', icon: 'dashboard', path: '/installer-dashboard' },
   { name: 'Customer Leads', icon: 'assignment_ind', path: '/installer-dashboard/leads' },
-  { name: 'Roof Reports', icon: 'assessment', path: '/installer-dashboard/roof-analysis' },
 ];
 
 const getLinksForRole = (role) => {
