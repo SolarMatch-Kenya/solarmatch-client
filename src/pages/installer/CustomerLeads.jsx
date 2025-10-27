@@ -1,9 +1,7 @@
-
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { installerService } from "../../services/installerService";
 import Loader from "../../components/common/Loader";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import API from '../../services/api';
 
 const CustomerLeads = () => {
   const { user } = useAuth();
@@ -16,42 +14,12 @@ const CustomerLeads = () => {
       if (!user) return;
       try {
         setLoading(true);
-        // const data = await installerService.getCustomerLeads(user.id);
-        // setLeads(data);
-
-        // Mock data for now
-        setTimeout(() => {
-          setLeads([
-            {
-              id: "1",
-              name: "John Doe",
-              location: "Nairobi",
-              potential: "High",
-              status: "New",
-              contact: "john.doe@example.com",
-            },
-            {
-              id: "2",
-              name: "Jane Smith",
-              location: "Mombasa",
-              potential: "Medium",
-              status: "Contacted",
-              contact: "jane.smith@example.com",
-            },
-            {
-              id: "3",
-              name: "Peter Jones",
-              location: "Kisumu",
-              potential: "Low",
-              status: "Qualified",
-              contact: "peter.jones@example.com",
-            },
-          ]);
-          setLoading(false);
-        }, 1000);
+        const res = await API.get('/installer-leads');
+        setLeads(res.data);
       } catch (err) {
         setError("Failed to fetch customer leads.");
         console.error(err);
+      } finally {
         setLoading(false);
       }
     };
@@ -70,11 +38,13 @@ const CustomerLeads = () => {
   return (
     <div className="p-6">
       <h2 className="text-3xl font-bold mb-6">Customer Leads</h2>
-      <Card>
-        <CardHeader>
-          <CardTitle>Your Leads</CardTitle>
-        </CardHeader>
-        <CardContent>
+      
+      {/* --- REPLACEMENT --- */}
+      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="p-6 border-b border-gray-200">
+          <h3 className="text-xl font-semibold text-gray-800">Your Leads</h3>
+        </div>
+        <div className="p-6">
           {leads.length === 0 ? (
             <p>No customer leads available.</p>
           ) : (
@@ -82,64 +52,30 @@ const CustomerLeads = () => {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Location
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Potential
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Status
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Contact
-                    </th>
+                    {/* Updated class for proper padding */}
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Potential</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {leads.map((lead) => (
                     <tr key={lead.id}>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {lead.name}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {lead.location}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {lead.potential}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {lead.status}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {lead.contact}
-                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">{lead.name}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{lead.location}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{lead.potential}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{lead.status}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{lead.contact}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };

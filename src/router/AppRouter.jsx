@@ -26,7 +26,9 @@ import UserManagement from "../pages/admin/UserManagement";
 import InstallerManagement from "../pages/admin/InstallerManagement";
 import Content from "../pages/admin/Content";
 import ChangePassword from "../pages/auth/ChangePassword";
-import InstallerDashboard from '../pages/InstallerDashboard'
+import InstallerDashboard from '../pages/InstallerDashboard';
+import InstallerOverview from "../pages/installer/InstallerOverview";
+import CustomerLeads from "../pages/installer/CustomerLeads";
 
 
 function AppRouter() {
@@ -64,9 +66,9 @@ function AppRouter() {
             </Route>
 
             <Route path='/installer-dashboard' element={<ProtectedRoute><InstallerDashboard /></ProtectedRoute>}>
-                {/* <Route index element={<InstallerOverview />} /> */}
-                {/* <Route path="leads" element={<CustomerLeads />} />
-                <Route path="roof-analysis" element={<RoofReports />} /> */}
+                <Route index element={<InstallerOverview />} />
+                <Route path="leads" element={<CustomerLeads />} />
+                {/* <Route path="roof-analysis" element={<RoofReports />} /> */}
             </Route>
         </Routes>
     )

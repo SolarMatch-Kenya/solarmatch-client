@@ -1,10 +1,6 @@
-
 import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DollarSign, Users, Zap } from "lucide-react";
 import EnergyUsageChart from "../../components/charts/EnergyUsageChart";
 import { useAuth } from "../../context/AuthContext";
-import { installerService } from "../../services/installerService";
 import Loader from "../../components/common/Loader";
 
 const InstallerOverview = () => {
@@ -18,9 +14,6 @@ const InstallerOverview = () => {
       if (!user) return;
       try {
         setLoading(true);
-        // const data = await installerService.getOverview(user.id);
-        // setStats(data);
-
         // Mock data for now
         setTimeout(() => {
           setStats({
@@ -42,7 +35,11 @@ const InstallerOverview = () => {
   }, [user]);
 
   if (loading) {
-    return <Loader />;
+    return (
+      <div className="flex justify-center items-center w-full p-6" style={{ minHeight: '400px' }}>
+        <Loader />
+      </div>
+    );
   }
 
   if (error) {
@@ -57,62 +54,58 @@ const InstallerOverview = () => {
     <div className="p-6">
       <h2 className="text-3xl font-bold mb-6">Overview</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">New Leads</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
+        
+        {/* --- Card 1 Replacement --- */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <h4 className="text-sm font-medium">New Leads</h4>
+            <span className="text-gray-400">[Users]</span> {/* Icon Placeholder */}
+          </div>
+          <div>
             <div className="text-2xl font-bold">{stats.newLeads}</div>
-            <p className="text-xs text-muted-foreground">+5 since last week</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Pending Installations
-            </CardTitle>
-            <Zap className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
+            <p className="text-xs text-gray-500">+5 since last week</p>
+          </div>
+        </div>
+
+        {/* --- Card 2 Replacement --- */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <h4 className="text-sm font-medium">Pending Installations</h4>
+            <span className="text-gray-400">[Zap]</span> {/* Icon Placeholder */}
+          </div>
+          <div>
             <div className="text-2xl font-bold">
               {stats.pendingInstallations}
             </div>
-            <p className="text-xs text-muted-foreground">2 waiting for parts</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Total Earnings (Monthly)
-            </CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
+            <p className="text-xs text-gray-500">2 waiting for parts</p>
+          </div>
+        </div>
+
+        {/* --- Card 3 Replacement --- */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <h4 className="text-sm font-medium">Total Earnings (Monthly)</h4>
+            <span className="text-gray-400">[$]</span> {/* Icon Placeholder */}
+          </div>
+          <div>
             <div className="text-2xl font-bold">${stats.totalEarnings}</div>
-            <p className="text-xs text-muted-foreground">+15% from last month</p>
-          </CardContent>
-        </Card>
+            <p className="text-xs text-gray-500">+15% from last month</p>
+          </div>
+        </div>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Recent Activity</CardTitle>
-        </CardHeader>
-        <CardContent>
+      {/* --- Chart Card Replacement --- */}
+      <div className="bg-white rounded-lg shadow-md">
+        <div className="p-6 border-b border-gray-200">
+          <h3 className="text-xl font-semibold text-gray-800">Recent Activity</h3>
+        </div>
+        <div className="p-6">
           <EnergyUsageChart />
-        </CardContent>
-      </Card>
+        </div>
+      </div>
+
     </div>
   );
 };
 
 export default InstallerOverview;
-
-
-
-
-// --- NEW INSTALLER CREATED ---
-// Email: johndoe@foreversolar.com
-// Username: INS-John-8734
-// Temporary Password: Solar6562!
