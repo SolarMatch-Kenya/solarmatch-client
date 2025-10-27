@@ -6,7 +6,6 @@ import ProtectedRoute from '../components/common/ProtectedRoute';
 import Home from "../pages/public/Home";
 import About from "../pages/public/About"
 import Register from "../pages/auth/Register";
-import ARView from "../pages/dashboard/ARView";
 import Login from "../pages/auth/Login";
 import Dashboard from "../pages/Dashboard";
 import ForgotPassword from '../pages/auth/ForgotPassword'
@@ -51,7 +50,6 @@ function AppRouter() {
             <Route path='/dashboard' element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
                 <Route index element={<Dashboard/>}/>
                 <Route path='analysis-result' element={<AnalysisResult/>}/>
-                <Route path='ar-view' element={<ARView/>}/>
                 <Route path='energy-data' element={<EnergyData/>}/>
                 <Route path='installers' element={<Installers/>}/>
                 <Route path='profile' element={<Profile/>}/>

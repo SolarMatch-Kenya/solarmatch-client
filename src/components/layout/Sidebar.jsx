@@ -8,7 +8,6 @@ import logoSrc from '../../assets/logo-color.svg';
 const userLinks = [
   { name: 'Dashboard', icon: 'dashboard', path: '/dashboard' },
   { name: 'AI Analysis', icon: 'auto_awesome', path: '/dashboard/analysis-result' },
-  { name: 'AR Preview', icon: 'view_in_ar', path: '/dashboard/ar-view' },
   { name: 'Energy Data', icon: 'show_chart', path: '/dashboard/energy-data' },
   { name: 'Find Installers', icon: 'engineering', path: '/dashboard/installers' },
   { name: 'Profile', icon: 'person', path: '/dashboard/profile' },

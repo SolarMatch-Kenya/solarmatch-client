@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import EmptyState from '../../components/common/EmptyState';
 import RoofPreview from "../../components/ar/RoofPreview";
 import API from '../../services/api';
+import { ArrowDownTrayIcon, ShareIcon } from '@heroicons/react/24/outline';
 
 const AnalysisResult = () => {
   const [data, setData] = useState(null);
@@ -10,18 +11,16 @@ const AnalysisResult = () => {
   const [error, setError] = useState(null);
   const [noData, setNoData] = useState(false);
   const [isPending, setIsPending] = useState(false);
+  const [activeTab, setActiveTab] = useState('summary');
   const { token } = useAuth();
 
   useEffect(() => {
+    
     const fetchResults = async () => {
       try {
         setLoading(true);
         setIsPending(false);
-        
-        // 2. Use API.get() (no need for headers, it's done by the interceptor)
         const res = await API.get('/analysis/latest');
-
-        // 3. Axios puts the response data in `res.data`
         const result = res.data; 
         
         if (result.status === 'PENDING') {
@@ -32,7 +31,6 @@ const AnalysisResult = () => {
           setData(result);
         }
       } catch (err) {
-        // 4. Handle Axios errors
         if (err.response && err.response.status === 404) {
           setNoData(true);
         } else {
@@ -50,52 +48,144 @@ const AnalysisResult = () => {
     }
   }, [token]);
 
+  // --- Your existing loading/error states ---
   if (loading) return <div className="p-6">Loading analysis...</div>;
-
   if (noData) return <EmptyState />;
   if (isPending) return <div className="p-6 text-blue-600">Your analysis is still processing. Please check back in a moment.</div>;
   if (error) return <div className="p-6 text-red-600">{error}</div>;
   if (!data) return <div className="p-6">No analysis data found.</div>;
 
+  // --- New Render Logic ---
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-3xl font-bold mb-6">AI Energy Analysis Results</h1>
-
-      {/* You now have 'data.result' and 'data.request'
-        Update your JSX to access 'data.result'
-      */}
-      <div className="mb-4">
-        <h2 className="text-xl font-semibold text-gray-700">Optimal Panel Count:</h2>
-        <p className="text-2xl text-green-600">{data.result.panel_count} panels</p>
+    <div className="p-6 md:p-8 bg-gray-50 min-h-full">
+      {/* Header */}
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold text-gray-800">
+          {/* Use placeholder or real address if available */}
+          Solar Analysis for {data.request.address || "123 Sunshine Ave, Nairobi"}
+        </h1>
+        <p className="text-gray-600">
+          Analysis completed: {new Date(data.created_at).toLocaleDateString()}
+        </p>
       </div>
 
-      <div className="mb-4">
-        <h2 className="text-xl font-semibold text-gray-700">Estimated Annual Production:</h2>
-        <p className="text-2xl text-blue-600">{data.result.annual_production_kwh} kWh</p>
+      {/* Action Buttons */}
+      <div className="flex space-x-3 mb-6">
+        <button className="flex items-center gap-2 bg-white border border-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-100">
+          <ArrowDownTrayIcon className="w-5 h-5" />
+          Download PDF
+        </button>
+        <button className="flex items-center gap-2 bg-white border border-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-100">
+          <ShareIcon className="w-5 h-5" />
+          Share
+        </button>
+        <button className="flex items-center gap-2 bg-[#f79436] text-white font-semibold py-2 px-4 rounded-lg hover:bg-[#e68529]">
+          Get a Quote
+        </button>
       </div>
 
-      <div className="mb-4">
-        <h2 className="text-xl font-semibold text-gray-700">Projected Annual Savings:</h2>
-        <p className="text-2xl text-purple-600">KSh {data.result.annual_savings_ksh.toLocaleString()}</p>
-      </div>
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        {/* Left Column (Stats & Info) */}
+        <div className="lg:col-span-3 space-y-6">
+          {/* Stat Cards */}
+          <div className="grid grid-cols-2 gap-4">
+            {/* Installation Cost (Placeholder data) */}
+            <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+              <h3 className="text-gray-500 mb-1">Installation Cost</h3>
+              <p className="text-2xl font-bold text-gray-800">KSh 850,000</p>
+              <p className="text-sm text-gray-500">vs. last month's estimate</p>
+            </div>
+            {/* Annual Savings (Real data) */}
+            <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+              <h3 className="text-gray-500 mb-1">Annual Savings</h3>
+              <p className="text-2xl font-bold text-green-600">KSh {data.result.annual_savings_ksh.toLocaleString()}</p>
+              <p className="text-sm text-green-500">Increased potential</p>
+            </div>
+            {/* ROI (Placeholder data) */}
+            <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+              <h3 className="text-gray-500 mb-1">Return on Investment</h3>
+              <p className="text-2xl font-bold text-gray-800">6.8 years</p>
+              <p className="text-sm text-red-500">Slightly longer</p>
+            </div>
+            {/* CO2 Reduction (Placeholder data) */}
+            <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+              <h3 className="text-gray-500 mb-1">CO₂ Reduction</h3>
+              <p className="text-2xl font-bold text-blue-600">2.1 tonnes/yr</p>
+              <p className="text-sm text-green-500">Better than average</p>
+            </div>
+          </div>
 
-      {/* Add the RoofPreview here */}
-      {data.request.roof_image_url && (
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold mb-4">3D Roof Preview</h2>
-          {data.result.panel_layout ? (
+          {/* Tabbed Info Section */}
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+            {/* Tab Headers */}
+            <div className="flex border-b border-gray-200 mb-4">
+              <button
+                onClick={() => setActiveTab('summary')}
+                className={`py-2 px-4 font-semibold ${activeTab === 'summary' ? 'border-b-2 border-yellow-500 text-gray-800' : 'text-gray-500'}`}
+              >
+                Summary
+              </button>
+              <button
+                onClick={() => setActiveTab('financial')}
+                className={`py-2 px-4 font-semibold ${activeTab === 'financial' ? 'border-b-2 border-yellow-500 text-gray-800' : 'text-gray-500'}`}
+              >
+                Financial Breakdown
+              </button>
+              <button
+                onClick={() => setActiveTab('impact')}
+                className={`py-2 px-4 font-semibold ${activeTab === 'impact' ? 'border-b-2 border-yellow-500 text-gray-800' : 'text-gray-500'}`}
+              >
+                Environmental Impact
+              </button>
+            </div>
+
+            {/* Tab Content */}
+            <div>
+              {activeTab === 'summary' && (
+                <div>
+                  <h3 className="text-xl font-bold mb-3">Sunlight & Energy Potential</h3>
+                  <p className="text-gray-600 mb-4">
+                    Your location receives an average of 5.8 peak sunlight hours per day, making it highly suitable for solar energy generation.
+                  </p>
+                  {/* Placeholder for Chart */}
+                  <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500">
+                    [Energy Potential Chart Placeholder]
+                  </div>
+                </div>
+              )}
+              {activeTab === 'financial' && (
+                <div className="text-gray-600">Financial breakdown details will go here.</div>
+              )}
+              {activeTab === 'impact' && (
+                <div className="text-gray-600">Environmental impact details will go here.</div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column (AR/3D Viz) */}
+        <div className="lg:col-span-2 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-lg font-bold">AR/3D Visualization</h3>
+            <span className="text-sm font-semibold bg-green-100 text-green-700 py-1 px-3 rounded-full">
+              High Suitability: 92%
+            </span>
+          </div>
+          
+          {data.request.roof_image_url && data.result.panel_layout ? (
             <RoofPreview 
               photoUrl={data.request.roof_image_url}
               panelPositions={data.result.panel_layout}
-              roofModelUrl={data.result.roof_model_url}
+              roofModelUrl="/public/models/3d_house_model.gltf"
             />
           ) : (
-            <div className="p-4 text-center text-gray-500 bg-gray-100 rounded-lg">
+            <div className="h-full min-h-[400px] flex items-center justify-center p-4 text-center text-gray-500 bg-gray-100 rounded-lg">
               3D panel layout could not be generated for this analysis.
             </div>
           )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
