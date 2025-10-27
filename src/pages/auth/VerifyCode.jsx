@@ -29,7 +29,8 @@ export default function VerifyCode() {
     try {
       const otpString = values.otp.join("");
       
-      await verifyOTP(values.user_name, otpString);
+      // 1. CAPTURE THE RETURNED DATA (which includes the user)
+      const data = await verifyOTP(values.user_name, otpString);
 
       // 2. Check for the redirect flag
       const pendingRedirect = localStorage.getItem("pendingAnalysisRedirect");
@@ -38,7 +39,11 @@ export default function VerifyCode() {
         localStorage.removeItem("pendingAnalysisRedirect");
         navigate("/analysis", { replace: true }); // <-- Go to form
       } else {
-        navigate("/dashboard", { replace: true }); // <-- Go to dashboard
+          if (data.user && data.user.role === 'admin') {
+            navigate("/admin-dashboard", { replace: true }); // <-- CORRECT: Go to admin dashboard
+          } else {
+            navigate("/dashboard", { replace: true }); // <-- Go to user dashboard
+          }
       }
       
     } catch (err) {

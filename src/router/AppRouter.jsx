@@ -52,7 +52,7 @@ function AppRouter() {
                 <Route path='ar-view' element={<ARView/>}/>
                 <Route path='energy-data' element={<EnergyData/>}/>
                 <Route path='installers' element={<Installers/>}/>
-                <Route path='profile' element={<Profile/>}/> */
+                <Route path='profile' element={<Profile/>}/>
             </Route>
 
             {/* admin routes */}
