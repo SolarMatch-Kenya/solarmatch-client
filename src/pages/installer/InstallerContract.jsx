@@ -3,6 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import SignatureCanvas from "react-signature-canvas";
+import API from "../../services/api";
 
 export default function InstallerContract() {
   const { user, updateUser, token } = useAuth();
@@ -39,29 +40,32 @@ export default function InstallerContract() {
 
       const payload = {
         signature: signatureData,
-        signedAt: new Date().toISOString(),
+        signedAt: new Date().toISOString(), // This is the ISO string
         ipAddress,
       };
 
-      const response = await fetch(
-        `http://localhost:5000/api/installers/${user.id}/contract`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(payload),
-        }
+      // --- 2. Use API.post instead of fetch ---
+      // This is cleaner and automatically uses your base URL
+      // and Authorization token from your API service.
+      const res = await API.post(
+        `/installers/${user.id}/contract`,
+        payload
       );
 
-      if (!response.ok) throw new Error("Failed to submit contract");
+      // 3. Update context with the *user object* from the backend
+      if (res.data.user) {
+        updateUser(res.data.user);
+      } else {
+        // Fallback (though backend should always return user)
+        updateUser({ ...user, contractAccepted: true });
+      }
+      
+      // 4. Navigate to the INSTALLER dashboard!
+      navigate("/installer-dashboard", { replace: true });
 
-      updateUser({ ...user, contractAccepted: true });
-      navigate("/dashboard");
     } catch (err) {
       console.error(err);
-      alert("Error submitting contract. Please try again.");
+      alert(err.response?.data?.error || "Error submitting contract. Please try again.");
     } finally {
       setLoading(false);
     }
