@@ -3,12 +3,15 @@ import React, { useRef, useEffect, useState, Suspense } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls, useTexture, useGLTF } from "@react-three/drei";
 import API from "../../services/api";
+import * as THREE from 'three';
 
 // Panel component is unchanged
 function Panel({ position, rotation, active }) {
+  const eulerRotation = new THREE.Euler(...rotation);
+
   return (
-    <mesh position={position} rotation={rotation} castShadow receiveShadow>
-      <boxGeometry args={[0.9, 0.05, 1.8]} />
+    <mesh position={position} rotation={eulerRotation} castShadow receiveShadow>
+      <boxGeometry args={[0.9, 0.05, 1.8]} /> {/* Standard panel size approx 1m x 2m */}
       <meshStandardMaterial color={active ? "#0B3D02" : "#2F3A3A"} metalness={0.6} roughness={0.2} />
     </mesh>
   );
@@ -18,26 +21,32 @@ function Panel({ position, rotation, active }) {
 function GLBScene({ modelUrl, panelPositions, setExporterScene }) {
   // Load the 3D model from the URL
   const { scene: roofModel } = useGLTF(modelUrl);
-  
   const { scene } = useThree();
+
   useEffect(() => {
     setExporterScene(scene);
   }, [scene, setExporterScene]);
 
   return (
     <>
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[5, 10, 7]} intensity={1.2} castShadow />
+      <ambientLight intensity={0.8} />
+      <directionalLight position={[8, 12, 5]} intensity={1.5} castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048} />
       
-      {/* Render the loaded roof model */}
-      <primitive object={roofModel} receiveShadow castShadow />
+      {/* Scale the model if it's too big or small */}
+      <primitive object={roofModel} receiveShadow castShadow scale={1.0} />
       
-      {/* Render panels. These will lie flat on the Y=0 plane.
-        This assumes your Gemini prompt provides coordinates
-        that match the GLB model's coordinate system.
-      */}
-      {panelPositions.map((p, i) => (
-        <Panel key={i} position={[p.x, 0.05, p.z]} rotation={[0, 0, 0]} active={true} />
+      {/* Render panels using full position and rotation from AI */}
+      {/* Ensure panelPositions is an array */}
+      {Array.isArray(panelPositions) && panelPositions.map((p, i) => (
+         // Validate that p has position and rotation
+         (p.position && p.rotation) ? (
+            <Panel 
+              key={i} 
+              position={p.position} 
+              rotation={p.rotation} // These are already in radians
+              active={true} 
+            />
+         ) : null // Skip if data is malformed
       ))}
       
       <OrbitControls enablePan enableRotate enableZoom />
@@ -46,7 +55,7 @@ function GLBScene({ modelUrl, panelPositions, setExporterScene }) {
 }
 
 // --- THIS IS YOUR OLD SCENE, RENAMED ---
-function FlatScene({ photoUrl, panelPositions, setExporterScene }) {
+function FlatScene({ photoUrl, panelPositions = [], setExporterScene }) {
   const texture = useTexture(photoUrl);
   const planeRef = useRef();
 
@@ -71,12 +80,17 @@ function FlatScene({ photoUrl, panelPositions, setExporterScene }) {
           <meshStandardMaterial map={texture} />
         </mesh>
 
-        {/* We apply the 90-degree counter-rotation here
-          to make the panels lie flat on the rotated plane.
-        */}
-        {panelPositions.map((p, i) => (
-          <Panel key={i} position={[p.x, 0.05, p.z]} rotation={[Math.PI / 2, 0, 0]} active={true} />
-        ))}
+        {Array.isArray(panelPositions) && panelPositions.map((p, i) => (
+           (p.x !== undefined && p.z !== undefined) ? (
+             <Panel 
+               key={i} 
+               position={[p.x, 0.05, p.z]} 
+               // For flat plane, only counter-rotate around X
+               rotation={[Math.PI / 2, 0, 0]} 
+               active={true} 
+             />
+           ) : null // Skip if data is malformed for flat scene
+         ))}
       </group>
 
       <OrbitControls enablePan enableRotate enableZoom />
@@ -125,21 +139,17 @@ export default function RoofPreview({ photoUrl, panelPositions = [], roofModelUr
     <div className="bg-white rounded-lg shadow p-4">
       <div style={{ height: 520 }}>
         <Canvas shadows camera={{ position: [6, 6, 6], fov: 50 }}>
-          <Suspense fallback={null}>
-            {/* --- THIS IS THE KEY ---
-              If we have a roofModelUrl, use the new 3D scene.
-              If not, fall back to the old flat image scene.
-            */}
+          <Suspense fallback={<group><mesh><boxGeometry/><meshStandardMaterial color="orange"/></mesh></group>}> {/* Basic fallback */}
             {roofModelUrl ? (
               <GLBScene 
                 modelUrl={roofModelUrl}
-                panelPositions={panelPositions}
+                panelPositions={panelPositions} // Pass the layout data
                 setExporterScene={setExporterScene}
               />
             ) : (
               <FlatScene 
                 photoUrl={photoUrl}
-                panelPositions={panelPositions}
+                panelPositions={panelPositions} // Pass the layout data
                 setExporterScene={setExporterScene}
               />
             )}

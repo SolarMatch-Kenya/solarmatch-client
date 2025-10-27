@@ -174,16 +174,18 @@ const AnalysisResult = () => {
         <div className="lg:col-span-2 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
           <div className="flex justify-between items-center mb-3">
             <h3 className="text-lg font-bold">AR/3D Visualization</h3>
-            <span className="text-sm font-semibold bg-green-100 text-green-700 py-1 px-3 rounded-full">
-              High Suitability: 92%
-            </span>
+            {data.result.solar_suitability_score !== null && (
+              <span className="text-sm font-semibold bg-green-100 text-green-700 py-1 px-3 rounded-full">
+                Suitability: {data.result.solar_suitability_score}%
+              </span>
+            )}
           </div>
           
           {data.request.roof_image_url && data.result.panel_layout ? (
             <RoofPreview 
               photoUrl={data.request.roof_image_url}
               panelPositions={data.result.panel_layout}
-              roofModelUrl="/public/models/3d_house_model.gltf"
+              roofModelUrl={data.result.roof_model_url || "/models/3d_house_model.gltf"}
             />
           ) : (
             <div className="h-full min-h-[400px] flex items-center justify-center p-4 text-center text-gray-500 bg-gray-100 rounded-lg">
