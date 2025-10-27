@@ -31,7 +31,7 @@ const Home = () => {
                                     <Link to='/analysis'>Check My Roof</Link>
                                 </PrimaryButton>
                                 <SecondaryButton className='border border-[#f79436]'>
-                                    <Link to='/installer-contract'>Learn More</Link>
+                                    <Link to='/how-it-works'>Learn More</Link>
                                 </SecondaryButton>
                             </div>
                         </div>
