@@ -34,9 +34,7 @@ export default function InstallerContract() {
 
     setLoading(true);
     try {
-      const signatureData = sigCanvas.current
-        .getTrimmedCanvas()
-        .toDataURL("image/png");
+      const signatureData = sigCanvas.current.toDataURL("image/png");
 
       const payload = {
         signature: signatureData,
