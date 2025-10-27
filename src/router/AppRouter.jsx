@@ -29,7 +29,7 @@ import ChangePassword from "../pages/auth/ChangePassword";
 import InstallerDashboard from '../pages/InstallerDashboard';
 import InstallerOverview from "../pages/installer/InstallerOverview";
 import CustomerLeads from "../pages/installer/CustomerLeads";
-
+import RoofReports from "../pages/installer/RoofReports";
 
 function AppRouter() {
     return (
@@ -68,7 +68,7 @@ function AppRouter() {
             <Route path='/installer-dashboard' element={<ProtectedRoute><InstallerDashboard /></ProtectedRoute>}>
                 <Route index element={<InstallerOverview />} />
                 <Route path="leads" element={<CustomerLeads />} />
-                {/* <Route path="roof-analysis" element={<RoofReports />} /> */}
+                <Route path="roof-analysis" element={<RoofReports />} />
             </Route>
         </Routes>
     )

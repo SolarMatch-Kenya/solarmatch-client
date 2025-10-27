@@ -140,25 +140,31 @@ const AnalysisResult = () => {
               </button>
             </div>
 
-            {/* Tab Content */}
-            <div>
+            {/* --- TAB CONTENT UPDATED --- */}
+            <div className="text-gray-700 space-y-3 min-h-[150px]">
               {activeTab === 'summary' && (
                 <div>
-                  <h3 className="text-xl font-bold mb-3">Sunlight & Energy Potential</h3>
-                  <p className="text-gray-600 mb-4">
-                    Your location receives an average of 5.8 peak sunlight hours per day, making it highly suitable for solar energy generation.
+                  <h3 className="text-xl font-bold mb-3">System Summary</h3>
+                  <p>
+                    {data.result.summary_text || "No summary available."}
                   </p>
-                  {/* Placeholder for Chart */}
-                  <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500">
-                    [Energy Potential Chart Placeholder]
-                  </div>
                 </div>
               )}
               {activeTab === 'financial' && (
-                <div className="text-gray-600">Financial breakdown details will go here.</div>
+                <div>
+                  <h3 className="text-xl font-bold mb-3">Financial Breakdown</h3>
+                  <p>
+                    {data.result.financial_summary_text || "No financial summary available."}
+                  </p>
+                </div>
               )}
               {activeTab === 'impact' && (
-                <div className="text-gray-600">Environmental impact details will go here.</div>
+                <div>
+                  <h3 className="text-xl font-bold mb-3">Environmental Impact</h3>
+                  <p>
+                    {data.result.environmental_summary_text || "No environmental impact summary available."}
+                  </p>
+                </div>
               )}
             </div>
           </div>
