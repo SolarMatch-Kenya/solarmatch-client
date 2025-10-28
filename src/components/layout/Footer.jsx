@@ -65,7 +65,7 @@ const Footer = () => {
                 <div className="flex flex-col md:flex-row md:justify-between items-center">
                     {/* Logo */}
                     <div className="flex flex-col items-center md:items-start mb-6 md:mb-0">
-                        <img src="src/assets/logo-white.svg" alt="Logo" className="h-24" />
+                        <img src={logoSrc} alt="Logo" className="h-24" />
                     </div>
 
                     {/* Navigation Links and Copyright */}
