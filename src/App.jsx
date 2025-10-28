@@ -1,6 +1,6 @@
 import AppRouter from "./router/AppRouter"
-import SunnyWidget from "./components/ai/SunnyWidget"
 import { Toaster } from "./components/common/Notification"
+import SunnyWidget from './components/ai/SunnyWidget';
 import ExamplePagination from "../examplepagination"
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
     <>
       <Toaster />
       <AppRouter/>
-      <SunnyWidget/>
+      <SunnyWidget />
     </>
   )
 }

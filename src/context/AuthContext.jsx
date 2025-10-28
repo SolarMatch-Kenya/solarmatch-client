@@ -10,6 +10,9 @@ export function AuthProvider({ children }) {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Derived state for isLoggedIn
+  const isLoggedIn = !!user && !!token;
+
   // Restore user & token on app load
   useEffect(() => {
     const { user, token } = getStoredUser();
@@ -29,16 +32,18 @@ export function AuthProvider({ children }) {
 
   // Logout (using service)
   const logout = () => {
+    console.log("AuthContext: Calling logoutService.");
     logoutService();
+    console.log("AuthContext: Setting user to null.");
     setUser(null);
+    console.log("AuthContext: Setting token to null.");
     setToken(null);
+    console.log("AuthContext: Logout complete. User and token states are null.");
   };
 
   async function resetPassword(email) {
     try {
-      // This depends on how your backend is set up.
-      // Example if you have an API endpoint for this:
-      const response = await fetch("http://localhost:5000/api/auth/forgot-password", {
+      const response = await fetch("http://localhost:5000/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -62,7 +67,7 @@ export function AuthProvider({ children }) {
   };
 
 
-  const value = { user, token, login, logout, loading, resetPassword, updateUser };
+  const value = { user, token, isLoggedIn, login, logout, loading, resetPassword, updateUser };
 
   return (
     <AuthContext.Provider value={value}>

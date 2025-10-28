@@ -6,7 +6,6 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import Bulb from '../ui/Bulb'
 
 export default function SignupForm() {
   const navigate = useNavigate();
@@ -15,6 +14,7 @@ export default function SignupForm() {
 
   // Validation schema
   const SignupSchema = Yup.object({
+    name: Yup.string().min(2, "Name must be at least 2 characters").required("Required"),
     email: Yup.string().email("Invalid email").required("Required"),
     password: Yup.string().min(6, "At least 6 characters").required("Required"),
     confirmPassword: Yup.string()
@@ -26,26 +26,28 @@ export default function SignupForm() {
   const handleSubmit = async (values, { setSubmitting }) => {
     setError("");
     try {
-      const response = await fetch("https://api.solarmatch.com/auth/signup", {
+      const response = await fetch("http://localhost:5000/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          name: values.name,
           email: values.email,
           password: values.password,
         }),
       });
 
-      if (!response.ok) throw new Error("Signup failed");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Signup failed");
+      }
 
       const data = await response.json();
-      // Assuming backend returns { user, token }
+      // Backend returns { message, user }
       localStorage.setItem("user", JSON.stringify(data.user));
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify({ email: values.email }));
 
       // Automatically log in and redirect
-      login(values.email, values.password);
-      navigate("/verify");
+      await login(values.email, values.password);
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message || "Something went wrong");
     } finally {
@@ -54,185 +56,109 @@ export default function SignupForm() {
   };
 
   return (
-    <div className="flex h-screen font-sans">
-      {/* Left Side - Signup Form */}
-      <div className="w-1/2 bg-white flex flex-col justify-center items-center px-16">
-        <div className="w-full max-w-md">
-          <Link to='/'>
-            <div className="pb-4 flex items-center gap-2 text-gray-800 hover:text-[#f79436] transition">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
-              </svg>
-              <p>Back to homepage</p>
-            </div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
+      <Link to='/'>
+        <div className="absolute top-6 left-6 flex items-center gap-2 text-gray-800 hover:text-[#f79436] transition">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
+            <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8" />
+          </svg>
+          <p>Back to homepage</p>
+        </div>
+      </Link>
+      <div className="max-w-md bg-white p-8 rounded-lg shadow-md w-full">
+        <h1 className="text-2xl font-bold mb-2">Create Your Account</h1>
+        <p className="text-gray-600 mb-6">Start your solar journey today.</p>
+
+        <Formik
+          initialValues={{ name: "", email: "", password: "", confirmPassword: "" }}
+          validationSchema={SignupSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ isSubmitting }) => (
+            <Form className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                <Field
+                  name="name"
+                  type="text"
+                  placeholder="Enter your full name"
+                  className="w-full border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-[#f79436] focus:border-transparent"
+                />
+                <ErrorMessage
+                  name="name"
+                  component="div"
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <Field
+                  name="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  className="w-full border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-[#f79436] focus:border-transparent"
+                />
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <Field
+                  name="password"
+                  type="password"
+                  placeholder="Create a password"
+                  className="w-full border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-[#f79436] focus:border-transparent"
+                />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                <Field
+                  name="confirmPassword"
+                  type="password"
+                  placeholder="Confirm your password"
+                  className="w-full border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-[#f79436] focus:border-transparent"
+                />
+                <ErrorMessage
+                  name="confirmPassword"
+                  component="div"
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+
+              {error && (
+                <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">
+                  {error}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-[#f79436] text-white py-3 rounded-md hover:bg-[#e68529] disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+              >
+                {isSubmitting ? "Signing up..." : "Sign Up"}
+              </button>
+            </Form>
+          )}
+        </Formik>
+
+        <p className="mt-6 text-center text-sm text-gray-600">
+          Already have an account?{" "}
+          <Link to="/login" className="text-[#f79436] font-semibold hover:underline">
+            Log in
           </Link>
-          <h1 className="text-3xl font-bold mb-2 text-gray-900">Create Your Account</h1>
-          <p className="text-sm text-yellow-600 mb-6">Start your solar journey today.</p>
-
-          <Formik
-            initialValues={{ email: "", password: "", confirmPassword: "" }}
-            validationSchema={SignupSchema}
-            onSubmit={handleSubmit}
-          >
-            {({ isSubmitting }) => (
-              <Form className="space-y-4">
-                <div>
-                  <label className="block mb-1 text-gray-700">Full Name</label>
-                  <Field
-                    name="full-name"
-                    type="name"
-                    placeholder="Enter your full name"
-                    className="w-full px-4 py-2 border rounded-[10px] outline-none focus:ring-2 focus:ring-[#f79436]"
-                  />
-                  <ErrorMessage
-                    name="name"
-                    component="div"
-                    className="text-red-500 text-sm mt-1"
-                  />
-                </div>
-
-                <div>
-                  <label className="block mb-1 text-gray-700">Email</label>
-                  <Field
-                    name="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    className="w-full px-4 py-2 border rounded-[10px] outline-none focus:ring-2 focus:ring-[#f79436]"
-                  />
-                  <ErrorMessage
-                    name="email"
-                    component="div"
-                    className="text-red-500 text-sm mt-1"
-                  />
-                </div>
-
-                <div>
-                  <label className="block mb-1 text-gray-700">Password</label>
-                  <Field
-                    name="password"
-                    type="password"
-                    placeholder="Create a password"
-                    className="w-full px-4 py-2 border rounded-[10px] outline-none focus:ring-2 focus:ring-[#f79436]"
-                  />
-                  <ErrorMessage
-                    name="password"
-                    component="div"
-                    className="text-red-500 text-sm mt-1"
-                  />
-                </div>
-
-                <div>
-                  <label className="block mb-1 text-gray-700">Confirm Password</label>
-                  <Field
-                    name="confirmPassword"
-                    type="password"
-                    placeholder="Confirm your password"
-                    className="w-full px-4 py-2 border rounded-[10px] outline-none focus:ring-2 focus:ring-[#f79436]"
-                  />
-                  <ErrorMessage
-                    name="confirmPassword"
-                    component="div"
-                    className="text-red-500 text-sm mt-1"
-                  />
-                </div>
-
-                {error && <div className="text-red-600 text-sm">{error}</div>}
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-3 border bg-[#f79436] text-white font-semibold rounded-[10px] hover:bg-[#f79436] hover:text-white transition"
-                >
-                  {isSubmitting ? "Signing up..." : "Sign Up"}
-                </button>
-              </Form>
-            )}
-          </Formik>
-
-          <div className="flex items-center my-4">
-            <hr className="grow border-gray-300" />
-            <span className="mx-2 text-gray-400 text-sm">OR</span>
-            <hr className="grow border-gray-300" />
-          </div>
-
-          <div className="flex justify-between">
-            <button className="flex items-center justify-center w-[48%] py-2 border rounded-[10px] font-semibold hover:bg-gray-50">
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
-                alt="Google"
-                className="w-5 h-5 mr-2"
-              />
-              Sign up with Google
-            </button>
-
-            <button className="flex items-center justify-center w-[48%] py-2 border rounded-[10px] font-semibold hover:bg-gray-50">
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg"
-                alt="Facebook"
-                className="w-5 h-5 mr-2"
-              />
-              Sign up with Facebook
-            </button>
-          </div>
-
-          <p className="text-center text-sm text-gray-500 mt-6">
-            Already have an account?{" "}
-            <a href="/login" className="text-yellow-600 hover:underline">
-              Log in
-            </a>
-          </p>
-        </div>
-      </div>
-
-      {/* Right Side - Info Section */}
-      <div className="w-1/2 bg-[#fff7f2] flex flex-col justify-center px-16 text-black">
-        <div>
-          <h2 className="text-3xl font-bold mb-4">Redefine Energy. Redefine You.</h2>
-          <p className="text-lg mb-6 text-black">
-            Join SolarMatch Kenya to get personalized insights for your home, farm, or
-            business. Make a smart, sustainable choice for a brighter future.
-          </p>
-
-          <div className="space-y-6 text-black">
-  <div className="flex gap-3">
-    <div className="shrink-0 flex items-stretch">
-      <div className="flex items-center">
-        <Bulb className="text-yellow-500 h-full w-6" />
-      </div>
-    </div>
-    <div>
-      <p className="font-semibold text-black">AI-Powered Analysis</p>
-      <p>Get accurate predictions on cost, savings, and ROI with our smart technology.</p>
-    </div>
-  </div>
-
-  <div className="flex gap-3">
-    <div className="shrink-0 flex items-stretch">
-      <div className="flex items-center">
-        <Bulb className="text-yellow-500 h-full w-6" />
-      </div>
-    </div>
-    <div>
-      <p className="font-semibold text-black">Save Money</p>
-      <p>Discover how much you can save on energy bills and increase your property value.</p>
-    </div>
-  </div>
-
-  <div className="flex gap-3">
-    <div className="shrink-0 flex items-stretch">
-      <div className="flex items-center">
-        <Bulb className="text-yellow-500 h-full w-6" />
-      </div>
-    </div>
-    <div>
-      <p className="font-semibold text-black">Go Green</p>
-      <p>Calculate your CO₂ reduction and contribute to a cleaner Kenya.</p>
-    </div>
-  </div>
-</div>
-
-
-        </div>
+        </p>
       </div>
     </div>
   );

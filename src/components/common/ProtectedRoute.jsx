@@ -8,7 +8,7 @@ export default function ProtectedRoute({ children, role }) {
 
   // Not logged in? Redirect to login
   if (!user) {
-    return <Navigate to={`/login/${role}`} replace />;
+    return <Navigate to="/login" replace />;
   }
 
   // Role mismatch? (for extra security)
@@ -16,8 +16,8 @@ export default function ProtectedRoute({ children, role }) {
     return <Navigate to="/" replace />;
   }
 
-  // if installer contract isn't signed
-  if (!user.contractAccepted) {
+  // if installer contract isn't signed (only for installer role)
+  if (role === "installer" && !user.contractAccepted) {
     return <Navigate to="/installer-contract" replace />;
   }
 

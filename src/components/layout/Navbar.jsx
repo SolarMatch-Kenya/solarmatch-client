@@ -26,6 +26,7 @@ const Navbar = () => {
     };
 
     const handleLogout = () => {
+        console.log("Navbar: handleLogout triggered.");
         logout();
         setIsDropdownOpen(false);
         navigate("/login");
@@ -44,7 +45,7 @@ const Navbar = () => {
     }, []);
 
     return (
-        <nav className="bg-white shadow-md relative z-50 px-[100px]">
+        <nav className="bg-white shadow-md relative z-50">
             <div className="w-full px-4 sm:px-6 lg:px-8 ">
                 <div className="flex items-center justify-between h-24">
                     <div className="flex items-center">
@@ -81,16 +82,21 @@ const Navbar = () => {
                         </div>
                         {/* User profile dropdown or Login button */}
                         {isLoggedIn ? (
-                            <div className="relative" ref={dropdownRef}>
+                            <div className="relative z-999" ref={dropdownRef}>
                                 <button onClick={toggleDropdown} className="flex items-center text-[#006800] hover:text-[#f79436] focus:outline-none">
-                                    <img src={user?.profilePicture || "./user-avatar.png"} alt="User Avatar" className="w-8 h-8 rounded-full" />
+                                    {user?.profilePicture ? (
+                                        <img src={user.profilePicture} alt="User Avatar" className="w-8 h-8 rounded-full" />
+                                    ) : (
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 rounded-full bg-gray-200 text-gray-600 p-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                        </svg>
+                                    )}
                                 </button>
                                 {isDropdownOpen && (
-                                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
-                                        <Link to="/profile" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={() => setIsDropdownOpen(false)}>
-                                            Profile
-                                        </Link>
-                                        <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-[9999]" style={{ pointerEvents: 'auto' }}>
+                                        <Link to="/dashboard/profile" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 z-[999]" onClick={() => setIsDropdownOpen(false)}>
+                                            {user?.name || "Profile"}
+                                        </Link>                                                                    <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                             Logout
                                         </button>
                                     </div>
@@ -134,14 +140,25 @@ const Navbar = () => {
                         Contact
                     </Link>
                     {isLoggedIn ? (
-                        <>
-                            <Link to="/profile" className="flex items-center text-base font-normal text-[#006800] hover:text-[#f79436] py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
-                                Profile
-                            </Link>
-                            <button onClick={() => { handleLogout(); toggleMobileMenu(); }} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                Logout
+                        <div className="relative flex flex-col items-center z-50" ref={dropdownRef}>
+                            <button onClick={toggleDropdown} className="flex items-center text-[#006800] hover:text-[#f79436] focus:outline-none py-5">
+                                {user?.profilePicture ? (
+                                    <img src={user.profilePicture} alt="User Avatar" className="w-10 h-10 rounded-full" />
+                                ) : (
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 rounded-full bg-gray-200 text-gray-600 p-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                )}
                             </button>
-                        </>
+                            {isDropdownOpen && (
+                                <div className="w-48 bg-white rounded-md shadow-lg py-1 text-center z-[9999]" style={{ pointerEvents: 'auto' }}>                                    <Link to="/dashboard/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={() => { setIsDropdownOpen(false); toggleMobileMenu(); }}>
+                                    {user?.name || "Profile"}
+                                </Link>                                                            <button onClick={() => { handleLogout(); toggleMobileMenu(); }} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                        Logout
+                                    </button>
+                                </div>
+                            )}
+                        </div>
                     ) : (
                         <Link to="/login" className="flex items-center text-base font-normal text-[#006800] hover:text-[#f79436] py-5 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100" onClick={toggleMobileMenu}>
                             <LoginIcon /> Log in

@@ -2,7 +2,7 @@
 // src/services/authService.js
 import { isTokenExpired } from "../utils/helpers";
 
-const API_URL = "https://api.solarmatch.com/auth"; // adjust to the solarmatch backend
+const API_URL = "http://localhost:5000/auth"; // Updated to match backend
 
 // Login
 export async function loginService(email, password) {
@@ -16,30 +16,45 @@ export async function loginService(email, password) {
 
   const data = await response.json();
 
-  // Example expected response: { user, token }
-  const { user, token } = data;
+  // Example expected response: { access_token, user }
+  const { access_token, user } = data;
 
   localStorage.setItem("user", JSON.stringify(user));
-  localStorage.setItem("token", token);
+  localStorage.setItem("token", access_token);
 
-  return { user, token };
+  return { user, token: access_token };
 }
 
 // Logout
 export function logoutService() {
+  console.log("logoutService: Removing user from localStorage.");
   localStorage.removeItem("user");
+  console.log("logoutService: Removing token from localStorage.");
   localStorage.removeItem("token");
+  console.log("logoutService: localStorage cleared.");
 }
 
 // Restore saved user/token if valid
 export function getStoredUser() {
-  const savedUser = JSON.parse(localStorage.getItem("user"));
-  const token = localStorage.getItem("token");
+  try {
+    const savedUserStr = localStorage.getItem("user");
+    const token = localStorage.getItem("token");
 
-  if (token && !isTokenExpired(token)) {
-    return { user: savedUser, token };
+    if (!token) {
+      return { user: null, token: null };
+    }
+
+    const savedUser = savedUserStr ? JSON.parse(savedUserStr) : null;
+
+    if (!isTokenExpired(token)) {
+      return { user: savedUser, token };
+    }
+
+    logoutService();
+    return { user: null, token: null };
+  } catch (error) {
+    console.error("Error getting stored user:", error);
+    logoutService();
+    return { user: null, token: null };
   }
-
-  logoutService();
-  return { user: null, token: null };
 }

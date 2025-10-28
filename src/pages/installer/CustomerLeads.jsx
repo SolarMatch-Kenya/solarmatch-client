@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { installerService } from "../../services/installerService";
 import Loader from "../../components/common/Loader";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Card from "../../components/ui/OnboardingCard";
 
 const CustomerLeads = () => {
   const { user } = useAuth();

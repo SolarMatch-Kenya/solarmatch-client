@@ -2,8 +2,22 @@
 
 // Decode a JWT token
 export function decodeToken(token) {
+  if (!token || typeof token !== 'string') {
+    return null;
+  }
   try {
-    const base64Url = token.split(".")[1];
+    const parts = token.split(".");
+    if (parts.length !== 3) {
+      console.error("Invalid token format: expected 3 parts, got", parts.length);
+      return null;
+    }
+
+    const base64Url = parts[1];
+    if (!base64Url) {
+      console.error("Invalid token: missing payload part");
+      return null;
+    }
+
     const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
     const jsonPayload = decodeURIComponent(
       atob(base64)
@@ -20,6 +34,7 @@ export function decodeToken(token) {
 
 // Check if token is expired
 export function isTokenExpired(token) {
+  if (!token) return true;
   const decoded = decodeToken(token);
   if (!decoded?.exp) return true;
 
