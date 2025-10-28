@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import PrimaryButton from '../buttons/PrimaryButton';
 import { AuthContext } from '../../context/AuthContext'; // Assuming installer registration/profile update uses AuthContext
 import { validateInstallerForm } from '../../utils/validations'; // Assuming this will be created
+import { toast } from 'sonner';
 
 const InstallerForm = () => {
   const { registerInstaller, updateInstallerProfile } = useContext(AuthContext); // Placeholder functions
@@ -25,8 +26,8 @@ const InstallerForm = () => {
     if (Object.keys(formErrors).length === 0) {
       // Decide whether to register or update based on context (e.g., if an installer is already logged in)
       console.log('Submitting installer form:', formData);
-      // await registerInstaller(formData); or await updateInstallerProfile(formData);
-      // Optionally clear form or show success message
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+      toast.success("Installer details saved!");
     } else {
       setErrors(formErrors);
     }

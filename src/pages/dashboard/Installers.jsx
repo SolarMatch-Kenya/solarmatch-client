@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import API from '../../services/api';
+import { toast } from 'sonner';
 
 const Installers = () => {
   
@@ -30,10 +31,10 @@ const Installers = () => {
     try {
       // Show a confirmation or loading state if you want
       const res = await API.post('/quote-request', { installer_id: installerId });
-      alert(res.data.message); // Show success message
+      toast.success(res.data.message || "Quote request sent successfully!");
     } catch (err) {
-      // Show error message from backend (e.g., "Request already sent")
-      alert(err.response?.data?.message || err.response?.data?.error || "Failed to send request.");
+      const errorMsg = err.response?.data?.message || err.response?.data?.error || "Failed to send request.";
+      toast.error(errorMsg);
       console.error(err);
     }
   };

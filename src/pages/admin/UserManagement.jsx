@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 // 1. Import the 'Unlock' icon for the unban button
 import { Search, Eye, Edit2, ShieldBan, ChevronDown, Unlock } from 'lucide-react';
 import API from '../../services/api';
+import { toast } from 'sonner';
 import {
   Pagination,
   PaginationContent,
@@ -75,8 +76,11 @@ const UserManagement = () => {
       setUsers(users.map(u => 
         u.id === userId ? { ...u, role: 'banned' } : u
       ));
+      toast.success(`${userName} has been banned.`);
     } catch (err) {
-      alert("Failed to ban user: " + err.response?.data?.error);
+      const errorMsg = err.response?.data?.error || "Failed to ban user.";
+      // --- Replace alert ---
+      toast.error(errorMsg);
     }
   };
 
@@ -87,8 +91,11 @@ const UserManagement = () => {
       setUsers(users.map(u => 
         u.id === userId ? { ...u, role: 'customer' } : u
       ));
+      toast.success(`${userName} has been unbanned.`);
     } catch (err) {
-      alert("Failed to unban user: " + err.response?.data?.error);
+      const errorMsg = err.response?.data?.error || "Failed to unban user.";
+      // --- Replace alert ---
+      toast.error(errorMsg);
     }
   };
 
@@ -179,7 +186,7 @@ const UserManagement = () => {
                     {user.role === 'banned' ? (
                       <button 
                         className="p-1 hover:text-yellow-600 ml-2" 
-                        onClick={() => handleUnbanUser(user.id)}
+                        onClick={() => handleUnbanUser(user.id, user.full_name)}
                         title="Unban User"
                       >
                         <Unlock className="w-4 h-4" />
@@ -187,7 +194,7 @@ const UserManagement = () => {
                     ) : (
                       <button 
                         className="p-1 hover:text-red-600 ml-2" 
-                        onClick={() => handleBanUser(user.id)}
+                        onClick={() => handleBanUser(user.id, user.full_name)}
                         title="Ban User"
                       >
                         <ShieldBan className="w-4 h-4" />

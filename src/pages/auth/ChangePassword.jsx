@@ -2,34 +2,37 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // <-- Add
 import { useAuth } from '../../context/AuthContext';
 import API from '../../services/api';
+import { toast } from 'sonner';
 
 const ChangePassword = () => {
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
   const { updateUser } = useAuth(); // <-- Get updateUser
   const navigate = useNavigate(); // <-- Add
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setSuccess('');
 
     if (password.length < 6) {
       setError("Password must be at least 6 characters");
+      toast.warning("Password must be at least 6 characters");
       return;
     }
     if (password !== confirm) {
       setError("Passwords do not match");
+      toast.warning("Passwords do not match");
       return;
     }
 
+    setIsSubmitting(true);
     try {
       // The backend now returns { message: "...", user: { ... } }
       const res = await API.post('/auth/change-password', { new_password: password });
       
-      setSuccess(res.data.message || "Password updated!");
+      toast.success(res.data.message || "Password updated!");
       
       let updatedUser;
       // Update the user in context
@@ -61,11 +64,14 @@ const ChangePassword = () => {
           // Default/customer flow
           navigate("/dashboard", { replace: true });
         }
-      }, 2000); // 2-second delay to show success message
+      }, 1500); // 2-second delay to show success message
       // --- END SMART NAVIGATION ---
 
     } catch (err) {
-      setError(err.response?.data?.error || "Failed to update password");
+      const errorMsg = err.response?.data?.error || "Failed to update password";
+      setError(errorMsg); // Keep inline error
+      toast.error(errorMsg); // <-- Use toast for error
+      setIsSubmitting(false); // Stop submitting on error
     }
   };
 
@@ -77,9 +83,6 @@ const ChangePassword = () => {
           As a new installer, you must set a permanent password before proceeding.
         </p>
         
-        {success ? (
-          <div className="text-green-600 text-center">{success}</div>
-        ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium">New Password</label>
@@ -102,12 +105,12 @@ const ChangePassword = () => {
             {error && <p className="text-red-500 text-sm">{error}</p>}
             <button
               type="submit"
+              disabled={isSubmitting}
               className="w-full bg-[#f79436] text-white py-2 rounded hover:bg-[#e68529]"
             >
-              Set Password & Continue
+              {isSubmitting ? "Saving..." : "Set Password & Continue"}
             </button>
           </form>
-        )}
       </div>
     </div>
   );

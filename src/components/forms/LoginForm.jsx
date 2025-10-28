@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { toast } from 'sonner';
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -11,20 +12,24 @@ export default function LoginForm() {
   const { login } = useAuth();
   const [form, setForm] = useState({ user_name: "", password: "" });
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setIsLoading(true);
 
     try {
       await login(form.user_name, form.password);
+      toast.info("Verification code sent to your email.");
 
       // Redirect to Verify page
       navigate("/verify");
     } catch (err) {
       setError(err.message || "Invalid credentials. Try again.");
+      toast.error(errorMsg);
     }
   };
 
@@ -77,9 +82,10 @@ export default function LoginForm() {
           {error && <p className="text-red-500 text-sm">{error}</p>}
           <button
             type="submit"
+            disabled={isLoading}
             className="w-full bg-[#f79436] text-white py-2 rounded hover:bg-[#e68529]"
           >
-            Log In
+            {isLoading ? "Logging In..." : "Log In"} {/* Show loading text */}
           </button>
         </form>
 

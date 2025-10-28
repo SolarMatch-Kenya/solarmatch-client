@@ -28,7 +28,11 @@ const CustomerLeads = () => {
   }, [user]);
 
   if (loading) {
-    return <Loader />;
+    return (
+      <div className="flex justify-center items-center w-full p-6" style={{ minHeight: '400px' }}>
+        <Loader />
+      </div>
+    );
   }
 
   if (error) {

@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import API from '../../services/api';
+import { toast } from 'sonner';
 
 export default function VerifyCode() {
   const navigate = useNavigate();
@@ -58,6 +59,7 @@ export default function VerifyCode() {
       
     } catch (err) {
       setError(err.response?.data?.message || err.message || "Something went wrong");
+      toast.error(errorMsg);
     } finally {
       setSubmitting(false);
       setIsVerifying(false); 
@@ -76,9 +78,9 @@ export default function VerifyCode() {
         user_name: pendingUser.user_name,
       });
 
-      alert("Verification code resent!");
+      toast.success("Verification code resent!");
     } catch (err) {
-      alert(err.response?.data?.message || err.message);
+      toast.error(err.response?.data?.message || err.message || "Failed to resend code.");
     } finally {
       setResending(false);
     }

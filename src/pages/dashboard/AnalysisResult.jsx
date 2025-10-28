@@ -4,6 +4,7 @@ import EmptyState from '../../components/common/EmptyState';
 import RoofPreview from "../../components/ar/RoofPreview";
 import API from '../../services/api';
 import { ArrowDownTrayIcon, ShareIcon } from '@heroicons/react/24/outline';
+import Loader from '../../components/common/Loader';
 
 const AnalysisResult = () => {
   const [data, setData] = useState(null);
@@ -49,7 +50,13 @@ const AnalysisResult = () => {
   }, [token]);
 
   // --- Your existing loading/error states ---
-  if (loading) return <div className="p-6">Loading analysis...</div>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center w-full p-6" style={{ minHeight: '400px' }}>
+        <Loader />
+      </div>
+    );
+  }
   if (noData) return <EmptyState />;
   if (isPending) return <div className="p-6 text-blue-600">Your analysis is still processing. Please check back in a moment.</div>;
   if (error) return <div className="p-6 text-red-600">{error}</div>;

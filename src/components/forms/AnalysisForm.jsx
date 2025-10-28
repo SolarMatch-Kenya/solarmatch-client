@@ -7,6 +7,8 @@ import { AuthContext } from "../../context/AuthContext";
 import { validateAnalysisForm } from "../../utils/validations";
 import MapSelector from "../map/MapSelector";
 import roofPlaceholder from "../../assets/image_placeholder.jpg"; 
+import Loader from "../common/Loader"
+import { toast } from 'sonner';
 
 const MemoizedMapSelector = memo(MapSelector);
 
@@ -34,6 +36,8 @@ export default function AnalysisForm() {
     if (pendingData) {
       setFormData(prev => ({ ...prev, ...JSON.parse(pendingData) }));
       localStorage.removeItem("pendingAnalysis");
+
+      toast.info("Welcome back! Please re-select your roof image to continue.");
       
       // Ask user to re-select the image
       setErrors(prev => ({ 
@@ -90,11 +94,26 @@ export default function AnalysisForm() {
       return;
     }
 
-    setLoading(true);
-    await submitAnalysis(formData);
-    setLoading(false);
-    navigate("/dashboard");
+    try {
+      await submitAnalysis(formData);
+      toast.success("Analysis submitted successfully! Redirecting..."); // <-- Success toast
+      // Redirect after a short delay to allow user to see the toast
+      setTimeout(() => {
+         navigate("/dashboard/analysis-result"); // Redirect to results page
+      }, 1500);
+    } catch (error) {
+       toast.error(error.message || "Failed to submit analysis."); // <-- Error toast
+       setIsSubmitting(false); // Stop submitting on error
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center w-full min-h-screen p-6" style={{ minHeight: '400px' }}>
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8 bg-white p-8 rounded-lg shadow-lg max-w-[1000px] mx-auto my-[100px]">
@@ -122,7 +141,6 @@ export default function AnalysisForm() {
             Drag and drop a photo or browse to upload. Ensure the photo is clear
             and shows the entire roof.
           </p>
-          <p className="text-red-600 mt-2 text-sm">{errors.roofImage}</p>
           
           {/* Styled file input */}
           <label
@@ -220,10 +238,10 @@ export default function AnalysisForm() {
       <div className="flex justify-center pt-4">
         <button
           type="submit"
-          disabled={loading}
+          disabled={isSubmitting}
           className="bg-yellow-400 text-black font-bold py-3 px-10 rounded-lg hover:bg-yellow-500 transition-all duration-300"
         >
-          {user ? "Run Analysis" : "Analyze My Roof"}
+          {isSubmitting ? "Submitting..." : (user ? "Run Analysis" : "Analyze My Roof")}
         </button>
       </div>
     </form>

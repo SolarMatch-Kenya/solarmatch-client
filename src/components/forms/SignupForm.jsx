@@ -8,6 +8,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Bulb from '../ui/Bulb'
 import API from '../../services/api';
+import { toast } from 'sonner';
 
 export default function SignupForm() {
   const navigate = useNavigate();
@@ -50,13 +51,14 @@ export default function SignupForm() {
       // Automatically log in using the username & password
       await login(username, values.password);
 
-      alert("Signup successful! Please check your email for a confirmation code.");
+      toast.success("Signup successful! Please check your email for a verification code.");
       
       // Redirect to verification page
       navigate("/verify"); // <-- Redirect to verify, not login
 
     } catch (err) {
       setError(err.response?.data?.message || err.message || "Something went wrong");
+      toast.error(errorMsg);
     } finally {
       setSubmitting(false);
     }

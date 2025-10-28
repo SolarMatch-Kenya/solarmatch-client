@@ -74,11 +74,22 @@ export default function SideBar() {
   // Determine role (defaulting to 'user')
   const userRole = user?.role || 'user'; 
   const links = getLinksForRole(userRole);
-  const panelTitle = userRole.charAt(0).toUpperCase() + userRole.slice(1) + " Panel";
+  // const panelTitle = userRole.charAt(0).toUpperCase() + userRole.slice(1) + " Panel";
 
   const handleLogout = () => {
     logout();
     navigate('/login');
+  };
+
+  // --- Helper to get initials ---
+  const getInitials = (name = "") => {
+    const names = name.split(' ');
+    if (names.length > 1) {
+      return `${names[0][0]}${names[names.length - 1][0]}`.toUpperCase();
+    } else if (names.length === 1 && names[0].length > 0) {
+      return names[0][0].toUpperCase();
+    }
+    return 'U'; // Default User
   };
 
   return (
@@ -101,15 +112,35 @@ export default function SideBar() {
         </nav>
       </div>
 
-      {/* Footer (Logout) */}
-      <div>
+      {/* --- START: User Info & Logout Section --- */}
+      <div className="space-y-2 pt-2 border-t border-gray-200">
+        {/* User Info */}
+        {user && ( // Only show if user is logged in
+          <div className="flex items-center gap-3 px-2 py-1">
+            {/* Avatar Placeholder */}
+            <div className="w-12 h-10 rounded-full bg-gray-200 flex items-center justify-center font-semibold text-gray-600">
+              {getInitials(user.full_name)}
+            </div>
+            {/* Name & Email */}
+            <div className="overflow-hidden">
+              <p className="text-sm font-semibold text-gray-800 truncate">
+                {user.full_name || "User"}
+              </p>
+              <p className="text-xs text-gray-500 truncate">
+                {user.email || "No email"}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Logout Button */}
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-primary/10 text-black w-full transition-all duration-300"
+          className="flex items-center gap-3 px-4 py-2 rounded-lg text-red-600 hover:bg-red-50 w-full transition-all duration-300" // Adjusted styling for emphasis
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="18" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
-            <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-box-arrow-left" viewBox="0 0 16 16">
+            <path fillRule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
+            <path fillRule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z"/>
           </svg>
           <span className="font-medium">Logout</span>
         </button>

@@ -18,7 +18,7 @@ function Panel({ position, rotation, active }) {
 }
 
 // --- THIS IS THE NEW SCENE FOR THE 3D MODEL ---
-function GLBScene({ modelUrl, panelPositions, setExporterScene }) {
+const GLBScene = React.memo(function GLBScene({ modelUrl, panelPositions, setExporterScene }) {
   // Load the 3D model from the URL
   const { scene: roofModel } = useGLTF(modelUrl);
   const { scene } = useThree();
@@ -26,6 +26,9 @@ function GLBScene({ modelUrl, panelPositions, setExporterScene }) {
   useEffect(() => {
     setExporterScene(scene);
   }, [scene, setExporterScene]);
+
+  const yOffset = 5.0;
+  const xOffset = 6.5;
 
   return (
     <>
@@ -42,7 +45,7 @@ function GLBScene({ modelUrl, panelPositions, setExporterScene }) {
          (p.position && p.rotation) ? (
             <Panel 
               key={i} 
-              position={p.position} 
+              position={[p.position[0] + xOffset, p.position[1] + yOffset, p.position[2]]}
               rotation={p.rotation} // These are already in radians
               active={true} 
             />
@@ -52,7 +55,7 @@ function GLBScene({ modelUrl, panelPositions, setExporterScene }) {
       <OrbitControls enablePan enableRotate enableZoom />
     </>
   );
-}
+})
 
 // --- THIS IS YOUR OLD SCENE, RENAMED ---
 function FlatScene({ photoUrl, panelPositions = [], setExporterScene }) {
