@@ -238,10 +238,10 @@ export default function AnalysisForm() {
       <div className="flex justify-center pt-4">
         <button
           type="submit"
-          disabled={isSubmitting}
+          // disabled={isSubmitting}
           className="bg-yellow-400 text-black font-bold py-3 px-10 rounded-lg hover:bg-yellow-500 transition-all duration-300"
         >
-          {isSubmitting ? "Submitting..." : (user ? "Run Analysis" : "Analyze My Roof")}
+          (user ? "Run Analysis" : "Analyze My Roof")
         </button>
       </div>
     </form>
