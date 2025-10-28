@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
+import API from '../../services/api'; // <-- Import API service
+import { toast } from 'sonner'; // <-- Import toast
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -11,6 +13,7 @@ const Contact = () => {
         customSubject: '',
         message: ''
     });
+    const [isLoading, setIsLoading] = useState(false); // <-- Add loading state
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -20,24 +23,46 @@ const Contact = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => { // <-- Make async
         e.preventDefault();
-        // Determine the final subject to send
-        const finalSubject = formData.subject === 'Other' ? formData.customSubject : formData.subject;
-        const dataToSend = { ...formData, subject: finalSubject };
-        delete dataToSend.customSubject; // Remove customSubject if not needed or already merged
+        setIsLoading(true); // <-- Start loading
 
-        // Here you would typically send the form data to a backend server
-        // For demonstration purposes, we'll just log it to the console
-        console.log('Form data submitted:', dataToSend);
-        alert('Thank you for your message! We will get back to you shortly.');
-        setFormData({
-            name: '',
-            email: '',
-            subject: '',
-            customSubject: '',
-            message: ''
-        });
+        const finalSubject = formData.subject === 'Other' ? formData.customSubject : formData.subject;
+
+        // Basic validation (add more if needed)
+        if (!formData.name || !formData.email || !finalSubject || !formData.message) {
+            toast.error("Please fill out all required fields.");
+            setIsLoading(false);
+            return;
+        }
+
+        // Prepare data for the backend
+        const dataToSend = {
+            name: formData.name,
+            email: formData.email,
+            subject: finalSubject,
+            message: formData.message
+         };
+
+        try {
+            // --- Call the backend ---
+            const response = await API.post('/contact', dataToSend);
+            // --- End Call ---
+
+            toast.success(response.data.message || 'Message sent successfully!'); // <-- Success toast
+
+            // Reset form
+            setFormData({
+                name: '', email: '', subject: '', customSubject: '', message: ''
+            });
+
+        } catch (error) {
+            // --- Error handling ---
+            toast.error(error.response?.data?.error || 'Failed to send message. Please try again.'); // <-- Error toast
+            console.error('Form submission error:', error);
+        } finally {
+            setIsLoading(false); // <-- Stop loading
+        }
     };
 
     return (
@@ -114,8 +139,9 @@ const Contact = () => {
                                             <label htmlFor="message" className="block text-gray-700 font-bold mb-2">Message</label>
                                             <textarea id="message" name="message" value={formData.message} onChange={handleChange} rows="5" className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006800]" required></textarea>
                                         </div>
-                                        <PrimaryButton type="submit" className='bg-[#f79436] text-white'>
-                                            Send Message
+                                        {/* --- Update Button --- */}
+                                        <PrimaryButton type="submit" className='bg-[#f79436] text-white disabled:opacity-50' disabled={isLoading}>
+                                            {isLoading ? 'Sending...' : 'Send Message'}
                                         </PrimaryButton>
                                     </form>
                                 </div>
