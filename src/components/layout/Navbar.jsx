@@ -2,6 +2,7 @@ import React, { useState, useContext, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PrimaryButton from "../buttons/PrimaryButton";
 import { useAuth } from "../../context/AuthContext";
+import logoSrc from '../../assets/logo-color.svg';
 
 // Icons
 const LoginIcon = () => (
@@ -80,7 +81,7 @@ const Navbar = () => {
                 <div className="flex items-center justify-between h-24">
                     <div className="flex items-center">
                         <Link to="/" className="flex items-center text-xl font-bold text-[#006800] space-x-2">
-                            <img src="src/assets/logo-color.svg" alt="Logo" className="h-20" />
+                            <img src={logoSrc} alt="Logo" className="h-20" />
                         </Link>
                     </div>
 

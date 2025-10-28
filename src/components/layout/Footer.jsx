@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import logoSrc from '../../assets/logo-white.svg';
 
 const LinkedinIcon = () => (
     <svg
