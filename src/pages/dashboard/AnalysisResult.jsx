@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import EmptyState from '../../components/common/EmptyState';
 import RoofPreview from "../../components/ar/RoofPreview";
@@ -15,21 +15,37 @@ const AnalysisResult = () => {
   const [activeTab, setActiveTab] = useState('summary');
   const { token } = useAuth();
 
+  // Ref to hold the timer ID
+  const pollingTimer = useRef(null);
+
   useEffect(() => {
     
     const fetchResults = async () => {
       try {
-        setLoading(true);
+        setError(null);
+        setNoData(false);
+
         setIsPending(false);
         const res = await API.get('/analysis/latest');
         const result = res.data; 
         
         if (result.status === 'PENDING') {
           setIsPending(true);
+          setLoading(false);
+
+          if (pollingTimer.current) {
+            clearTimeout(pollingTimer.current);
+          }
+          pollingTimer.current = setTimeout(fetchResults, 5000);
+
         } else if (result.status === 'FAILED') {
           setError("The analysis failed to process.");
+          setIsPending(false);
+          setLoading(false);
         } else {
           setData(result);
+          setIsPending(false);
+          setLoading(false);
         }
       } catch (err) {
         if (err.response && err.response.status === 404) {
@@ -37,22 +53,29 @@ const AnalysisResult = () => {
         } else {
           setError(err.message);
         }
-      } finally {
         setLoading(false);
-      }
+        setIsPending(false);
+      } 
     };
     
     if (token) {
+      setLoading(true);
       fetchResults();
     } else {
       setLoading(false);
     }
+
+    return () => {
+      if (pollingTimer.current) {
+        clearTimeout(pollingTimer.current);
+      }
+    };
   }, [token]);
 
   // --- Your existing loading/error states ---
   if (loading) {
     return (
-      <div className="flex justify-center items-center w-full p-6" style={{ minHeight: '400px' }}>
+      <div className="flex justify-center items-center w-full p-6 min-h-full" style={{ minHeight: '400px' }}>
         <Loader />
       </div>
     );
