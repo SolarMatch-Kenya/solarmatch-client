@@ -3,8 +3,10 @@
 import axios from 'axios';
 
 // Create an instance of axios
+const VITE_API_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:5000/api';
+
 const API = axios.create({
-  baseURL: 'http://127.0.0.1:5000/api' // Your backend API URL
+  baseURL: VITE_API_URL
 });
 
 // Add an interceptor to include the auth token in all requests
