@@ -5,7 +5,7 @@ import FinancerCard from '../../components/cards/FinancerCard';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
-import bg from '/assets/contact.jpg'
+import bg from '../../assets/contact.jpg'
 
 const financers = [
     {

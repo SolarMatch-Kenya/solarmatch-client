@@ -4,7 +4,7 @@ import Footer from '../../components/layout/Footer';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import API from '../../services/api'; 
 import { toast } from 'sonner'; 
-import bg from '/assets/contact.jpg'
+import bg from '../../assets/contact.jpg'
 
 const Contact = () => {
     const [formData, setFormData] = useState({

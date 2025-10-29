@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
-import bg from '/assets/financing.jpg'
+import bg from '../../assets/financing.jpg'
 
 // Icons for the steps
 const LocationIcon = () => (
