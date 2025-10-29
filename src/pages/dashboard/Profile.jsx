@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../context/AuthContext'; // Import useAuth to get user data
+import { useAuth } from '../../context/AuthContext';
 
 const Profile = () => {
   const { user } = useAuth(); // Get the real user

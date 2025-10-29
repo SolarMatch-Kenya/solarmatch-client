@@ -1,17 +1,17 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Dialog, Transition } from '@headlessui/react'; // Ensure you ran: npm install @headlessui/react
+import { Dialog, Transition } from '@headlessui/react'; 
 import API from '../../services/api';
 import { Search, ChevronDown, Plus, X } from 'lucide-react';
 import InstallerCard from "../../components/cards/InstallerCard"
 
-// --- Add Installer Modal Form (Now includes category dropdown) ---
+// --- AInstaller Modal Form (includes category dropdown) ---
 const AddInstallerModal = ({ isOpen, onClose, onSuccess }) => {
   const [formData, setFormData] = useState({
     full_name: '',
     email: '',
     phone_number: '',
     county: '',
-    installer_category: '' // <-- Add category state
+    installer_category: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -132,7 +132,6 @@ const InstallerManagement = () => {
       setInstallers(res.data.installers);
     } catch (err) {
       console.error("Fetch Installers Error:", err);
-      // Optionally set an error state here
     }
     setLoading(false);
   };
@@ -144,7 +143,7 @@ const InstallerManagement = () => {
   const handleAddSuccess = () => {
     setIsModalOpen(false);
     fetchInstallers(); // Refresh list
-    // TODO: Replace alert with a proper toast notification library
+    // TODO: Replace alert with a proper toast notification
     alert("Installer added successfully! Credentials printed in backend console.");
   };
 

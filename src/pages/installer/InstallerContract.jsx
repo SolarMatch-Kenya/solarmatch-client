@@ -14,7 +14,7 @@ export default function InstallerContract() {
   const [loading, setLoading] = useState(false);
   const [ipAddress, setIpAddress] = useState("");
 
-  // Get user's IP for compliance
+  // Gets user's IP for compliance
   useEffect(() => {
     fetch("https://api.ipify.org?format=json")
       .then((res) => res.json())
@@ -42,7 +42,7 @@ export default function InstallerContract() {
         ipAddress,
       };
 
-      // --- 2. Use API.post instead of fetch ---
+      // Use API.post instead of fetch ---
       // This is cleaner and automatically uses your base URL
       // and Authorization token from your API service.
       const res = await API.post(
@@ -50,7 +50,7 @@ export default function InstallerContract() {
         payload
       );
 
-      // 3. Update context with the *user object* from the backend
+      // Update context with the *user object* from the backend
       if (res.data.user) {
         updateUser(res.data.user);
       } else {
@@ -58,7 +58,7 @@ export default function InstallerContract() {
         updateUser({ ...user, contractAccepted: true });
       }
       
-      // 4. Navigate to the INSTALLER dashboard!
+      // Navigate to the INSTALLER dashboard!
       navigate("/installer-dashboard", { replace: true });
 
     } catch (err) {

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// 1. Import the 'Unlock' icon for the unban button
 import { Search, Eye, Edit2, ShieldBan, ChevronDown, Unlock } from 'lucide-react';
 import API from '../../services/api';
 import { toast } from 'sonner';
@@ -9,8 +8,7 @@ import {
   PaginationItem,
   PaginationLink,
   PaginationNext,
-  PaginationPrevious,
-  PaginationEllipsis
+  PaginationPrevious
 } from '../../components/common/Pagination';
 
 const UserManagement = () => {
@@ -20,11 +18,10 @@ const UserManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  // --- 2. Add state for search ---
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
 
-  // --- 3. Add a debouncer for the search input ---
+  // --- Add a debouncer for the search input ---
   // This prevents an API call on every single keystroke
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -35,7 +32,7 @@ const UserManagement = () => {
     return () => clearTimeout(timer); // Cleanup timer
   }, [searchTerm]);
 
-  // --- 4. Update data fetching to include search ---
+  // --- Update data fetching to include search ---
   useEffect(() => {
     const fetchUsers = async () => {
       setLoading(true);
@@ -66,7 +63,7 @@ const UserManagement = () => {
     setCurrentPage(page);
   };
   
-  // --- 5. Add handlers for Ban/Unban ---
+  // --- handlers for Ban/Unban ---
   const handleBanUser = async (userId) => {
     if (!window.confirm("Are you sure you want to ban this user?")) return;
 
@@ -79,7 +76,6 @@ const UserManagement = () => {
       toast.success(`${userName} has been banned.`);
     } catch (err) {
       const errorMsg = err.response?.data?.error || "Failed to ban user.";
-      // --- Replace alert ---
       toast.error(errorMsg);
     }
   };
@@ -94,7 +90,6 @@ const UserManagement = () => {
       toast.success(`${userName} has been unbanned.`);
     } catch (err) {
       const errorMsg = err.response?.data?.error || "Failed to unban user.";
-      // --- Replace alert ---
       toast.error(errorMsg);
     }
   };
@@ -165,7 +160,7 @@ const UserManagement = () => {
                     {user.county || 'N/A'}
                   </td>
                   <td className="p-4 whitespace-nowrap text-sm">
-                    {/* --- 7. Add styling for 'banned' role --- */}
+                    {/* --- styling for 'banned' role --- */}
                     <span 
                       className={`px-2 py-1 rounded-full text-xs font-medium ${
                         user.role === 'customer' 
@@ -182,7 +177,7 @@ const UserManagement = () => {
                     <button className="p-1 hover:text-blue-600"><Eye className="w-4 h-4" /></button>
                     <button className="p-1 hover:text-green-600 ml-2"><Edit2 className="w-4 h-4" /></button>
                     
-                    {/* --- 8. Add conditional Ban/Unban button --- */}
+                    {/* --- conditional Ban/Unban button --- */}
                     {user.role === 'banned' ? (
                       <button 
                         className="p-1 hover:text-yellow-600 ml-2" 

@@ -52,7 +52,7 @@ const TipItem = ({ tip, onEdit, onDelete }) => (
 );
 
 
-// --- Add/Edit Modal (Generic for FAQ and Tip) ---
+// --- Add/Edit Modal ---
 const ContentModal = ({ isOpen, onClose, item, type, onSave }) => {
   const [formData, setFormData] = useState({ title: '', description: '', question: '', answer: '' });
   const [loading, setLoading] = useState(false);

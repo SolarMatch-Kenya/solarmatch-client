@@ -1,1 +1,0 @@
-// Fetches leaderboard data from backend API

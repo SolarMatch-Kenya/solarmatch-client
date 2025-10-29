@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import Loader from "../../components/common/Loader";
-import API from "../../services/api"; // 1. Import API
+import API from "../../services/api";
 
 const RoofReports = () => {
   const { user } = useAuth();
@@ -14,7 +14,7 @@ const RoofReports = () => {
       if (!user) return;
       try {
         setLoading(true);
-        // 2. Fetch real data from the new endpoint
+        // Fetch real data from the new endpoint
         const res = await API.get('/installer-reports');
         setReports(res.data);
       } catch (err) {
@@ -29,7 +29,6 @@ const RoofReports = () => {
   }, [user]);
 
   if (loading) {
-    // 3. Center the loader
     return (
       <div className="flex justify-center items-center w-full p-6" style={{ minHeight: '400px' }}>
         <Loader />
@@ -51,7 +50,6 @@ const RoofReports = () => {
           <p className="text-sm mt-1">When a customer you have as a lead completes an analysis, it will appear here.</p>
         </div>
       ) : (
-        // 4. Render cards instead of a table
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {reports.map((report) => (
             <div key={report.id} className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">

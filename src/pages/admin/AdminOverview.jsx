@@ -10,11 +10,11 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Filler, // Import Filler for area charts
+  Filler,
   Legend,
 } from 'chart.js';
 
-// --- Register Chart.js components ---
+// --- Chart.js components ---
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -22,7 +22,7 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Filler, // Register Filler
+  Filler, 
   Legend
 );
 
@@ -109,7 +109,7 @@ const AdminOverview = () => {
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    plugins: { legend: { display: false } }, // Hide legend
+    plugins: { legend: { display: false } },
     scales: {
       x: { grid: { display: false } },
       y: { beginAtZero: true }

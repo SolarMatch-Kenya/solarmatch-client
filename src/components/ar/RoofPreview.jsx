@@ -5,7 +5,7 @@ import { OrbitControls, useTexture, useGLTF } from "@react-three/drei";
 import API from "../../services/api";
 import * as THREE from 'three';
 
-// Panel component is unchanged
+
 function Panel({ position, rotation, active }) {
   const eulerRotation = new THREE.Euler(...rotation);
 
@@ -17,7 +17,7 @@ function Panel({ position, rotation, active }) {
   );
 }
 
-// --- THIS IS THE NEW SCENE FOR THE 3D MODEL ---
+
 const GLBScene = React.memo(function GLBScene({ modelUrl, panelPositions, setExporterScene }) {
   // Load the 3D model from the URL
   const { scene: roofModel } = useGLTF(modelUrl);
@@ -46,7 +46,7 @@ const GLBScene = React.memo(function GLBScene({ modelUrl, panelPositions, setExp
             <Panel 
               key={i} 
               position={[p.position[0] + xOffset, p.position[1] + yOffset, p.position[2]]}
-              rotation={p.rotation} // These are already in radians
+              rotation={p.rotation}
               active={true} 
             />
          ) : null // Skip if data is malformed
@@ -57,7 +57,7 @@ const GLBScene = React.memo(function GLBScene({ modelUrl, panelPositions, setExp
   );
 })
 
-// --- THIS IS YOUR OLD SCENE, RENAMED ---
+
 function FlatScene({ photoUrl, panelPositions = [], setExporterScene }) {
   const texture = useTexture(photoUrl);
   const planeRef = useRef();
@@ -108,7 +108,6 @@ export default function RoofPreview({ photoUrl, panelPositions = [], roofModelUr
   const [status, setStatus] = useState("");
 
   const handleExportGLB = async () => {
-    // ... This function remains exactly the same ...
     if (!exporterScene) return;
     setStatus("Exporting...");
     const { GLTFExporter } = await import("three/examples/jsm/exporters/GLTFExporter.js");

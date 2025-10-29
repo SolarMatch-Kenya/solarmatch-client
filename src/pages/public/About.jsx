@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
+import bg from '/assets/contact.jpg'
 
 const LinkedinIcon = () => (
     <svg
@@ -111,7 +112,7 @@ const About = () => {
                     {/* Hero Section */}
                     <div
                         className="relative bg-cover bg-bottom min-h-[50vh] flex items-center justify-center"
-                        style={{ backgroundImage: "url('src/assets/contact.jpg')" }}
+                        style={{ backgroundImage: `url(${bg})` }}
                     >
                         <div className="absolute inset-0 bg-black opacity-70"></div>
                         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">

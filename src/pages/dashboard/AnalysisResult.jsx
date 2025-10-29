@@ -72,7 +72,6 @@ const AnalysisResult = () => {
     };
   }, [token]);
 
-  // --- Your existing loading/error states ---
   if (loading) {
     return (
       <div className="flex justify-center items-center w-full p-6 min-h-full" style={{ minHeight: '400px' }}>
@@ -85,7 +84,6 @@ const AnalysisResult = () => {
   if (error) return <div className="p-6 text-red-600">{error}</div>;
   if (!data) return <div className="p-6">No analysis data found.</div>;
 
-  // --- New Render Logic ---
   return (
     <div className="p-6 md:p-8 bg-gray-50 min-h-full">
       {/* Header */}

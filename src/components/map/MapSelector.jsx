@@ -32,17 +32,16 @@ export default function MapSelector({ onSelect, width = "100%", height = 400 }) 
     const lng = e.latLng.lng();
     const newPos = { lat, lng };
 
-    // 1. Set the marker position on the map
+    // Set the marker position on the map
     setMarkerPosition(newPos);
 
-    // 2. Use Google's Geocoder service to get the address
+    // Use Google's Geocoder service to get the address
     const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode({ location: newPos }, (results, status) => {
       if (status === "OK" && results[0]) {
         const place = results[0];
         
-        // 3. We build a 'place' object that matches the
-        // structure your AnalysisForm expects!
+        
         const compatiblePlaceObject = {
           place_name: place.formatted_address,
           geometry: {
@@ -50,7 +49,7 @@ export default function MapSelector({ onSelect, width = "100%", height = 400 }) 
           }
         };
 
-        // 4. Call the onSelect prop
+        // Call the onSelect prop
         onSelect(compatiblePlaceObject);
 
       } else {
@@ -74,7 +73,7 @@ export default function MapSelector({ onSelect, width = "100%", height = 400 }) 
       mapContainerStyle={mapContainerStyle}
       zoom={10}
       center={mapCenter}
-      mapTypeId="satellite" // Use satellite view
+      mapTypeId="satellite" // satellite view
       tilt={45}
       options={{
         streetViewControl: false,

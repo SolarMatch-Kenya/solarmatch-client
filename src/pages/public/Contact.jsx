@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
-import API from '../../services/api'; // <-- Import API service
-import { toast } from 'sonner'; // <-- Import toast
+import API from '../../services/api'; 
+import { toast } from 'sonner'; 
+import bg from '/assets/contact.jpg'
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -13,7 +14,7 @@ const Contact = () => {
         customSubject: '',
         message: ''
     });
-    const [isLoading, setIsLoading] = useState(false); // <-- Add loading state
+    const [isLoading, setIsLoading] = useState(false); 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -23,13 +24,13 @@ const Contact = () => {
         }));
     };
 
-    const handleSubmit = async (e) => { // <-- Make async
+    const handleSubmit = async (e) => { 
         e.preventDefault();
-        setIsLoading(true); // <-- Start loading
+        setIsLoading(true);
 
         const finalSubject = formData.subject === 'Other' ? formData.customSubject : formData.subject;
 
-        // Basic validation (add more if needed)
+        // Basic validation
         if (!formData.name || !formData.email || !finalSubject || !formData.message) {
             toast.error("Please fill out all required fields.");
             setIsLoading(false);
@@ -47,7 +48,6 @@ const Contact = () => {
         try {
             // --- Call the backend ---
             const response = await API.post('/contact', dataToSend);
-            // --- End Call ---
 
             toast.success(response.data.message || 'Message sent successfully!'); // <-- Success toast
 
@@ -75,7 +75,7 @@ const Contact = () => {
                     {/* Hero Section */}
                     <div
                         className="hero relative bg-cover bg-center min-h-[50vh] flex items-center justify-center"
-                        style={{ backgroundImage: "url('/src/assets/contact.jpg')" }}
+                        style={{ backgroundImage: `url(${bg})` }}
                     >
                         <div className="absolute inset-0 bg-black opacity-70"></div>
                         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,6 +1,4 @@
 // Handles login/signup/logout API requests
-// src/services/authService.js
-// src/services/authService.js
 
 import { isTokenExpired } from "../utils/helpers";
 import API from './api'; // <-- 1. Import your axios instance

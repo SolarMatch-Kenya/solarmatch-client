@@ -1,15 +1,11 @@
 // AppRouter.js - Updated with Code-Splitting
 
 import { Routes, Route } from "react-router-dom";
-import { lazy, Suspense } from 'react'; // <-- 1. IMPORTED
+import { lazy, Suspense } from 'react';
 import ProtectedRoute from '../components/common/ProtectedRoute';
+import Loader from "../components/common/Loader";
 
-// 2. IMPORT A LOADER
-// You'll need to create this component. 
-// It will show while the page chunks are downloading.
-import Loader from "../components/common/Loader"; // <-- Or wherever you create it
-
-// 3. LAZY-LOAD ALL YOUR PAGES
+// LAZY-LOAD ALL PAGES
 const Home = lazy(() => import("../pages/public/Home"));
 const About = lazy(() => import("../pages/public/About"));
 const Register = lazy(() => import("../pages/auth/Register"));
@@ -38,12 +34,11 @@ const InstallerOverview = lazy(() => import("../pages/installer/InstallerOvervie
 const CustomerLeads = lazy(() => import("../pages/installer/CustomerLeads"));
 const RoofReports = lazy(() => import("../pages/installer/RoofReports"));
 
-// (All your old static 'import' lines for pages are now GONE)
 
 function AppRouter() {
     return (
-        // 4. WRAP EVERYTHING IN <Suspense>
-        <Suspense fallback={<Loader />}>
+        // wrapping EVERYTHING IN <Suspense>
+        <Suspense fallback={<div className="flex justify-center items-center w-full p-6 min-h-full" style={{ minHeight: '400px' }}><Loader /></div>}>
             <Routes>
                 <Route path='/' element={<Home />}/> 
                 <Route path='/about' element={<About />}/>

@@ -8,8 +8,8 @@ const ChangePassword = () => {
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
   const [error, setError] = useState('');
-  const { updateUser } = useAuth(); // <-- Get updateUser
-  const navigate = useNavigate(); // <-- Add
+  const { updateUser } = useAuth(); 
+  const navigate = useNavigate(); 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -45,9 +45,9 @@ const ChangePassword = () => {
         updateUser(updatedUser);
       }
 
-      // --- START SMART NAVIGATION ---
+      // --- SMART NAVIGATION ---
       setTimeout(() => {
-        // Now, decide where to go next based on the *updated* user
+        // Now, decides where to go next based on the *updated* user
         if (updatedUser.role === 'installer' && !updatedUser.contractAccepted) {
           // New installer flow: password done, now sign contract
           navigate("/installer-contract", { replace: true });
@@ -65,13 +65,12 @@ const ChangePassword = () => {
           navigate("/dashboard", { replace: true });
         }
       }, 1500); // 2-second delay to show success message
-      // --- END SMART NAVIGATION ---
 
     } catch (err) {
       const errorMsg = err.response?.data?.error || "Failed to update password";
-      setError(errorMsg); // Keep inline error
-      toast.error(errorMsg); // <-- Use toast for error
-      setIsSubmitting(false); // Stop submitting on error
+      setError(errorMsg); 
+      toast.error(errorMsg); 
+      setIsSubmitting(false); 
     }
   };
 

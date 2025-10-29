@@ -30,18 +30,18 @@ export default function VerifyCode() {
     try {
       const otpString = values.otp.join("");
       
-      // 1. CAPTURE THE RETURNED DATA (which includes the user)
+      // CAPTURE THE RETURNED DATA (which includes the user)
       const data = await verifyOTP(values.user_name, otpString);
 
-      // 2. Check for the redirect flag
+      // Check for the redirect flag
       const pendingRedirect = localStorage.getItem("pendingAnalysisRedirect");
       
       if (pendingRedirect) {
         localStorage.removeItem("pendingAnalysisRedirect");
-        navigate("/analysis", { replace: true }); // <-- Go to form
+        navigate("/analysis", { replace: true });
       } else {
           if (data.user && data.user.role === 'admin') {
-            navigate("/admin-dashboard", { replace: true }); // <-- CORRECT: Go to admin dashboard
+            navigate("/admin-dashboard", { replace: true });
           } else if (data.user.role === 'installer') {
               // Priority 1: Password reset
               if (data.user.password_reset_required) {
@@ -69,11 +69,11 @@ export default function VerifyCode() {
   const resendCode = async () => {
     try {
       setResending(true);
-      // 3. Get username from form, not email
+      // Get username from form, not email
       const pendingUser = JSON.parse(localStorage.getItem("pendingUser"));
       if (!pendingUser?.user_name) throw new Error("No username found");
 
-      // 4. Use API.post and send username
+      // Use API.post and send username
       await API.post("/auth/resend-otp", {
         user_name: pendingUser.user_name,
       });

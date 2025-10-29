@@ -5,6 +5,7 @@ import FinancerCard from '../../components/cards/FinancerCard';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
+import bg from '/assets/contact.jpg'
 
 const financers = [
     {
@@ -57,7 +58,7 @@ const Financing = () => {
             <Navbar />
             <div className="body">
                 {/* Hero section */}
-                <div className="hero relative bg-cover bg-center min-h-[50vh] flex items-center justify-center" style={{ backgroundImage: "url('src/assets/contact.jpg')" }}>
+                <div className="hero relative bg-cover bg-center min-h-[50vh] flex items-center justify-center" style={{ backgroundImage: `url(${bg})` }}>
                     <div className="absolute inset-0 bg-black/60"></div>
                     <div className="container mx-auto px-8 relative text-center max-w-7xl">
                         <h1 className="text-4xl font-bold lg:text-5xl text-white tracking-tight">Power Your Home with Solar, Affordably.</h1>
