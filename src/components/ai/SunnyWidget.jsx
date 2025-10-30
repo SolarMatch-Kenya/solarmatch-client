@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SunnyChatbot from "./SunnyChatbot";
 import DotLottie from "../ui/dotLottie";
+import close from "../../assets/icons/close_24dp_144404_FILL0_wght400_GRAD0_opsz24.svg"
 
 const SunnyWidget = () => {
   const [open, setOpen] = useState(false);
@@ -97,7 +98,7 @@ const SunnyWidget = () => {
                 onClick={() => setOpen(false)}
                 className="text-gray-500 hover:text-gray-700 text-lg"
               >
-                <img src="src/assets/icons/close_24dp_144404_FILL0_wght400_GRAD0_opsz24.svg" />
+                <img src={close} />
               </button>
             </div>
             <SunnyChatbot />
