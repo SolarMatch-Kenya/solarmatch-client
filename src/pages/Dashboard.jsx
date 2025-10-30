@@ -168,7 +168,7 @@ const Dashboard = () => {
             Ready to move forward? Explore your results in augmented reality or find certified local installers.
           </p>
           <div className="space-y-3">
-            <Link to="/dashboard/ar-view" className="w-full flex items-center justify-center gap-2 bg-[#f79436] text-white font-semibold py-3 rounded-lg hover:bg-[#e68529]">
+            <Link to="/dashboard/analysis-result" className="w-full flex items-center justify-center gap-2 bg-[#f79436] text-white font-semibold py-3 rounded-lg hover:bg-[#e68529]">
               <ViewfinderCircleIcon className="w-5 h-5" />
               Explore in AR
             </Link>
