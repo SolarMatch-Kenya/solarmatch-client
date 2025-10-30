@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
-import API from '../../services/api'; 
-import { toast } from 'sonner'; 
+import API from '../../services/api';
+import { toast } from 'sonner';
 import bg from '../../assets/contact.jpg'
 
 const Contact = () => {
@@ -14,7 +14,7 @@ const Contact = () => {
         customSubject: '',
         message: ''
     });
-    const [isLoading, setIsLoading] = useState(false); 
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -24,7 +24,7 @@ const Contact = () => {
         }));
     };
 
-    const handleSubmit = async (e) => { 
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
 
@@ -43,7 +43,7 @@ const Contact = () => {
             email: formData.email,
             subject: finalSubject,
             message: formData.message
-         };
+        };
 
         try {
             // --- Call the backend ---
@@ -74,13 +74,26 @@ const Contact = () => {
                 <div className="text-base font-normal">
                     {/* Hero Section */}
                     <div
-                        className="hero relative bg-cover bg-center min-h-[50vh] flex items-center justify-center"
+                        className="hero relative bg-cover bg-center min-h-[60vh] flex items-center justify-center"
                         style={{ backgroundImage: `url(${bg})` }}
                     >
                         <div className="absolute inset-0 bg-black opacity-70"></div>
                         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
                             <h1 className="text-white text-4xl font-bold lg:text-5xl text-center">Contact Us</h1>
                             <p className="text-white xt-lg mt-4 max-w-2xl mx-auto text-center">We'd love to hear from you. Get in touch with us for any inquiries.</p>
+                        </div>
+                        {/* Wavy bottom shape */}
+                        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+                            <svg
+                                viewBox="0 0 500 150"
+                                preserveAspectRatio="none"
+                                className="w-full h-20 lg:h-24"
+                            >
+                                <path
+                                    d="M0.00,49.98 C150.00,150.00 349.20,-50.00 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
+                                    style={{ stroke: "none", fill: "#fff" }}
+                                ></path>
+                            </svg>
                         </div>
                     </div>
 

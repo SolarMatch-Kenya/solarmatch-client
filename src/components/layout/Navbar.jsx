@@ -87,12 +87,21 @@ const Navbar = () => {
 
                     {/* Desktop Navigation */}
                     <div className="hidden lg:flex items-center space-x-6">
-                        {/* ... your nav links ... */}
-                        <Link to="/" className="flex items-center ...">Home</Link>
-                        <Link to="/about" className="flex items-center ...">About</Link>
-                        <Link to="/how-it-works" className="flex items-center ...">How It Works</Link>
-                        <Link to="/financing" className="flex items-center ...">Financing</Link>
-                        <Link to="/contact" className="flex items-center ...">Contact</Link>
+                        <Link to="/" className="flex items-center text-base font-bold text-[#006800] hover:text-[#f79436] p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
+                            Home
+                        </Link>
+                        <Link to="/about" className="flex items-center text-base font-bold text-[#006800] hover:text-[#f79436] p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
+                            About
+                        </Link>
+                        <Link to="/how-it-works" className="flex items-center text-base font-bold text-[#006800] hover:text-[#f79436] p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
+                            How It Works
+                        </Link>
+                        <Link to="/financing" className="flex items-center text-base font-bold text-[#006800] hover:text-[#f79436] p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
+                            Financing
+                        </Link>
+                        <Link to="/contact" className="flex items-center text-base font-bold text-[#006800] hover:text-[#f79436] p-2 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#f79436] after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out after:origin-left hover:after:scale-x-100">
+                            Contact
+                        </Link>
                     </div>
 
                     <div className="hidden lg:flex items-center space-x-4">
@@ -134,7 +143,7 @@ const Navbar = () => {
                                         >
                                             Profile
                                         </Link>
-                                         {/* Link to appropriate Dashboard */}
+                                        {/* Link to appropriate Dashboard */}
                                         <Link
                                             to={dashboardPath}
                                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
