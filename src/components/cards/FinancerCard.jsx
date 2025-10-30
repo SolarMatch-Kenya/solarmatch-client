@@ -9,19 +9,19 @@ const FinancerCard = ({ financer }) => {
     return (
         <div
             onClick={handleClick}
-            className="cursor-pointer border border-gray-300 rounded-lg p-4 flex flex-col items-center hover:shadow-lg transition-shadow duration-200"
+            className="cursor-pointer  bg-white border border-gray-300 rounded-lg p-4 flex flex-col items-center hover:shadow-lg transition-shadow duration-200"
         >
             {/* Financer Logo */}
             <img src={financer.logo} alt={financer.name} className="h-16 mb-4" />
 
             {/* Financer Details */}
-            <h3 className="text-lg font-semibold">{financer.name}</h3>
+            <h3 className="text-lg font-semibold text-center mb-2">{financer.name}</h3>
 
             {/* Financer Description */}
-            <p className="text-gray-600">{financer.description}</p>
+            <p className="text-gray-600 text-center">{financer.description}</p>
 
             {/* Financer Location */}
-            <span className="text-gray-500">{financer.location}</span>
+            <span className="text-gray-500 text-center">{financer.location}</span>
 
             {/* Contact Financer Button */}
             <a

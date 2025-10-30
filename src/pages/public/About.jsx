@@ -3,6 +3,9 @@ import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import bg from '../../assets/contact.jpg'
+import trish from '../../assets/trish.jpg';
+import james from '../../assets/james.jpg';
+import foks from '../../assets/foks.jpg';
 
 const LinkedinIcon = () => (
     <svg
@@ -111,13 +114,26 @@ const About = () => {
                 <div className="body">
                     {/* Hero Section */}
                     <div
-                        className="relative bg-cover bg-bottom min-h-[50vh] flex items-center justify-center"
+                        className="relative bg-cover bg-bottom min-h-[60vh] flex items-center justify-center"
                         style={{ backgroundImage: `url(${bg})` }}
                     >
                         <div className="absolute inset-0 bg-black opacity-70"></div>
                         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
                             <h1 className="text-white text-4xl font-bold lg:text-5xl text-center">About SolarMatch</h1>
                             <p className="text-white text-lg mt-4 max-w-2xl mx-auto text-center">Empowering a sustainable future through accessible solar energy.</p>
+                        </div>
+                        {/* Wavy bottom shape */}
+                        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+                            <svg
+                                viewBox="0 0 500 150"
+                                preserveAspectRatio="none"
+                                className="w-full h-20 lg:h-24"
+                            >
+                                <path
+                                    d="M0.00,49.98 C150.00,150.00 349.20,-50.00 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
+                                    style={{ stroke: "none", fill: "#fff" }}
+                                ></path>
+                            </svg>
                         </div>
                     </div>
 
@@ -161,7 +177,7 @@ const About = () => {
                             <h2 className="text-3xl font-bold lg:text-4xl text-center text-[#006800] mb-8">Meet the Team</h2>
                             <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 <div className="p-6 bg-white rounded-lg shadow-md">
-                                    <img src="https://via.placeholder.com/150" alt="Team Member 1" className="w-32 h-32 rounded-full mx-auto mb-4" />
+                                    <img src={james} alt="Jaymo" className="w-32 h-32 rounded-full mx-auto mb-4" />
                                     <h3 className="text-xl font-semibold">Jaymo Kariuki</h3>
                                     <p className="text-base text-gray-600">Team Lead</p>
                                     <div className="mt-4 flex justify-center space-x-4">
@@ -171,7 +187,7 @@ const About = () => {
                                     </div>
                                 </div>
                                 <div className="p-6 bg-white rounded-lg shadow-md">
-                                    <img src="https://via.placeholder.com/150" alt="Team Member 2" className="w-32 h-32 rounded-full mx-auto mb-4" />
+                                    <img src={trish} alt="Trish" className="w-32 h-32 rounded-full mx-auto mb-4" />
                                     <h3 className="text-xl font-semibold">Trish Njuguna</h3>
                                     <p className="text-base text-gray-600">Lead AI Engineer</p>
                                     <div className="mt-4 flex justify-center space-x-4">
@@ -181,7 +197,7 @@ const About = () => {
                                     </div>
                                 </div>
                                 <div className="p-6 bg-white rounded-lg shadow-md">
-                                    <img src="https://via.placeholder.com/150" alt="Team Member 3" className="w-32 h-32 rounded-full mx-auto mb-4" />
+                                    <img src={foks} alt="Ayub" className="w-32 h-32 rounded-full mx-auto mb-4" />
                                     <h3 className="text-xl font-semibold">Ayub Foks</h3>
                                     <p className="text-base text-gray-600">Lead Software Engineer</p>
                                     <div className="mt-4 flex justify-center space-x-4">

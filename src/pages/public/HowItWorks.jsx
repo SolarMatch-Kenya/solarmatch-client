@@ -3,6 +3,7 @@ import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import bg from '../../assets/financing.jpg'
+import { Link } from 'react-router-dom';
 
 // Icons for the steps
 const LocationIcon = () => (
@@ -37,13 +38,26 @@ const HowItWorks = () => {
             <div className="body">
                 {/* Hero Section */}
                 <div
-                    className="relative bg-cover bg-center min-h-[50vh] flex items-center justify-center"
+                    className="relative bg-cover bg-center min-h-[60vh] flex items-center justify-center"
                     style={{ backgroundImage: `url(${bg})` }}
                 >
                     <div className="absolute inset-0 bg-black opacity-70"></div>
                     <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
                         <h1 className="text-white text-4xl font-bold lg:text-5xl text-center">How SolarMatch Works</h1>
                         <p className="text-white text-lg mt-4 max-w-2xl mx-auto text-center">Discover the simple steps to unlock your home's solar potential and contribute to a greener Kenya.</p>
+                    </div>
+                    {/* Wavy bottom shape */}
+                    <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+                        <svg
+                            viewBox="0 0 500 150"
+                            preserveAspectRatio="none"
+                            className="w-full h-20 lg:h-24"
+                        >
+                            <path
+                                d="M0.00,49.98 C150.00,150.00 349.20,-50.00 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
+                                style={{ stroke: "none", fill: "#fff" }}
+                            ></path>
+                        </svg>
                     </div>
                 </div>
 
@@ -83,7 +97,7 @@ const HowItWorks = () => {
                         <p className="text-lg mt-4 max-w-2xl mx-auto text-[#006800]">Get your personalized solar report today and take the first step towards energy independence.</p>
                         <div className="mt-8">
                             <PrimaryButton className='bg-[#f79436] text-white'>
-                                Get Your Free Solar Report
+                                <Link to="/analysis">Get Your Free Solar Report</Link>
                             </PrimaryButton>
                         </div>
                     </div>

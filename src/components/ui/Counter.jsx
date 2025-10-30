@@ -44,7 +44,7 @@ const Counter = ({ target, duration = 2000, prefix = "", suffix = "" }) => {
   }, [hasStarted, target, duration]);
 
   return (
-    <span ref={ref} className="text-4xl font-bold text-primary">
+    <span ref={ref} className="text-3xl font-bold lg:text-4xl">
       {prefix}
       {count.toLocaleString()}
       {suffix}
