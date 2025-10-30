@@ -55,7 +55,7 @@ const HowItWorks = () => {
                         >
                             <path
                                 d="M0.00,49.98 C150.00,150.00 349.20,-50.00 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
-                                style={{ stroke: "none", fill: "#fff" }}
+                                style={{ stroke: "none", fill: "#f9fafb" }}
                             ></path>
                         </svg>
                     </div>
